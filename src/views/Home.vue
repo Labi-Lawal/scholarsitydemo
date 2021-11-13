@@ -190,9 +190,6 @@ header.fixed::v-deep .bottom nav > div {
   color: var(--paper-grey-700);
 }
 
-.categories_body {
-  
-}
 .carousel_list {
   padding: 3% 0;
 }

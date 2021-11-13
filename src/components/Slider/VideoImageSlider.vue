@@ -47,11 +47,10 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
-import SearchBar from "@/components/Form/SearchBar.vue";
 
 export default defineComponent({
   name: "video-image-slider",
-  components: { ButtonPlainText, SearchBar },
+  components: { ButtonPlainText },
   props: ["carouselDetails"],
   data() {
     
