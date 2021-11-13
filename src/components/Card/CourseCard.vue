@@ -92,17 +92,7 @@ export default defineComponent ({
 .ratings {
     height: 15%;
     width: 100%;
-    height: 50%;
-    padding: 2% 2% 0%;
-}
-.title {
-    width: 100%;
-    height: 39%;
-    line-height: calc(110%);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-weight: 600;
-    font-size: 110%;
+    height: 15%;
 }
 .tutor {
     margin: 2% 0%;
