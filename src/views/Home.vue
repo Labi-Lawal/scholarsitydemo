@@ -77,13 +77,16 @@ export default defineComponent({
       var details = [
         {
           target_url: 'google.com',
-          ad_image: '../../assets/hero_img.png' 
+          ad_image: '../../assets/hero_img.png',
+          mainText: 'Lorem ipsum dolor sit amet consectetur adipi',
+          subText: 'amet consectetur adipi scing elit'
           
         },
         {
           target_url: 'google.com',
-          ad_image: '../../assets/hero_img.png' 
-          
+          ad_image: '../../assets/hero_img.png',
+          mainText: 'Lorem ipsum dolor sit amet consectetur adipi',
+          subText: 'amet consectetur adipi scing elit'
         }
       ],
 
@@ -171,6 +174,7 @@ header::v-deep .notification .icon_wrapper .icon {
 
 header.fixed {
   position: fixed;
+  z-index: 5;
   top: 0;
   background: white !important;
   color: var(--paper-grey-800) !important;

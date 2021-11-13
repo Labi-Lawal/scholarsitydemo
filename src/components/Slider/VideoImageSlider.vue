@@ -7,7 +7,20 @@
             <router-link :to="slide.target_url">
               <!-- <img src="../../assets/hero_img.png"> -->
 
-              <div class="overlay"></div>
+              <div class="overlay">
+                <div class="main_text">
+                  {{ slide.mainText }}
+                </div>
+                <div class="sub_text">
+                  {{ slide.subText }}
+                </div>
+
+                <div class="hero_btn_wrapper">
+                  <ButtonPlainText
+                    buttonText="Explore Courses"
+                  />
+                </div>
+              </div>
 
               <video
                 :src=source
@@ -33,9 +46,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
+import SearchBar from "@/components/Form/SearchBar.vue";
 
 export default defineComponent({
   name: "video-image-slider",
+  components: { ButtonPlainText, SearchBar },
   props: ["carouselDetails"],
   data() {
     
@@ -92,10 +108,40 @@ export default defineComponent({
   position: relative;
 }
 .overlay {
-  background: rgba(0, 0, 0, 0.473);
+  background: rgba(0, 0, 0, 0.673);
   width: 100%;
   height: 100%;
   position: absolute;
+} 
+.main_text {
+  margin-top: 18%;
+  margin-left: 5%;
+  font-weight: 700;
+  font-size: 400%;
+  width: 50%;
+  color: white;
+}
+.sub_text {
+  margin-left: 5%;
+  font-weight: 400;
+  font-size: 150%;
+  width: 55%;
+  color: white;
+}
+div.hero_btn_wrapper {
+  margin-left: 5%;
+  margin-top: 3%;
+  width: 12%;
+  height: 50px;
+}
+div.hero_btn_wrapper button {
+  border-radius: 25px;
+  background: none;
+  border: 2px solid var(--blue-100);
+  background: var(--blue-100);
+  color: white;
+  font-weight: 600;
+  font-size: 110%;
 }
 img {
   width: 100%;
@@ -109,7 +155,7 @@ video {
 }
 div.slide-buttons {
   position: absolute;
-  z-index: 100;
+  z-index: 1;
   top: 40%;
   color: grey;
   display: flex;

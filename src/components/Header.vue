@@ -11,21 +11,26 @@
             </div>
 
             <div class="nav">
+                <nav>
+                    <div class="become_teacher"> Become A Teacher </div>
+                </nav>
+
                 <SearchBar class="search_bar" />
 
                 <Notifications 
                     class="notification"
-                    count="9" 
+                    count="9"
+                    v-if="isSignedIn"
                 />
             </div>
 
-            <div class="btn_wrapper" v-if="!isSignedIn">
+            <div class="signin_btn_wrapper" v-if="!isSignedIn">
                 <router-link to="/signin">
-                    <ButtonPlainText buttonText="LOG IN" :isLoading="false" class="signin_btn"/>
+                    <ButtonPlainText buttonText="SIGN IN" :isLoading="false" class="signin_btn"/>
                 </router-link>
             </div>
                 
-            <div class="btn_wrapper" v-if="isSignedIn">
+            <div class="signin_btn_wrapper" v-if="isSignedIn">
                 <router-link to="/account">
                     <ButtonPlainText buttonText="ACCOUNT" :isLoading="false" class="signin_btn"/>
                 </router-link>
@@ -109,27 +114,39 @@
     }
     
     .nav {
-        width: 70%;
+        width: 80%;
         height: 60%;
-        margin: 0 auto;
         display: flex;
+        margin-left: 2%;
+        margin-right: 2%;
     }
 
     .search_bar{
-        /* background: var(--paper-grey-100); */
+        margin-left: auto;
     }
     
     .notification {
-        margin-left: auto;
         margin-top: auto;
         margin-bottom: auto;
     }
-
-    .btn_wrapper {
+    
+    nav {
+        display: flex;
+        align-items: center;
+    }
+    nav > div {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .signin_btn_wrapper {
+        margin-left: auto;
         height: 60%;
         width: 8%;
     }
-    .btn_wrapper button {
+    .signin_btn_wrapper button {
         border: none;
         background: var(--blue-100);
         color: white;
