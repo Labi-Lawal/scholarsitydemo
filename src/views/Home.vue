@@ -78,7 +78,7 @@ export default defineComponent({
         {
           target_url: 'google.com',
           ad_image: '../../assets/hero_img.png',
-          mainText: 'Lorem ipsum dolor sit amet consectetur adipi',
+          mainText: 'Lorem ip sum dolor sit amet con sect etur adipi',
           subText: 'amet consectetur adipi scing elit'
           
         },
@@ -145,7 +145,7 @@ export default defineComponent({
 .header {
   position: absolute;
   width: 100%;
-  z-index: 1;
+  z-index: 5;
   box-shadow: none;
 }
 header {
@@ -157,6 +157,7 @@ header .logo_wrapper {
 }
 header::v-deep .search_bar {
   background: white !important;
+  display: none;
 }
 header::v-deep .notification .icon_wrapper .icon {
   color: white !important;
@@ -165,29 +166,20 @@ header::v-deep .bottom nav > div {
   color: white;
 }
 
-header::v-deep .search_bar {
-  background: white !important;
-}
-header::v-deep .notification .icon_wrapper .icon {
-  color: white !important;
-}
 
-header.fixed {
-  position: fixed;
-  z-index: 5;
-  top: 0;
-  background: white !important;
-  color: var(--paper-grey-800) !important;
-  box-shadow: 0 0 20px -2px rgb(20 23 28 / 10%);
-}
 header.fixed::v-deep .search_bar {
   background: var(--paper-grey-100) !important;
+  display: unset;
 }
 header.fixed::v-deep .notification .icon_wrapper .icon {
   color: var(--paper-grey-400) !important;
 }
 header.fixed::v-deep .bottom nav > div {
   color: var(--paper-grey-700);
+}
+header::v-deep nav .router-link-exact-active{
+  color: white;
+  border-color: white;
 }
 
 .carousel_list {

@@ -4,31 +4,25 @@
       <div class="slides">
         
           <div class="slide" v-for="(slide, index) in carouselDetails" :key="index" v-show="index == visibleCard">
-            <router-link :to="slide.target_url">
-              <!-- <img src="../../assets/hero_img.png"> -->
-
-              <div class="overlay">
-                <div class="main_text">
-                  {{ slide.mainText }}
-                </div>
-                <div class="sub_text">
-                  {{ slide.subText }}
-                </div>
-
-                <div class="hero_btn_wrapper">
-                  <ButtonPlainText
-                    buttonText="Explore Courses"
-                  />
-                </div>
-              </div>
-
-              <video
-                :src=source
-                autoplay
-                muted
-              ></video>
             
-            </router-link>
+            <div class="overlay">
+              <div class="main_text">
+                {{ slide.mainText }}
+              </div>
+              
+              <div class="sub_text">
+                {{ slide.subText }}
+              </div>
+              
+              <SearchBar class="search_bar" />
+            </div>
+
+            <video
+              :src=source
+              autoplay
+              muted
+            ></video>
+          
           </div>
         
         <div class="slide-buttons button-left" @click="prev()" v-show="visibleCard > 0"> 
@@ -46,11 +40,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
+// import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
+import SearchBar from "@/components/Form/SearchBar.vue";
 
 export default defineComponent({
   name: "video-image-slider",
-  components: { ButtonPlainText },
+  components: { SearchBar },
   props: ["carouselDetails"],
   data() {
     
@@ -111,26 +106,27 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 1;
 } 
 .main_text {
-  margin-top: 18%;
+  margin-top: 15%;
   margin-left: 5%;
   font-weight: 700;
-  font-size: 400%;
-  width: 50%;
+  font-size: 450%;
+  width: 45%;
   color: white;
 }
 .sub_text {
   margin-left: 5%;
   font-weight: 400;
-  font-size: 150%;
+  font-size: 180%;
   width: 55%;
   color: white;
 }
-div.hero_btn_wrapper {
+div.hero_search_bar_wrapper {
   margin-left: 5%;
   margin-top: 3%;
-  width: 12%;
+  width: 25%;
   height: 50px;
 }
 div.hero_btn_wrapper button {
@@ -148,13 +144,14 @@ img {
   object-fit: contain; /******************/
 }
 video {
+  z-index: 0;
   width: 100%;
   height: 100%;
   object-fit: cover; 
 }
 div.slide-buttons {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 40%;
   color: grey;
   display: flex;
@@ -176,6 +173,31 @@ div.slide-buttons:hover {
 }
 div.button-right {
   right: 1%;
+}
+
+.search_bar {
+  margin-left: 5%;
+  margin-top: 1%;
+  width: 30%;
+  height: 60px !important;
+  border-radius: 5px !important;
+  background: white !important;
+  flex-direction: row-reverse;
+}
+.search_bar input {
+  width: 85% !important;
+  border: 1px solid red !important;
+}
+.search_bar button {
+  color: var(--blue-100) !important;
+  width: 15% !important;
+}
+
+.search_bar.expand {
+  width: 30%;
+}
+.search_bar.expand button{
+  color: var(--blue-100) !important;
 }
 
 .home-page-banner *::selection {

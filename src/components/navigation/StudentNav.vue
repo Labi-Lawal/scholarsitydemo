@@ -44,6 +44,7 @@ export default defineComponent({
     }
     nav > div {
         width: calc(100%/7);
+        height: 100%;
         cursor: pointer;
         color: var(--paper-grey-500);
         font-weight: 500;

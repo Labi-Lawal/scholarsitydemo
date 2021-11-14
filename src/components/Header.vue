@@ -14,7 +14,8 @@
                 <nav>
                     <div class="become_teacher"> Become A Teacher </div>
                 </nav>
-
+                
+                
                 <SearchBar class="search_bar" />
 
                 <Notifications 
@@ -30,31 +31,34 @@
                 </router-link>
             </div>
                 
-            <div class="signin_btn_wrapper" v-if="isSignedIn">
+            <div class="profile_wrapper" v-if="isSignedIn">
                 <router-link to="/account">
-                    <ButtonPlainText buttonText="ACCOUNT" :isLoading="false" class="signin_btn"/>
+                    <UserProfileMin 
+                        :authenticated="isSignedIn"
+                    />
                 </router-link>
             </div>
         </div>
         
-        <div class="bottom" v-if="isSignedIn">
+        <!-- <div class="bottom" v-if="isSignedIn">
             <StudentNav v-if="routeParent === 'student'" />
             <TeacherNav v-if="routeParent === 'teacher'" />
-        </div>
+        </div> -->
     </header>
 </template>
 
 <script>
     import { defineComponent } from "@vue/runtime-core";
     import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
-    import TeacherNav from "@/components/navigation/TeacherNav.vue";
-    import StudentNav from "@/components/navigation/StudentNav.vue";
+    // import TeacherNav from "@/components/navigation/TeacherNav.vue";
+    // import StudentNav from "@/components/navigation/StudentNav.vue";
     import SearchBar from "@/components/Form/SearchBar.vue";
     import Notifications from "@/components/Notifications.vue";
+    import UserProfileMin from "@/components/UserProfileMin.vue";
 
     export default defineComponent({
         name: 'Header',
-        components: { ButtonPlainText, TeacherNav, StudentNav, SearchBar, Notifications },
+        components: { ButtonPlainText, SearchBar, Notifications, UserProfileMin },
         data () {
             var routeParent = this.$route.matched[0].name.toLowerCase();
 
@@ -69,7 +73,7 @@
         methods: {
             handleOnSroll() {
                 this.windowTop = window.top.scrollY;
-                if(this.windowTop >= 200) this.isFixed = true;
+                if(this.windowTop >= 500) this.isFixed = true;
                 else this.isFixed = false;
             }
         },
@@ -92,8 +96,14 @@
         height: 70px;
         box-shadow: 0 0 20px -2px rgb(20 23 28 / 10%);
     }
-    header.signedin {
-        height: 120px;
+    
+    header.fixed {
+        position: fixed;
+        z-index: 5;
+        top: 0;
+        background: white !important;
+        color: var(--paper-grey-800) !important;
+        box-shadow: 0 0 20px -2px rgb(20 23 28 / 10%);
     }
     
     div.top {
@@ -109,7 +119,7 @@
     }
 
     .logo_wrapper {
-        font-size: 150%;
+        font-size: 180%;
         font-weight: 600;
     }
     
@@ -120,19 +130,25 @@
         margin-left: 2%;
         margin-right: 2%;
     }
-
-    .search_bar{
+    
+    .search_bar {
         margin-left: auto;
+        width: 25%;
+    }
+    .search_bar.expand {
+        width: 40%;
     }
     
     .notification {
         margin-top: auto;
+        margin-left: 5%;
         margin-bottom: auto;
     }
     
     nav {
         display: flex;
         align-items: center;
+        margin-right: auto;
     }
     nav > div {
         height: 100%;
@@ -153,6 +169,10 @@
         font-weight: 600;
         border-radius: 25px;
     }
+    .profile_wrapper {
+        margin: auto 0;
+    }
+    
 
     .bottom {
         /* border: 1px solid black; */

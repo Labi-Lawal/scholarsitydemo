@@ -37,16 +37,13 @@ export default defineComponent({
 
 <style scoped>
     form.search_bar {
-        background: var(--paper-grey-100);
-        width: 20%;
+        background: var(--paper-grey-80);
         height: 100%;
         display: flex;
         border-radius: 25px;
         transition: 0.2s ease-in-out;
     }
-    .search_bar.expand {
-        width: 40%;
-    }
+
     .search_bar input {
         height: 100%;
         width: 70%;
@@ -55,7 +52,7 @@ export default defineComponent({
         background: none;
         border: none;
         font-size: 90%;
-        color: var(--paper-grey-600);
+        color: var(--paper-grey-700);
         transition: 0.5s;
     }
     .search_bar.expand input {
@@ -70,6 +67,7 @@ export default defineComponent({
         border: none;
         background: none;
         color: var(--paper-grey-600);
+        transition: 0.5s;
     }
     .search_bar.expand button {
         width: 10%;
