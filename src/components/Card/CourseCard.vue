@@ -1,4 +1,5 @@
 <template>
+    <router-link to="/course">
     <div class="course_card">
         <div class="image_wrapper">
             <img src="../../assets/course-3.jpg">
@@ -27,6 +28,7 @@
             </div>
         </div>
     </div>
+    </router-link>
 </template> 
 
 <script>

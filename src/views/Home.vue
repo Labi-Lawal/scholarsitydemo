@@ -79,14 +79,16 @@ export default defineComponent({
           target_url: 'google.com',
           ad_image: '../../assets/hero_img.png',
           mainText: 'Lorem ip sum dolor sit amet con sect etur adipi',
-          subText: 'amet consectetur adipi scing elit'
+          subText: 'amet consectetur adipi scing elit',
+          ref: 'vid'
           
         },
         {
           target_url: 'google.com',
           ad_image: '../../assets/hero_img.png',
           mainText: 'Lorem ipsum dolor sit amet consectetur adipi',
-          subText: 'amet consectetur adipi scing elit'
+          subText: 'amet consectetur adipi scing elit',
+          ref: 'video'
         }
       ],
 
@@ -181,6 +183,8 @@ header::v-deep nav .router-link-exact-active{
   color: white;
   border-color: white;
 }
+
+
 
 .carousel_list {
   padding: 3% 0;

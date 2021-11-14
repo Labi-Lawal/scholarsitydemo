@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
     component: ()=> import('../views/Auth/Signout.vue')
   },
   {
+    path: '/course',
+    name: 'Course',
+    component: ()=> import('../views/Course.vue')
+  },
+  {
     path: '/student', alias: '/',
     name: 'Student',
     component: ()=> import('../views/Student/Student.vue'),

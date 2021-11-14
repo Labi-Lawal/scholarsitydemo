@@ -1,5 +1,6 @@
 <template>
     <form 
+        @submit.prevent="signInButtonPressed"
         :class="{ 
             search_bar: true,
             expand: isExpand

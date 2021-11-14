@@ -24,6 +24,11 @@ export default createStore({
         commit('clear_user');
         resolve();
       });
+    },
+    fetchCourse({commit}) {
+      return new Promise<void>((resolve, reject)=> {
+        console.log("fetching User");
+      })
     }
   },
   getters: {

@@ -6,19 +6,32 @@
           <div class="slide" v-for="(slide, index) in carouselDetails" :key="index" v-show="index == visibleCard">
             
             <div class="overlay">
-              <div class="main_text">
-                {{ slide.mainText }}
+              <div class="content">
+                <div class="main_text">
+                  {{ slide.mainText }}
+                </div>
+                
+                <div class="sub_text">
+                  {{ slide.subText }}
+                </div>
+                
+                <SearchBar class="search_bar" />
+
+                <ButtonIcon
+                  :iconName="iconname[index]"
+                  class="play_icon"
+                  @click="togglePlay(index)"
+                />
               </div>
-              
-              <div class="sub_text">
-                {{ slide.subText }}
-              </div>
-              
-              <SearchBar class="search_bar" />
             </div>
 
             <video
               :src=source
+              :ref="'video' + index"
+              :class="{
+                zero: (index == 0) ?true :false,
+                one: (index == 1) ?true :false
+              }"
               autoplay
               muted
             ></video>
@@ -40,21 +53,39 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-// import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
+import ButtonIcon from "@/components/buttons/ButtonIcon.vue";
 import SearchBar from "@/components/Form/SearchBar.vue";
 
 export default defineComponent({
   name: "video-image-slider",
-  components: { SearchBar },
+  components: { SearchBar, ButtonIcon },
   props: ["carouselDetails"],
   data() {
-    
-    console.log(this.$refs.scroll);
+    var videoRef:any = null;
 
-    return { }
+    return {
+      videoRef,
+      iconname: ['pause', 'pause']
+    }
+  },
+  methods: {
+    togglePlay(index:number) {
+      if(index <= this.carouselDetails.length) {
+        if(index == 0) this.videoRef = this.$refs.video0;
+        if(index == 1) this.videoRef = this.$refs.video1;
+
+        if(this.videoRef.paused){
+           this.videoRef.play();
+           this.iconname[index] = 'pause';
+        }
+        else { 
+          this.videoRef.pause();
+          this.iconname[index] = 'play';
+        }
+      }
+    }
   },
   setup(props) {
-    console.log(props.carouselDetails);
 
     const prev = () => {
       if (visibleCard.value > 0) {
@@ -74,7 +105,7 @@ export default defineComponent({
       next,
       visibleCard,
       prev,
-      source: "https://res.cloudinary.com/labilawal/video/upload/v1636723470/video-1_nsjqvg.mp4"
+      source: "https://res.cloudinary.com/labilawal/video/upload/v1636723470/video-1_nsjqvg.mp4",
     }
   }
 });
@@ -108,35 +139,27 @@ export default defineComponent({
   position: absolute;
   z-index: 1;
 } 
-.main_text {
-  margin-top: 15%;
+.overlay .content {
+  box-shadow: inset 0 0 2000px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  margin-top: 10%;
   margin-left: 5%;
+  width: 45%;
+  padding: 3%;
+  position: relative;
+}
+.overlay .content::before {
+  filter: blur(10px);
+}
+.main_text {
   font-weight: 700;
   font-size: 450%;
-  width: 45%;
   color: white;
 }
 .sub_text {
-  margin-left: 5%;
   font-weight: 400;
   font-size: 180%;
-  width: 55%;
   color: white;
-}
-div.hero_search_bar_wrapper {
-  margin-left: 5%;
-  margin-top: 3%;
-  width: 25%;
-  height: 50px;
-}
-div.hero_btn_wrapper button {
-  border-radius: 25px;
-  background: none;
-  border: 2px solid var(--blue-100);
-  background: var(--blue-100);
-  color: white;
-  font-weight: 600;
-  font-size: 110%;
 }
 img {
   width: 100%;
@@ -176,31 +199,58 @@ div.button-right {
 }
 
 .search_bar {
-  margin-left: 5%;
+  width: 65%;
   margin-top: 1%;
-  width: 30%;
   height: 60px !important;
-  border-radius: 5px !important;
+  border-radius: 15px !important;
   background: white !important;
   flex-direction: row-reverse;
 }
-.search_bar input {
-  width: 85% !important;
-  border: 1px solid red !important;
+.search_bar::v-deep input {
+  width: 78%;
 }
-.search_bar button {
-  color: var(--blue-100) !important;
-  width: 15% !important;
+.search_bar::v-deep button {
+  color: var(--blue-100);
+  border-radius: 20%;
+  width: 30px;
+  height: 30px;
+  margin: auto 0;
+}
+.search_bar.expand::v-deep button {
+  color: white;
+  background: var(--blue-100);
+  border: 1px solid var(--blue-100);
+  border-radius: 20%;
+  width: 50px;
+  height: 50px;
+  margin: auto 0;
 }
 
 .search_bar.expand {
-  width: 30%;
+  width: 65%;
 }
-.search_bar.expand button{
-  color: var(--blue-100) !important;
+.search_bar.expand::v-deep input {
+  width: 78%;
+}
+.search_bar.expand::v-deep button {
+  width: 50px;
 }
 
 .home-page-banner *::selection {
   background: none;
+}
+
+.play_icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid white;
+  background: white;
+  position: absolute;
+  right: -3%;
+  bottom: 8.5%;
+  cursor: pointer;
+  font-size: 200%;
+  color: var(--blue-100);
 }
 </style>
