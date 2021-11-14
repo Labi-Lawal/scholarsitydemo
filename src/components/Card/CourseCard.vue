@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/course">
+    <router-link to="/course" class="course_card_wall">
     <div class="course_card">
         <div class="image_wrapper">
             <img src="../../assets/course-3.jpg">
@@ -44,11 +44,14 @@ export default defineComponent ({
 *::selection {
     background: none;
 }
+.course_card_wall {
+    margin-right: 2%;
+}
 .course_card {
     width: calc(100% / 5);
     height: calc(100% - 30px);
     margin-top: 10px;
-    margin-right: 1%;
+    margin-right: 3%;
     padding: 5px;
     border-radius: 10px;
     box-shadow: 0 0 20px -2px rgb(20 23 28 / 10%);

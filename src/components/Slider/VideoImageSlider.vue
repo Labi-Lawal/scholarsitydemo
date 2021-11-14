@@ -61,7 +61,7 @@ export default defineComponent({
   components: { SearchBar, ButtonIcon },
   props: ["carouselDetails"],
   data() {
-    var videoRef:any = null;
+    var videoRef:any = "";
 
     return {
       videoRef,

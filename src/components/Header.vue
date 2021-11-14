@@ -33,9 +33,7 @@
                 
             <div class="profile_wrapper" v-if="isSignedIn">
                 <router-link to="/account">
-                    <UserProfileMin 
-                        :authenticated="isSignedIn"
-                    />
+                    <UserProfileMin :showDetails=false />
                 </router-link>
             </div>
         </div>
@@ -79,7 +77,6 @@
         },
         created() {
             this.isSignedIn = this.$store.getters.isSignedIn;
-            console.log(this.isSignedIn);
 
             window.addEventListener('scroll', this.handleOnSroll);
         },
@@ -99,6 +96,7 @@
     
     header.fixed {
         position: fixed;
+        width: 100%;
         z-index: 5;
         top: 0;
         background: white !important;

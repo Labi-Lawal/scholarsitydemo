@@ -14,20 +14,21 @@ export default createStore({
   },
   actions: {
     signuserin({commit}) {
-      return new Promise<void>((resolve, reject)=> {
+      return new Promise<void>((resolve)=> {
         commit('auth_success');
         resolve();
       });
     },
     signuserout({commit}) {
-      return new Promise<void>((resolve, reject)=> {
+      return new Promise<void>((resolve)=> {
         commit('clear_user');
         resolve();
       });
     },
-    fetchCourse({commit}) {
-      return new Promise<void>((resolve, reject)=> {
+    fetchCourse() {
+      return new Promise<void>((resolve)=> {
         console.log("fetching User");
+        resolve();
       })
     }
   },
