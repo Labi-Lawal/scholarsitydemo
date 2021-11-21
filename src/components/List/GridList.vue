@@ -1,23 +1,37 @@
 <template>
-    <section class="grid_list">
-        <CourseCard :list=10 v-if="contentType === 'courses'"/>
-        <ProductCard :list=15 @buttonAction="redeem" v-if="contentType === 'products'"/>
+    <section 
+        :class="{
+            grid_list: true,
+            four_columns: (columnAmnt == 4) ?true :false,
+            three_columns: (columnAmnt == 3) ?true :false,
+            two_columns: (columnAmnt == 2) ?true :false
+        }"
+    >
+        <CourseCard  
+          v-for="(course, index) in courses"
+          :key="index"
+          :title="course.title"
+          :tutor="course.tutor"
+          :ratings="course.averageRatings"
+          :ratingsCount="course.ratingsCount"
+          :avgRatings="course.avg_ratings"
+          :price="course.price"
+        />
+
+        <!-- <ProductCard :list=15 @buttonAction="redeem" v-if="contentType === 'products'"/>
         <BulletinBoardCard :list=12 v-if="contentType === 'bulletin-board'" @buttonAction="emitButtonAction"/>
-        <ContestCard :list=listLength v-if="contentType === 'contests'" />
+        <ContestCard :list=listLength v-if="contentType === 'contests'" /> -->
     </section>
 </template>
 
 <script>
 import { defineComponent } from "@vue/runtime-core";
 import CourseCard from "@/components/Card/CourseCard.vue";
-import BulletinBoardCard from "@/components/Card/BulletinBoardCard.vue";
-import ProductCard from "@/components/Card/ProductCard.vue";
-import ContestCard from "@/components/Card/ContestCard.vue";
 
 export default defineComponent({
     name: 'grid-list',
-    components: { CourseCard, BulletinBoardCard, ProductCard, ContestCard },
-    props: ['contentType', 'listLength'],
+    components: { CourseCard },
+    props: ['columnAmnt', 'courses'],
     data() {
         return { }
     },
@@ -38,10 +52,17 @@ export default defineComponent({
     display: grid;
     justify-items: center;
     align-items: center;
-    grid-template-columns: auto auto auto auto;
     row-gap: 20px;
     column-gap: 20px;
     width: 100%;
 }
-
+.four_columns {
+    grid-template-columns: auto auto auto auto;
+}
+.three_columns {
+    grid-template-columns: auto auto auto;
+}
+.two_columns {
+    grid-template-columns: auto auto;
+}
 </style>

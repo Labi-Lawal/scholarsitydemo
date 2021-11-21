@@ -13,7 +13,7 @@
 
 <script>
 import { defineComponent } from "@vue/runtime-core";
-import Header from "@/components/Header.vue";
+import Header from "@/components/Header/Header.vue";
 import GridList from "@/components/List/GridList.vue";
 import BulletinBoardBlogs from "@/components/BulletinBoardBlogs.vue";
 import Footer from "@/components/Footer/Footer.vue";

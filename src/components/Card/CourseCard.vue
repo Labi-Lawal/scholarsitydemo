@@ -48,7 +48,6 @@ export default defineComponent ({
     margin-right: 2%;
 }
 .course_card {
-    width: calc(100% / 5);
     height: calc(100% - 30px);
     margin-top: 10px;
     margin-right: 3%;

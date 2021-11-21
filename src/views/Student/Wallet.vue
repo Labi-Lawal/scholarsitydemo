@@ -1,61 +1,53 @@
 <template>
-    <section class="wallet">
-        <Header />
-        <section class="wallet_body">
-            <div class="container_padding_5">
-                <div class="balance_card_wrapper">
-                    <BalanceCard :widthRatio="2" />
-                </div>
-                <div class="wallet_table">
-                    <div class="filters">
-                        <div 
-                            class="credits-purchased"
-                            :class="{ 
-                                selected: (selected == 'credit-purchased') ? true : false
-                            }"
-                            @click="selectFilter('credit-purchased')"
-                        >Credit Purchased</div>
-                        <div 
-                            class="credits-earned"
-                            :class="{ 
-                                selected: (selected == 'credit-earned') ? true : false
-                            }"
-                            @click="selectFilter('credit-earned')"
-                        >Credit Earned</div>
-                        <div 
-                            class="credits-utilized"
-                            :class="{ 
-                                selected: (selected == 'credit-utilized') ? true : false
-                            }"
-                            @click="selectFilter('credit-utilized')"
-                        >Credit Utilized</div>
-                        <div 
-                            class="credits-purchased"
-                            :class="{ 
-                                selected: (selected == 'date-range') ? true : false
-                            }"
-                            @click="selectFilter('date-range')"
-                        >Date Range</div>
-                    </div>
-                    <div class="wallet_table_content">
-                        <Table :tableHeadings="headings" :tableBody="body" />
-                    </div>
-                </div>
+    <section class="wallet_body">
+        <div class="balance_card_wrapper">
+            <BalanceCard :widthRatio="2" />
+        </div>
+        <div class="wallet_table">
+            <div class="filters">
+                <div 
+                    class="credits-purchased"
+                    :class="{ 
+                        selected: (selected == 'credit-purchased') ? true : false
+                    }"
+                    @click="selectFilter('credit-purchased')"
+                >Credit Purchased</div>
+                <div 
+                    class="credits-earned"
+                    :class="{ 
+                        selected: (selected == 'credit-earned') ? true : false
+                    }"
+                    @click="selectFilter('credit-earned')"
+                >Credit Earned</div>
+                <div 
+                    class="credits-utilized"
+                    :class="{ 
+                        selected: (selected == 'credit-utilized') ? true : false
+                    }"
+                    @click="selectFilter('credit-utilized')"
+                >Credit Utilized</div>
+                <div 
+                    class="credits-purchased"
+                    :class="{ 
+                        selected: (selected == 'date-range') ? true : false
+                    }"
+                    @click="selectFilter('date-range')"
+                >Date Range</div>
             </div>
-        </section>
-        <Footer />
+            <div class="wallet_table_content">
+                <Table :tableHeadings="headings" :tableBody="body" />
+            </div>
+        </div>
     </section>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import Header from '@/components/Header.vue';
 import BalanceCard from '@/components/Wallet/BalanceCard.vue';
 import Table from '@/components/Table.vue';
-import Footer from '@/components/Footer/Footer.vue';
 
 export default defineComponent({
-    components: { Header, BalanceCard, Table, Footer },
+    components: { BalanceCard, Table },
     data() {
         var selected = 'credit-purchased',
         headingCreditsPurchased = [
@@ -75,6 +67,13 @@ export default defineComponent({
             'Credits Utilized'
         ],
         bodyCreditsPurchased = [
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
+            ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
             ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400'],
             ['20-Oct-2021 20:06:55', 'Credits Purchased', '4,000.00', '400']
         ],
@@ -123,7 +122,8 @@ export default defineComponent({
 
 <style scoped>
 .wallet_body {
-    padding: 5% 0;
+    padding: 3%;
+    width: 94%;
 }
 .balance_card_wrapper {
     width: 25%;

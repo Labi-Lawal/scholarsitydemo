@@ -20,5 +20,6 @@ export default defineComponent({
     .main {
         font-size: 200%;
         padding: 1% 0;
+        text-transform: capitalize;
     }
 </style>

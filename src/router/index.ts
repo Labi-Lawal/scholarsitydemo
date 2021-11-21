@@ -1,6 +1,12 @@
+import store from '@/store';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'Home',
+    component: ()=> import('../views/Home.vue')
+  },
   {
     path: '/signin',
     name: 'SignIn',
@@ -17,17 +23,21 @@ const routes: Array<RouteRecordRaw> = [
     component: ()=> import('../views/Course.vue')
   },
   {
-    path: '/student', alias: '/',
-    name: 'Student',
-    component: ()=> import('../views/Student/Student.vue'),
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: ()=> import('../views/Dashboard.vue'),
+    meta: {
+      requiresAuth: true
+    },
     children: [
+
+      // STUDENT ROUTES
+      // {
+      //   path: 'categories', alias: '', name: 'Categories',
+      //   component: ()=> import('../views/Home.vue')
+      // },
       {
-        path: 'categories', alias: '', name: 'Categories',
-        component: ()=> import('../views/Home.vue')
-      },
-      {
-        path: 'analytics',
-        name: 'Analytics',
+        path: 'analytics', alias: '', name: 'Analytics',
         component: ()=> import('../views/Student/Analytics.vue'),
         children: [
           {
@@ -90,15 +100,10 @@ const routes: Array<RouteRecordRaw> = [
         path: 'bulletin-board', name: 'Bulletin Board',
         component: ()=> import('../views/Student/BulletinBoard.vue')
       },
-    ]
-  },
 
-  {
-    path: '/teacher', name: 'Teacher',
-    component: ()=> import('../views/Teacher/Teacher.vue'),
-    children: [
+      // TEACHER ROUTES
       {
-        path: 'create', alias: '', name: 'Create',
+        path: 'create', name: 'Create',
         component: ()=> import('../views/Teacher/Create.vue'),
         children: [
           {
@@ -158,12 +163,20 @@ const routes: Array<RouteRecordRaw> = [
         component: ()=> import('../views/Teacher/StudentList.vue'),
       },
     ]
-  }
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.API_BASE_URL),
   routes
-})
+});
+
+router.beforeEach((to, from, next)=> {
+  if(to.matched.some(record=> record.meta.requiresAuth)) {
+    if(store.getters.isSignedIn) next();
+    else next('/signin');
+  }
+  else next();
+});
 
 export default router

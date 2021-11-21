@@ -1,25 +1,19 @@
 <template>
-  <section class="bulletin_board">
-      <Header />
-      <section class="bulletin_board_body">
-        <div class="list">
-          <GridList contentType="bulletin-board" v-if="!boardOpen" @openBoardAction="openBoard" />
-          <BulletinBoardBlogs :bulletinBoardDets="bulletinDets" v-if="boardOpen" @close="closeBoard"/>
-        </div>
-      </section>
-      <Footer /> 
+  <section class="bulletin_board_body">
+    <div class="list">
+        <GridList contentType="bulletin-board" v-if="!boardOpen" @openBoardAction="openBoard" />
+        <BulletinBoardBlogs :bulletinBoardDets="bulletinDets" v-if="boardOpen" @close="closeBoard"/>
+    </div>
   </section>
 </template>
 
 <script>
 import { defineComponent } from "@vue/runtime-core";
-import Header from "@/components/Header.vue";
 import GridList from "@/components/List/GridList.vue";
 import BulletinBoardBlogs from "@/components/BulletinBoardBlogs.vue";
-import Footer from "@/components/Footer/Footer.vue";
 
 export default defineComponent({
-  components: { Header, GridList, BulletinBoardBlogs, Footer },
+  components: { GridList, BulletinBoardBlogs },
   data() {
     var openedBoardIndex,
     bulletinDets;

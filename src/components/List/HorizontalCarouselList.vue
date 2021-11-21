@@ -88,6 +88,9 @@ export default defineComponent({
   left: -2%; 
   top: 45%;
 }
+.horizontal_carousel_list::v-deep .course_card {
+  width: calc(100% / 5);
+}
 
 
 </style>

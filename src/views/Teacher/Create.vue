@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+import Header from "@/components/Header/Header.vue";
 import SideBar from "@/components/Sidebar/SideBar.vue";
 import VerticalList from "@/components/List/VerticalList.vue";
 import AddQuestions from "@/components/Form/AddQuestions.vue";

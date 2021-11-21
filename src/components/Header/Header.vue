@@ -32,9 +32,7 @@
             </div>
                 
             <div class="profile_wrapper" v-if="isSignedIn">
-                <router-link to="/account">
-                    <UserProfileMin :showDetails=false />
-                </router-link>
+                <UserProfileMin :showDetails=false />
             </div>
         </div>
         
@@ -61,7 +59,7 @@
             var routeParent = this.$route.matched[0].name.toLowerCase();
 
             return  { 
-                isSignedIn: false,
+                isSignedIn: this.$store.getters.isSignedIn,
                 routeParent,
                 isNotificationVisible: false,
                 windowTop: 0,

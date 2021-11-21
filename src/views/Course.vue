@@ -51,11 +51,110 @@
                     </div>
                 </div>
             </div>
-            <div class="about_course">
+
+            <div class="section_frame">
                 <SectionTitle title="Description" class="section_title" />
                 <div class="text_body">
                     {{ course.description }}
                 </div>
+            </div>
+
+            <div class="section_frame">
+                <SectionTitle title="Student Feedback" class="section_title" />
+                <div class="section_sub_frame ratings">
+                    <div class="avg_ratings">
+                        <div class="digit">{{ course.avg_ratings }}</div>
+                        <div class="stars">
+                            <FontAwesomeIcon
+                                :icon="['fas', 'star']"
+                                v-for="index in 5"
+                                :key=index
+                            />
+                        </div>
+                        <div class="label">
+                            Course Rating
+                        </div>
+                    </div>
+                    <div class="ratings_details">
+                        <div class="progress_indicator_wrapper">
+                            <div class="bar_wrapper"></div>
+                            <div class="rank">
+                                <div class="stars">
+                                    <FontAwesomeIcon
+                                        :icon="['fas', 'star']"
+                                        v-for="index in 5"
+                                        :key=index
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress_indicator_wrapper">
+                            <div class="bar_wrapper"></div>
+                            <div class="rank">
+                                <div class="stars">
+                                    <FontAwesomeIcon
+                                        :icon="['fas', 'star']"
+                                        v-for="index in 5"
+                                        :key=index
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress_indicator_wrapper">
+                            <div class="bar_wrapper"></div>
+                            <div class="rank">
+                                <div class="stars">
+                                    <FontAwesomeIcon
+                                        :icon="['fas', 'star']"
+                                        v-for="index in 5"
+                                        :key=index
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress_indicator_wrapper">
+                            <div class="bar_wrapper"></div>
+                            <div class="rank">
+                                <div class="stars">
+                                    <FontAwesomeIcon
+                                        :icon="['fas', 'star']"
+                                        v-for="index in 5"
+                                        :key=index
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress_indicator_wrapper">
+                            <div class="bar_wrapper"></div>
+                            <div class="rank">
+                                <div class="stars">
+                                    <FontAwesomeIcon
+                                        :icon="['fas', 'star']"
+                                        v-for="index in 5"
+                                        :key=index
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section_sub_frame reviews">
+                    <div class="sub_title">Reviews</div>
+                    <div class="review_list_frame">
+                        <ReviewCard 
+                            v-for="(review, index) in course.reviews"
+                            :review=review
+                            :key=index
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="more_courses_wrapper">
+                <div class="more_courses_title">More Courses Like This</div>
+                <SuggestedCourses 
+                    :courses="courses"
+                />
             </div>
         </section>
         <Footer />
@@ -64,14 +163,16 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import Header from "@/components/Header.vue";
+import Header from "@/components/Header/Header.vue";
 import Footer from "@/components/Footer/Footer.vue";
 import UserProfileMin from "@/components/UserProfileMin.vue";
 import SectionTitle from '@/components/Title/SectionTitle.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
+import ReviewCard from "@/components/Card/ReviewCard.vue";
+import SuggestedCourses from "@/components/SuggestedCourses.vue";
 
 export default defineComponent({
-    components: { Header, Footer, UserProfileMin, SectionTitle, ButtonPlainText },
+    components: { Header, Footer, UserProfileMin, SectionTitle, ButtonPlainText, ReviewCard, SuggestedCourses },
     data() {
 
         var course = {
@@ -80,20 +181,83 @@ export default defineComponent({
             tutor: 'Jose Portilla',
             ratingsCount: 52,
             avg_ratings: 4.8,
+            price: 84.99,
+            reviews: [
+                {
+                    name: 'jon doe',
+                    ratings: 5,
+                    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non fermentum enim. Maecenas eu turpis in arcu iaculis fringilla nec a turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed ornare nibh et est eleifend porttitor. Aliquam erat volutpat. Aenean in mauris sed lacus commodo laoreet ut at felis. Nullam id mauris turpis. Fusce cursus ipsum sem, at placerat eros dapibus ac.',
+                    dateCreated: Date.now()
+                },
+                {
+                    name: 'jon doe',
+                    ratings: 5,
+                    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non fermentum enim. Maecenas eu turpis in arcu iaculis fringilla nec a turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed ornare nibh et est eleifend porttitor. Aliquam erat volutpat. Aenean in mauris sed lacus commodo laoreet ut at felis. Nullam id mauris turpis. Fusce cursus ipsum sem, at placerat eros dapibus ac.',
+                    dateCreated: Date.now()
+                }
+            ]
+        },
+
+        courses = [
+            {
+            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+            tutor: 'Jose Portilla',
+            ratingsCount: 52,
+            avg_ratings: 4.8,
             price: 84.99
-        };
+            },
+            {
+            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+            tutor: 'Jose Portilla',
+            ratingsCount: 52,
+            avg_ratings: 4.8,
+            price: 84.99
+            },
+            {
+            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+            tutor: 'Jose Portilla',
+            ratingsCount: 52,
+            avg_ratings: 4.8,
+            price: 84.99
+            },
+            {
+            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+            tutor: 'Jose Portilla',
+            ratingsCount: 52,
+            avg_ratings: 4.8,
+            price: 84.99
+            },
+            {
+            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+            tutor: 'Jose Portilla',
+            ratingsCount: 52,
+            avg_ratings: 4.8,
+            price: 84.99
+            },{
+            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+            tutor: 'Jose Portilla',
+            ratingsCount: 52,
+            avg_ratings: 4.8,
+            price: 84.99
+            }
+        ];
 
         return {
             course,
             windowTop: 0,
-            isFixed: false
+            isFixed: false,
+            courses
         }
     },
     methods: {
         handleOnSroll() {
             this.windowTop = window.top.scrollY;
+            console.log(this.windowTop);
+
             if(this.windowTop >= 500) this.isFixed = true;
             else this.isFixed = false;
+
+            if(this.windowTop >= 2600) this.isFixed = false;
         }
     },
     created() {
@@ -204,8 +368,10 @@ export default defineComponent({
         color: white;
         font-weight: 600;
         font-size: 350%;
-        margin-top: 10%;
         margin-bottom: 10%;
+    }
+    .price_section.fixed .price {
+        margin-top: 10%;
     }
     .btn_wrapper {
         height: 50px;
@@ -225,19 +391,83 @@ export default defineComponent({
         color: var(--blue-100);
     }
     
-    .about_course {
+    .section_frame {
         border-radius: 10px;
         margin-top: 5%;
         box-shadow: 0 0 20px -2px rgb(20 23 28 / 10%);
         padding: 2% 5%;
     }
-    .about_course .section_title {
+    .section_frame .section_title {
         font-size: 90% !important;
     }
-    .about_course .text_body {
+    .section_frame .text_body {
         font-size: 110%;
         color: var(--paper-grey-600);
         line-height: 150%;
         font-weight: 500;
+    }
+    .section_sub_frame {
+        margin: 5% 0;
+    }
+    .section_sub_frame.ratings{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 70%;
+    }
+    .avg_ratings {
+        width: 20%;
+    }
+    .avg_ratings .digit {
+        font-size: 500%;
+        font-weight: 700;
+    }
+    .ratings .stars {
+        font-size: 140%;
+    }
+    .ratings .avg_ratings .label {
+        margin: 4% 0;
+        font-size: 12 0%;
+        font-weight: 600;
+    }
+    .ratings_details {
+        width: 70%;
+        margin-left: auto;
+    }
+    .ratings_details .progress_indicator_wrapper {
+        width: 100%;
+        margin-bottom: 1%;
+        display: flex;
+        align-items: center;
+    }
+    .progress_indicator_wrapper .bar_wrapper {
+        width: 70%;
+        background: lightgrey;
+        height: 10px;
+    }
+    .progress_indicator_wrapper .rank {
+        margin-left: 10%;
+    }
+    .progress_indicator_wrapper .rank .stars {
+        font-size: 110%;
+    }
+    .reviews {
+
+    }
+    .sub_title {
+        font-weight: 600;
+        font-size: 150%;
+    }
+    .review_list_frame {
+        width: 70%;
+    }
+
+    .more_courses_wrapper {
+        margin-top: 5%;
+        width: 70%;
+    }
+    .more_courses_title {
+        font-size: 160%;
+        font-weight: 400;
     }
 </style>

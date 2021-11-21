@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+import Header from "@/components/Header/Header.vue";
 import Table from '@/components/Table.vue';
 import StudentAddNew from '@/components/Form/StudentAddNew.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';

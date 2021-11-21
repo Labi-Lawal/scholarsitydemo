@@ -2,7 +2,11 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    isSignedIn: false
+    isSignedIn: false,
+    userData: {
+      userName: 'alex joyner',
+      role: 'teacher'
+    }
   },
   mutations: {
     clear_user(state) { 
@@ -33,8 +37,7 @@ export default createStore({
     }
   },
   getters: {
-    isSignedIn: state => state.isSignedIn
-  },
-  modules: {
+    isSignedIn: state => state.isSignedIn,
+    userRole: state => state.userData.role
   }
 })

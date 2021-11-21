@@ -20,7 +20,7 @@
 
 <script>
 import { defineComponent } from "@vue/runtime-core";
-import Header from '@/components/Header.vue';
+import Header from '@/components/Header/Header.vue';
 import GridList from "@/components/List/GridList.vue";
 import RedeemProduct from "@/components/RedeemProduct.vue";
 import BalanceCard from '@/components/Wallet/BalanceCard.vue';

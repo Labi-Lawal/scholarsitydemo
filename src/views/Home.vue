@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Header from '@/components/Header.vue';
+import Header from '@/components/Header/Header.vue';
 import VideoImageSlider from '@/components/Slider/VideoImageSlider.vue';
 import SectionTitle from '@/components/Title/SectionTitle.vue';
 import HorizontalCarouselList from "@/components/List/HorizontalCarouselList.vue";
