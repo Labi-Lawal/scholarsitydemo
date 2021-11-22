@@ -47,6 +47,7 @@
     --paper-yellow-a200: #ffff00;
     --paper-yellow-a400: #ffea00;
     --paper-yellow-a700: #ffd600;
+    --paper-yellow-a800: #edc70b;
     --paper-orange-50: #fff3e0;
     --paper-orange-100: #ffe0b2;
     --paper-orange-200: #ffcc80;
@@ -63,4 +64,7 @@
     --paper-orange-a700: #ff6500;
 
     --red-100: #dc3545;
+    --red-100-faded: #e24454;
+
+    --shadow-100: 0 0 20px -2px rgb(20 23 28 / 10%);
 }

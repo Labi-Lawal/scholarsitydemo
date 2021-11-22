@@ -24,7 +24,7 @@
                         src="https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
                     />
                 </div>
-                <div class="name">Jason Ma</div>
+                <div class="name"> {{ userName }} </div>
                 <!-- <div class="name"> Jason Manfdia </div> -->
             </div>
         
@@ -43,7 +43,8 @@
         props: ['pageTitle'],
         data () {
             return  { 
-                isNotificationVisible: false
+                isNotificationVisible: false,
+                userName: this.$store.getters.userData.fullname,
             }
         }
     });
@@ -124,7 +125,9 @@
         object-position: top;
     }
     .name {
+        margin-left: 10px;
         font-weight: 500;
+        text-transform: capitalize;
     }
     
 

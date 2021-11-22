@@ -1,7 +1,7 @@
 <template>
     <section class="redeem_product_form">
         <form @submit.prevent="signInButtonPressed">
-            <div class="">
+            <div class="title">
                 <FormTitle title="Create A New Test" />
             </div>
             <div class="input_field_wrapper">
@@ -377,12 +377,12 @@ export default defineComponent({
 
 }
 form {
-    width: 35%;
+    width: 90%;
     margin: 0 auto;
 }
-
-.input_field_wrapper {
-    margin-top: 10%;
+.title {
+    border-bottom: 1px solid var(--paper-grey-300);
+    padding: 0 0 2%;
 }
 div.field {
     width: 100%;
@@ -429,7 +429,7 @@ button.cancel {
     height: 40px;
 }
 .section_wrapper {
-    padding: 10% 0;
+    padding: 5% 0;
 }
 .scoring_criteria {
     border-top: 1px solid var(--paper-grey-300);

@@ -2,7 +2,7 @@
     <section class="vertical_list">
         <BulletinBoardBlogsCard
             :list=10 
-            v-if="contentType === 'blog-card'" 
+            v-if="contentType === 'blog-card'"
             @buttonAction="openBlog"
         />
         <TestCard
@@ -36,6 +36,5 @@ export default defineComponent({
     width: 100%;
     margin: 0 auto;
 }
-
 
 </style>

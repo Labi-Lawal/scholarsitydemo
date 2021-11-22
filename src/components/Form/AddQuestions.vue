@@ -9,7 +9,7 @@
             </div>
             <div class="input_field_wrapper">
                 <div 
-                    class="field"   
+                    class="field"
                     v-for="(item, index) in allFields"
                     :key="index"
                 >
