@@ -164,7 +164,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import Header from "@/components/Header/Header.vue";
-import Footer from "@/components/Footer/Footer.vue";
+import Footer from "@/components/Footer/SiteFooter.vue";
 import UserProfileMin from "@/components/UserProfileMin.vue";
 import SectionTitle from '@/components/Title/SectionTitle.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';

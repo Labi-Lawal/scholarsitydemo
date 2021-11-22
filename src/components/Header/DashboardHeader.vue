@@ -1,36 +1,31 @@
 <template>
-    <header 
-        :class="{
-            signedin: isSignedIn,
-            fixed: isFixed
-        }"
-    >
-            <div class="logo">
-                <SectionTitle :title="pageTitle" />
-            </div>
-            <div class="nav">
-                
-                <SearchBar class="search_bar" />
+    <header>
+        <div class="logo">
+            <SectionTitle :title="pageTitle" />
+        </div>
+        <div class="nav">
+            
+            <SearchBar class="search_bar" />
 
-                <Notifications 
-                    class="notification"
-                    count="9"
+            <Notifications 
+                class="notification"
+                count="9"
+            />
+        </div>
+            
+        <div class="profile_wrapper">
+            <div class="profile_image">
+                <img 
+                    src="https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
                 />
             </div>
-                
-            <div class="profile_wrapper">
-                <div class="profile_image">
-                    <img 
-                        src="https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
-                    />
-                </div>
-                <div class="name"> {{ userName }} </div>
-                <div class="user_profile_menu">
-                    <div class="item logout"> 
-                        <router-link to="/signout">Log Out</router-link> 
-                    </div>
+            <div class="name"> {{ userName }} </div>
+            <div class="user_profile_menu">
+                <div class="item logout"> 
+                    <router-link to="/signout">Log Out</router-link> 
                 </div>
             </div>
+        </div>
         
     </header>
 </template>
@@ -51,7 +46,7 @@
                 userName: '',
             }
         },
-        updated() {
+        beforeMount() {
             this.userName = this.$store.getters.userData.fullname;
         }
     });

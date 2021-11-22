@@ -40,7 +40,7 @@
 import { defineComponent } from "@vue/runtime-core";
 import Header from '@/components/Header/Header.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 
 export default defineComponent({
     components: { Header, ButtonPlainText, Footer },

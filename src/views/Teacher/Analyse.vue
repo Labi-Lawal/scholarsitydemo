@@ -15,12 +15,13 @@
     </section>
 </template>
 
-<script> 
+<script lang="ts"> 
+import { defineComponent } from "@vue/runtime-core";
 import Header from "@/components/Header/Header.vue";
 import SideBar from "@/components/Sidebar/SideBar.vue";
-import Footer from "@/components/Footer/Footer.vue";
+import Footer from "@/components/Footer/SiteFooter.vue";
 
-export default {
+export default defineComponent({
     components: { Header, Footer, SideBar },
     data() {
         return {
@@ -40,8 +41,7 @@ export default {
             ]
         }
     }
-
-}
+});
 </script>
 
 <style scoped>

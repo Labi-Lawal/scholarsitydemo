@@ -108,7 +108,7 @@ import { defineComponent } from "@vue/runtime-core";
 import DownloadApp from "@/components/DownloadApp.vue";
 
 export default defineComponent({
-    name: 'footer',
+    name: 'site-footer',
     components: { DownloadApp }
 });
 </script>

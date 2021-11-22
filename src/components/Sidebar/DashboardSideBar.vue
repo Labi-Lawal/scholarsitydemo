@@ -1,7 +1,9 @@
 <template>
     <section class="dashboard_side_bar">
         <div class="logo_wrapper">
-            <div class="logo">SCHOLARSITY</div>
+            <div class="logo">
+                <router-link to="/">SCHOLARSITY</router-link>
+            </div>
         </div>
         <nav>
             <div 

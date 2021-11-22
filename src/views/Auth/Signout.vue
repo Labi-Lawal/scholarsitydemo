@@ -32,7 +32,7 @@
 import { defineComponent } from "@vue/runtime-core";
 import Header from '@/components/Header/Header.vue';
 import DownloadApp from "@/components/DownloadApp.vue";
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 
 export default defineComponent({
     components: { Header, DownloadApp, Footer },

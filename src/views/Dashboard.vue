@@ -36,7 +36,7 @@ export default defineComponent({
 
         return {
             currentPageTitle: '',
-            userRole: this.$store.getters.userRole,
+            userRole: '',
             nav,
             studentNav: [
                 {
@@ -182,23 +182,15 @@ export default defineComponent({
             this.currentPageTitle = title;
         }
     },
-    async beforeCreate() {
-        if(!this.$store.getters.isSignedIn) {
-            await this.$store.dispatch('fetchuserinfo')
-            .then(()=>{
-                this.userRole = this.$store.getters.userRole;
-                if(this.userRole == 'student') {
-                    this.nav = this.studentNav;
-                }
-                if(this.userRole == 'teacher') {
-                    this.nav = this.teacherNav;
-                }
-                this.currentPageTitle = this.nav[0].title
-            })  
-            .catch((error)=>{
-                console.log(error.response);
-            });
+    async beforeMount() {
+        this.userRole = this.$store.getters.userData.role;
+        if(this.userRole == 'student') {
+            this.nav = this.studentNav;
         }
+        if(this.userRole == 'teacher') {
+            this.nav = this.teacherNav;
+        }
+        this.currentPageTitle = this.nav[0].title
     }
 });
 </script>

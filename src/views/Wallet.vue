@@ -52,7 +52,7 @@ import { defineComponent } from 'vue';
 import Header from '@/components/Header/Header.vue';
 import BalanceCard from '@/components/Wallet/BalanceCard.vue';
 import Table from '@/components/Table.vue';
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 
 export default defineComponent({
     components: { Header, BalanceCard, Table, Footer },

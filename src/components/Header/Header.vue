@@ -10,12 +10,7 @@
                 <router-link to="/">Scholarsity</router-link>
             </div>
 
-            <div class="nav">
-                <nav>
-                    <div class="become_teacher"> Become A Teacher </div>
-                </nav>
-                
-                
+            <div class="nav">   
                 <SearchBar class="search_bar" />
 
                 <Notifications 

@@ -89,7 +89,7 @@ import { defineComponent } from "@vue/runtime-core";
 import Header from '@/components/Header/Header.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
 import DropDown from '@/components/DropDown/DropDown.vue';
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 import helper from '@/helper';
 
 export default defineComponent({
@@ -160,8 +160,6 @@ export default defineComponent({
                     role: this.roleModel.value,
                     password: this.passwordModel.value
                 };
-
-                console.log(body);
 
                 this.isLoading = true;
             
@@ -237,8 +235,17 @@ export default defineComponent({
         },
         async checkEmail(email) {
             await this.$store.dispatch('checkemail', email)
-            .then(()=> { return true })
-            .catch(()=> { return false });
+            .then(()=> {
+                console.log('SUCCESS');
+                this.emailModel.error = "";
+                return true;
+            })
+            .catch((error)=> {
+                console.log(error);
+                this.emailModel.error = "Email already exist";
+                return false;
+            });
+            
         },
     }
 });

@@ -5,10 +5,7 @@ export default createStore({
   state: {
     isSignedIn: false,
     token: localStorage.getItem('access-token'),
-    user: {
-      fullname: '',
-      role: ''
-    }
+    user: null
   },
   mutations: {
     store_user(state, payload) {
@@ -24,10 +21,7 @@ export default createStore({
     clear_user(state) { 
       state.isSignedIn = false;
       state.token = '';
-      state.user = { 
-        fullname: '',
-        role: ''
-      };
+      state.user = null;
     },
     auth_success(state) {
       state.isSignedIn = true;
@@ -68,9 +62,10 @@ export default createStore({
       return new Promise<boolean> ((resolve, reject)=> {
         net.http.get(`/user/checkemail/${payload}`)
         .then(()=> {  resolve(true);  })
-        .catch(()=> { reject(false); });
+        .catch((error)=> { 
+          reject(new Error(error)); 
+        });
       });
-
     },
     registerUser({commit}, payload) {
       return new Promise ((resolve, reject)=> {
@@ -122,7 +117,7 @@ export default createStore({
   },
   getters: {
     isSignedIn: state => state.isSignedIn,
-    userRole: state => state.user.role,
     userData: state => state.user,
+    token: state => state.token
   }
 })

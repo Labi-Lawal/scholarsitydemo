@@ -56,15 +56,16 @@
     </section>  
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "@vue/runtime-core";
 import Header from "@/components/Header/Header.vue";
 import Table from '@/components/Table.vue';
 import StudentAddNew from '@/components/Form/StudentAddNew.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 
 
-export default {
+export default defineComponent({
     components: { Header, Table, ButtonPlainText, StudentAddNew, Footer },
     data() {
         var selected = 'grade',
@@ -75,7 +76,7 @@ export default {
             'grade',
             'date'
         ],
-        body =  [];
+        body:any =  [];
 
         return {
             selected,
@@ -85,9 +86,9 @@ export default {
         }
     },
     methods: {
-        selectFilter(filter) {
+        selectFilter(filter:string) {
             this.selected = filter;
-            this.filterBody();
+            // this.filterBody();
         },
         showNewUserForm() {
             this.isNewUserFormVisible = true;
@@ -96,7 +97,7 @@ export default {
             this.isNewUserFormVisible = false;
         },
     }
-}
+});
 </script>
 
 <style scoped>

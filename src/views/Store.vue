@@ -24,7 +24,7 @@ import Header from '@/components/Header/Header.vue';
 import GridList from "@/components/List/GridList.vue";
 import RedeemProduct from "@/components/RedeemProduct.vue";
 import BalanceCard from '@/components/Wallet/BalanceCard.vue';
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 
 export default defineComponent({
     components: { Header, BalanceCard, Footer, GridList, RedeemProduct },

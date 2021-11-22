@@ -34,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
     component: ()=> import('../views/Course.vue')
   },
   {
+    path: '/settings',
+    name: 'Settings',
+    component: ()=> import('../views/Course.vue')
+  },
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: ()=> import('../views/Dashboard.vue'),
@@ -182,20 +187,22 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next)=> {
+router.beforeEach( async (to, from, next)=> {
   if(to.matched.some(record=> record.meta.requiresAuth)) {
-    if(store.getters.token != '') next();
+    if(store.getters.token) {
+      if(store.getters.userData) next();
+      else {
+        await store.dispatch('fetchuserinfo')
+        .then(()=> { next() })
+        .catch(()=> { next('/signout') });
+      }
+    }
     else next('/signin');
   }
 
-  if(to.matched.some(record => record.meta.authRoute)) {
-    if(store.getters.token != undefined) {
-      console.log(store.getters.token);
-      next('/dashboard');
-    }
-    else { 
-      next();
-    }
+  else if(to.matched.some(record => record.meta.authRoute)) {
+    if(!store.getters.token) next();
+    else next('/dashboard');
   }
 
   else next();

@@ -69,7 +69,7 @@ import Header from '@/components/Header/Header.vue';
 import VideoImageSlider from '@/components/Slider/VideoImageSlider.vue';
 import SectionTitle from '@/components/Title/SectionTitle.vue';
 import HorizontalCarouselList from "@/components/List/HorizontalCarouselList.vue";
-import Footer from '@/components/Footer/Footer.vue';
+import Footer from '@/components/Footer/SiteFooter.vue';
 
 export default defineComponent({
     components: { Header, VideoImageSlider, HorizontalCarouselList, SectionTitle, Footer },
