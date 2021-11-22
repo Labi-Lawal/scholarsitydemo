@@ -25,17 +25,22 @@
                         >
                         <div class="error-message" v-if="fullnameModel.error != ''">{{ fullnameModel.error }}</div>
                         
-                        <input 
-                            v-model="emailModel.value" 
-                            @keyup="validateEmail()" 
-                            :type="emailModel.type" 
-                            :class="{
-                                error: (emailModel.error) ?true :false
-                            }"
-                            placeholder="Email" 
-                            autocomplete="off"
-                        >
-                        <div class="error-message" v-if="emailModel.error != ''">{{ emailModel.error }}</div>
+                        <div class="input_field">
+                            <input 
+                                v-model="emailModel.value" 
+                                @keyup="validateEmail()" 
+                                :type="emailModel.type" 
+                                :class="{
+                                    error: (emailModel.error) ?true :false
+                                }"
+                                placeholder="Email" 
+                                autocomplete="off"
+                            >
+                            <div class="email_loader" v-if="isCheckingEmail">
+                                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                            </div>
+                            <div class="error-message" v-if="emailModel.error != ''">{{ emailModel.error }}</div>
+                        </div>
                         
                         <div class="drop_down_wrapper">
                             <DropDown 
@@ -138,7 +143,8 @@ export default defineComponent({
             optionsVisibility: false,
             formModel, 
             isDisabled,
-            isLoading: false
+            isLoading: false,
+            isCheckingEmail: false
         }
     },
     methods: {
@@ -234,18 +240,20 @@ export default defineComponent({
             return true;
         },
         async checkEmail(email) {
+            this.isCheckingEmail = true;
             await this.$store.dispatch('checkemail', email)
             .then(()=> {
                 console.log('SUCCESS');
                 this.emailModel.error = "";
+                this.isCheckingEmail = false;
                 return true;
             })
             .catch((error)=> {
                 console.log(error);
                 this.emailModel.error = "Email already exist";
+                this.isCheckingEmail = false;
                 return false;
             });
-            
         },
     }
 });
@@ -368,4 +376,50 @@ export default defineComponent({
         background: var(--paper-light-blue-900);
         color: white;
     }
+
+    .input_field {
+        position: relative;
+    }
+    .email_loader {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        top: 24px;
+        right: 7%;
+        margin: auto 0;
+    }
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--blue-100);
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--blue-100) transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
