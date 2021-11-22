@@ -4,7 +4,7 @@ import net from "../services/http";
 export default createStore({
   state: {
     isSignedIn: false,
-    token: localStorage.getItem('access-token') || '',
+    token: localStorage.getItem('access-token'),
     user: {
       fullname: '',
       role: ''
@@ -23,6 +23,11 @@ export default createStore({
   },
     clear_user(state) { 
       state.isSignedIn = false;
+      state.token = '';
+      state.user = { 
+        fullname: '',
+        role: ''
+      };
     },
     auth_success(state) {
       state.isSignedIn = true;
@@ -54,8 +59,8 @@ export default createStore({
     },
     signuserout({commit}) {
       return new Promise<void>((resolve)=> {
+        localStorage.removeItem('access-token');
         commit('clear_user');
-        commit('update_auth_status', false);
         resolve();
       });
     },
@@ -90,12 +95,30 @@ export default createStore({
 
       });
     },
+    fetchuserinfo({commit}) {
+      return new Promise((resolve, reject)=> {
+        net.httpSec.get('/user/profile/me')
+        .then((response)=> {
+          const user = response.data.user;
+
+          commit('store_user', user);
+          commit('update_auth_status', true);
+          
+          console.log();
+          resolve(user);
+        })
+        .catch((error)=> {
+          reject(error);
+
+        });
+      });
+    },
     fetchCourse() {
       return new Promise<void>((resolve)=> {
         console.log("fetching User");
         resolve();
       })
-    }
+    },
   },
   getters: {
     isSignedIn: state => state.isSignedIn,

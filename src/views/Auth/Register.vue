@@ -37,9 +37,24 @@
                         >
                         <div class="error-message" v-if="emailModel.error != ''">{{ emailModel.error }}</div>
                         
-                        <div class="form_field">
-                            
+                        <div class="drop_down_wrapper">
+                            <DropDown 
+                                :dropDownIndex=0
+                                placeholder="Account Type"
+                                :options="roleModel.options"
+                                :isOptionsVisible=optionsVisibility
+                                :selected=roleModel.selected
+                                :selectedIndex=roleDropDownSelectedIndex
+                                :hideIcon=true
+                                :hideBorder=false
+                                @showOptions=toggleOptions
+                                @optionSelect=selectOption
+                                :class="{
+                                    error: (emailModel.error) ?true :false
+                                }"
+                            />
                         </div>
+                        <div class="error-message" v-if="roleModel.error != ''">{{ roleModel.error }}</div>
 
                         <input 
                             v-model="passwordModel.value" 
@@ -78,7 +93,7 @@ import Footer from '@/components/Footer/Footer.vue';
 import helper from '@/helper';
 
 export default defineComponent({
-    components: { Header, ButtonPlainText, Footer },
+    components: { Header, ButtonPlainText, Footer, DropDown },
     data() {
         var fullnameModel = {
                 type: 'fullname',
@@ -103,20 +118,50 @@ export default defineComponent({
         return {
             fullnameModel,
             emailModel,
-            passwordModel, 
+            passwordModel,
+            roleModel: {
+                error: '',
+                value: '',
+                selected: false,
+                options: [
+                    {
+                        display_name: 'student',
+                        value: 'student'
+                    },
+                    {
+                        display_name: 'teacher',
+                        value: 'teacher'
+                    },
+                ]
+            },
+            roleDropDownSelectedIndex: 0,
+            optionsVisibility: false,
             formModel, 
             isDisabled,
             isLoading: false
         }
     },
     methods: {
+        toggleOptions() {
+            this.optionsVisibility = !this.optionsVisibility;
+            this.validateRole();
+        },
+        selectOption(selected) {
+            this.roleDropDownSelectedIndex = selected.optionIndex;
+            this.roleModel.value = this.roleModel.options[this.roleDropDownSelectedIndex].value;
+            this.roleModel.selected = true;
+            this.toggleOptions();
+        },
         async registerUser() {
             if(this.validateFormInput()) {
                 var body = {
                     fullname: this.fullnameModel.value,
                     email: this.emailModel.value,
+                    role: this.roleModel.value,
                     password: this.passwordModel.value
                 };
+
+                console.log(body);
 
                 this.isLoading = true;
             
@@ -135,7 +180,7 @@ export default defineComponent({
             }
         },
         validateFormInput() {
-            if(this.validateFullname() && this.validateEmail() && this.validatePassword()) return true;
+            if(this.validateFullname() && this.validateEmail() && this.validateRole() && this.validatePassword()) return true;
             else return false;
         },
         validateFullname() { 
@@ -166,6 +211,15 @@ export default defineComponent({
             }
 
             this.emailModel.error = '';
+            return true;
+        },
+        validateRole() {
+            if(this.roleModel.value == '') {
+                this.roleModel.error = "Please select your account type";
+                return false;
+            }
+
+            this.roleModel.error = '';
             return true;
         },
         validatePassword() {
@@ -242,6 +296,14 @@ export default defineComponent({
         font-weight: 400;
         color: var(--paper-grey-600);
     }
+    .drop_down_wrapper {
+        width: 90%;
+        margin: 2% auto 0;
+        height: 50px;
+    }
+    .drop_down_wrapper div.display div.placeholder-option {
+        color: rgb(83, 83, 83);
+    }
     div.form-box input {
         width: 80%;
         height: 40px;
@@ -255,10 +317,10 @@ export default defineComponent({
         border-radius: 5px;
     }
     div.form-box input::placeholder {
-        color: rgb(146, 146, 146);
+        color: rgba(146, 146, 146, 0.705);
     }
     div.form-box input.error {
-        border: 1px solid red;
+        border: 1px solid red !important;
     }
     div.form-box input.error ~ div.error-message {
         display: block;

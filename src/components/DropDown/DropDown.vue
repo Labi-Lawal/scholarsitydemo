@@ -30,7 +30,17 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
     name: 'Drop-Down',
-    props: ['options', 'selected', 'selectedIndex', 'placeholder', 'isOptionsVisible', 'hideIcon', 'hideBorder', 'raiseByOne', 'dropDownIndex'],
+    props: [
+        'placeholder', 
+        'options', 
+        'isOptionsVisible',
+        'selected', 
+        'selectedIndex', 
+        'hideIcon', 
+        'hideBorder', 
+        'raiseByOne', 
+        'dropDownIndex'
+    ],
     data(){
         return {}
     },
@@ -59,6 +69,9 @@ export default defineComponent({
         border: 1px solid lightgrey;
         border-radius: 5px;
         text-transform: capitalize;
+        font-size: 110%;
+        color: rgb(83, 83, 83);
+        font-weight: 500;
     }
     div.display.hide-border {
         border: none;
@@ -71,7 +84,7 @@ export default defineComponent({
         width: 90%;
     }
     div.display div.placeholder-option {
-        color: rgb(156, 156, 156);
+        color: rgba(146, 146, 146, 0.705);
     }
     div.icon {
         width: 10%;

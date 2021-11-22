@@ -25,7 +25,11 @@
                     />
                 </div>
                 <div class="name"> {{ userName }} </div>
-                <!-- <div class="name"> Jason Manfdia </div> -->
+                <div class="user_profile_menu">
+                    <div class="item logout"> 
+                        <router-link to="/signout">Log Out</router-link> 
+                    </div>
+                </div>
             </div>
         
     </header>
@@ -44,8 +48,11 @@
         data () {
             return  { 
                 isNotificationVisible: false,
-                userName: this.$store.getters.userData.fullname,
+                userName: '',
             }
+        },
+        updated() {
+            this.userName = this.$store.getters.userData.fullname;
         }
     });
 </script>
@@ -116,6 +123,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        position: relative;
     }
     img {
         height: 40px;
@@ -129,15 +137,34 @@
         font-weight: 500;
         text-transform: capitalize;
     }
-    
 
-    .bottom {
-        height: 49px;
-        width: 100%;
+    .user_profile_menu {
+        box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.192);
+        border-radius: 5px;
+        position: absolute;
+        z-index: 5;
+        top: 120%;
+        right: 0;
+        width: 250px;
+        padding: 3% 0;
+        background: white;
     }
-    .bottom nav {
-        width: 90%;
-        margin: 0 auto;
+    .item {
+        font-weight: 500;
+        height: 40px;
+        cursor: pointer;
+        color: var(--paper-grey-600);
+    }
+    .item > * {
+        padding: 0 5%;
+        display: flex;
+        align-items: center;
+    }
+    .item:hover {
+        background: var(--paper-grey-100);
+    }
+    .logout {
+        
     }
 
 </style>

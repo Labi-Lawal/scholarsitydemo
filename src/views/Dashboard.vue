@@ -182,14 +182,23 @@ export default defineComponent({
             this.currentPageTitle = title;
         }
     },
-    beforeMount() {
-        if(this.userRole == 'student') {
-            this.nav = this.studentNav;
+    async beforeCreate() {
+        if(!this.$store.getters.isSignedIn) {
+            await this.$store.dispatch('fetchuserinfo')
+            .then(()=>{
+                this.userRole = this.$store.getters.userRole;
+                if(this.userRole == 'student') {
+                    this.nav = this.studentNav;
+                }
+                if(this.userRole == 'teacher') {
+                    this.nav = this.teacherNav;
+                }
+                this.currentPageTitle = this.nav[0].title
+            })  
+            .catch((error)=>{
+                console.log(error.response);
+            });
         }
-        if(this.userRole == 'teacher') {
-            this.nav = this.teacherNav;
-        }
-        this.currentPageTitle = this.nav[0].title
     }
 });
 </script>

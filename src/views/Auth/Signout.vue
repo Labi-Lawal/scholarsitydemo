@@ -39,8 +39,8 @@ export default defineComponent({
     data() {
         return { }
     },
-    methods: {
-
+    beforeCreate() {
+        this.$store.dispatch('signuserout');
     }
 });
 </script>

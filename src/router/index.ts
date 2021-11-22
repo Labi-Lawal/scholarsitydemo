@@ -10,12 +10,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/register',
     name: 'Register',
-    component: ()=> import('../views/Auth/Register.vue')
+    component: ()=> import('../views/Auth/Register.vue'),
+    meta: {
+      authRoute: true
+    }
   },
   {
     path: '/signin',
     name: 'SignIn',
-    component: ()=> import('../views/Auth/Signin.vue')
+    component: ()=> import('../views/Auth/Signin.vue'),
+    meta: {
+      authRoute: true
+    }
   },
   {
     path: '/signout',
@@ -178,9 +184,20 @@ const router = createRouter({
 
 router.beforeEach((to, from, next)=> {
   if(to.matched.some(record=> record.meta.requiresAuth)) {
-    if(store.getters.isSignedIn) next();
+    if(store.getters.token != '') next();
     else next('/signin');
   }
+
+  if(to.matched.some(record => record.meta.authRoute)) {
+    if(store.getters.token != undefined) {
+      console.log(store.getters.token);
+      next('/dashboard');
+    }
+    else { 
+      next();
+    }
+  }
+
   else next();
 });
 
