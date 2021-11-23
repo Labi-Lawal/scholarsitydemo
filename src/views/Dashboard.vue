@@ -113,32 +113,32 @@ export default defineComponent({
                     title: 'create',
                     link: 'create',
                     icon: 'chart-pie',
-                    subLinks: [
-                        {
-                            title: 'general',
-                            link: 'general'
-                        },
-                        {
-                            title: 'instructions',
-                            link: 'instructions'
-                        },
-                        {
-                            title: 'add questions',
-                            link: 'add-questions'
-                        },
-                        {
-                            title: 'reviews',
-                            link: 'publish'
-                        },
-                        {
-                            title: 'publish',
-                            link: 'publish'
-                        },
-                        {
-                            title: 'success',
-                            link: 'success'
-                        },
-                    ]
+                    // subLinks: [
+                    //     {
+                    //         title: 'general',
+                    //         link: 'general'
+                    //     },
+                    //     {
+                    //         title: 'instructions',
+                    //         link: 'instructions'
+                    //     },
+                    //     {
+                    //         title: 'add questions',
+                    //         link: 'add-questions'
+                    //     },
+                    //     {
+                    //         title: 'reviews',
+                    //         link: 'publish'
+                    //     },
+                    //     {
+                    //         title: 'publish',
+                    //         link: 'publish'
+                    //     },
+                    //     {
+                    //         title: 'success',
+                    //         link: 'success'
+                    //     },
+                    // ]
                 },
                 {
                     title: 'analyse',
@@ -205,13 +205,13 @@ export default defineComponent({
     height: 100%;
 }
 .side_bar_wrapper {
-    width: 20%;
+    width: 18%;
     height: 100%;
     position: fixed;
 }
 .dashboard_content {
-    margin-left: 20%;
-    width: 80%;
+    margin-left: 18%;
+    width: 82%;
     height: 100%;
 }
 .dashboard_view {

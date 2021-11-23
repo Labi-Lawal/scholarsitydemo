@@ -7,7 +7,7 @@
             two_columns: (columnAmnt == 2) ?true :false
         }"
     >
-        <CourseCard  
+        <CourseCard
           v-for="(course, index) in courses"
           :key="index"
           :title="course.title"
@@ -16,6 +16,14 @@
           :ratingsCount="course.ratingsCount"
           :avgRatings="course.avg_ratings"
           :price="course.price"
+        />
+
+        <TestCard
+          v-for="(test, index) in tests"
+          :key="index"
+          :title="test.title"
+          :course="test.course"
+          :progress="test.progress"
         />
 
         <!-- <ProductCard :list=15 @buttonAction="redeem" v-if="contentType === 'products'"/>
@@ -27,11 +35,12 @@
 <script>
 import { defineComponent } from "@vue/runtime-core";
 import CourseCard from "@/components/Card/CourseCard.vue";
+import TestCard from "@/components/Card/TestCard.vue";
 
 export default defineComponent({
     name: 'grid-list',
-    components: { CourseCard },
-    props: ['columnAmnt', 'courses'],
+    components: { CourseCard, TestCard },
+    props: ['columnAmnt', 'courses', 'tests'],
     data() {
         return { }
     },
@@ -50,19 +59,21 @@ export default defineComponent({
 .grid_list {
     padding: 1% 0;
     display: grid;
-    justify-items: center;
     align-items: center;
     row-gap: 20px;
     column-gap: 20px;
     width: 100%;
 }
 .four_columns {
-    grid-template-columns: auto auto auto auto;
+    --grid-frame-width: calc(100% - calc(20px * 3));
+    grid-template-columns: calc(var(--grid-frame-width)/4) calc(var(--grid-frame-width)/4) calc(var(--grid-frame-width)/4) calc(100%/4);
 }
 .three_columns {
-    grid-template-columns: auto auto auto;
+    --grid-frame-width: calc(100% - calc(20px * 2));
+    grid-template-columns: calc(var(--grid-frame-width)/3) calc(var(--grid-frame-width)/3) calc(var(--grid-frame-width)/3);
 }
 .two_columns {
-    grid-template-columns: auto auto;
+    --grid-frame-width: calc(100% - calc(20px * 1));
+    grid-template-columns: calc(var(--grid-frame-width)/2) calc(var(--grid-frame-width)/2) calc(var(--grid-frame-width)/2);
 }
 </style>

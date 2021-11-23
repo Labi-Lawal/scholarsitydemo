@@ -14,13 +14,15 @@
         </div>
             
         <div class="profile_wrapper">
-            <div class="profile_image">
-                <img 
-                    src="https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
-                />
+            <div class="profile" @click="toggleMenu">
+                <div class="profile_image">
+                    <img 
+                        src="https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
+                    />
+                </div>
+                <div class="name"> {{ userName }} </div>
             </div>
-            <div class="name"> {{ userName }} </div>
-            <div class="user_profile_menu">
+            <div class="user_profile_menu" v-if="isMenuVisible">
                 <div class="item logout"> 
                     <router-link to="/signout">Log Out</router-link> 
                 </div>
@@ -43,7 +45,14 @@
         data () {
             return  { 
                 isNotificationVisible: false,
+                isMenuVisible: false,
+                is: '',
                 userName: '',
+            }
+        },
+        methods: {
+            toggleMenu () {
+                this.isMenuVisible = !this.isMenuVisible;      
             }
         },
         beforeMount() {
@@ -115,10 +124,16 @@
     }
     .profile_wrapper {
         margin: auto 0;
+        position: relative;
+    }
+    .profile_wrapper *::selection {
+        background: none;
+    }
+    .profile_wrapper .profile { 
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        position: relative;
+        cursor: pointer;
     }
     img {
         height: 40px;
@@ -140,7 +155,7 @@
         z-index: 5;
         top: 120%;
         right: 0;
-        width: 250px;
+        width: 200px;
         padding: 3% 0;
         background: white;
     }
@@ -157,9 +172,6 @@
     }
     .item:hover {
         background: var(--paper-grey-100);
-    }
-    .logout {
-        
     }
 
 </style>

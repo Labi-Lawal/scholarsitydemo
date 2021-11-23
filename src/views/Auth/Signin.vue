@@ -87,7 +87,7 @@ export default defineComponent({
         }
     },
     methods: {
-        signUserIn() {
+        async signUserIn() {
             if(this.validateFormInput()) {
                 var payload = {
                     email: this.emailModel.value,
@@ -96,17 +96,19 @@ export default defineComponent({
 
                 this.isLoading = true;
                 
-                this.$store.dispatch('signuserin', payload)
+                await this.$store.dispatch('signuserin', payload)
                 .then(()=> {
                     this.$router.push({ path: '/dashboard' })
                 })
                 .catch((error)=> {
                     this.isLoading = false;
-
+                    
                     if( error.response.status == 409 )
                         this.emailModel.error = error.response.data.message
                     if (error.response.status == 422 )
                         this.formModel.error = error.response.data.message;
+                    if (error.response.status == 404 )
+                        this.formModel.error = 'Invalid Login Credentials';
                 });
             }
         },

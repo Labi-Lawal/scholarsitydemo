@@ -1,74 +1,87 @@
 <template>
     <section class="create_body">
 
-        <div class="create_options" v-if="!isOptionSelected">
-            <div class="create_new_test">
-                <div class="overlay">
-                    <div class="text">
-                        Organize your own tests to spark your 
-                        <span class="emphasis">students</span> study
+        <div class="create_options_tests" v-if="!isOptionSelected">
+            <div class="options">
+                <div class="create_new_test">
+                    <div class="overlay">
+                        <div class="text">
+                            Organize your own tests to spark your 
+                            <span class="emphasis">students</span> study
+                        </div>
+                        <div class="btn_wrapper">
+                            <ButtonPlainText 
+                                buttonText="Create New Test"
+                                @buttonAction="showCreateNewTestForm"
+                            />
+                        </div>
                     </div>
-                    <div class="btn_wrapper">
-                        <ButtonPlainText 
-                            buttonText="Create New Test"
-                            @buttonAction="showCreateNewTestForm"
-                        />
+                    <div class="illustration_wrapper">
+                        <img src="../../assets/teacher/create/illustration-create-test.png" >
+                    </div>
+                    <div class="floating_bubble"></div>
+                    <div class="rad_emit">
+                        <div>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
-                <div class="illustration_wrapper">
-                    <img src="../../assets/teacher/create/illustration-create-test.png" >
+                <div class="edit_unpublished_test">
+                    <div class="overlay">
+                        <div class="text">
+                            Go ahead and edit that test one last time
+                            <span class="emphasis">before</span> publishing 
+                        </div>
+                        <div class="btn_wrapper">
+                            <ButtonPlainText 
+                                buttonText="Edit Test"
+                                @buttonAction="showEditNewTest"
+                            />
+                        </div>
+                    </div>
+                    <div class="illustration_wrapper">
+                        <img src="../../assets/teacher/create/illustration-edit-test.png" >
+                    </div>
+                    <div class="floating_bubble"></div>
+                    <div class="rad_emit">
+                        <div>
+                            <div></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="floating_bubble"></div>
-                <div class="rad_emit">
-                    <div>
-                        <div></div>
+                <div class="create_new_question">
+                    <div class="overlay">
+                        <div class="text">
+                            Create A New Question
+                            <!-- <span class="emphasis">unpublished</span> test -->
+                        </div>
+                        <div class="btn_wrapper">
+                            <ButtonPlainText 
+                                buttonText="Add Question"
+                                @buttonAction="showNewQuestion"
+                            />
+                        </div>
+                    </div>
+                    <div class="illustration_wrapper">
+                        <img src="../../assets/teacher/create/illustration-create-test.png" >
+                    </div>
+                    <div class="floating_bubble"></div>
+                    <div class="rad_emit">
+                        <div>
+                            <div></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="edit_unpublished_test">
-                <div class="overlay">
-                    <div class="text">
-                        Go ahead and edit that test one last time
-                        <span class="emphasis">before</span> publishing 
+            <div class="tests_frame">
+                <div class="tests_grid_list_wrapper">
+                    <div class="section_title">
+                        All Tests
                     </div>
-                    <div class="btn_wrapper">
-                        <ButtonPlainText 
-                            buttonText="Edit Test"
-                            @buttonAction="showEditNewTest"
-                        />
-                    </div>
-                </div>
-                <div class="illustration_wrapper">
-                    <img src="../../assets/teacher/create/illustration-edit-test.png" >
-                </div>
-                <div class="floating_bubble"></div>
-                <div class="rad_emit">
-                    <div>
-                        <div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="create_new_question">
-                <div class="overlay">
-                    <div class="text">
-                        Create A New Question
-                        <!-- <span class="emphasis">unpublished</span> test -->
-                    </div>
-                    <div class="btn_wrapper">
-                        <ButtonPlainText 
-                            buttonText="Create New Question"
-                            @buttonAction="showNewQuestion"
-                        />
-                    </div>
-                </div>
-                <div class="illustration_wrapper">
-                    <img src="../../assets/teacher/create/illustration-create-test.png" >
-                </div>
-                <div class="floating_bubble"></div>
-                <div class="rad_emit">
-                    <div>
-                        <div></div>
-                    </div>
+                    <GridList 
+                        :tests=allTests 
+                        :columnAmnt=4
+                    />
                 </div>
             </div>
         </div>
@@ -113,9 +126,10 @@ import VerticalList from "@/components/List/VerticalList.vue";
 import AddQuestions from "@/components/Form/AddQuestions.vue";
 import QuestionSuccess from "@/components/messages/QuestionSuccess.vue";
 import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
+import GridList from "@/components/List/GridList.vue";
 
 export default {
-    components: { VerticalList, AddQuestions, QuestionSuccess, ButtonPlainText },
+    components: { VerticalList, AddQuestions, QuestionSuccess, ButtonPlainText, GridList },
     data() {
         return { 
             route: '',
@@ -124,7 +138,34 @@ export default {
             createNewTestFormVisible: false,
             editTestFormVisible: false,
             createNewQuestion: false,
-            successMessageVisible: false
+            successMessageVisible: false,
+            allTests: [
+                {
+                    title: 'TEST 01',
+                    course: 'COURSE 01 - Lorem ipsum ia kadhyvk ',
+                    progress: 80
+                },
+                {
+                    title: 'TEST 01',
+                    course: 'COURSE 01',
+                    progress: 20
+                },
+                {
+                    title: 'TEST 01',
+                    course: 'COURSE 01',
+                    progress: 70
+                },
+                {
+                    title: 'TEST 01',
+                    course: 'COURSE 01',
+                    progress: 90
+                },
+                {
+                    title: 'TEST 01',
+                    course: 'COURSE 01',
+                    progress: 40
+                }
+            ]
         }
     },
     methods: {
@@ -168,11 +209,14 @@ export default {
     padding: 3%;
     width: 94%;
 }
-.create_options > div {
+.options {
+    display: flex;
+}
+.options > div {
     border: 1px solid var(--paper-grey-100);
     box-shadow: var(--shadow-100);
-    width: calc(100%/2.5);
-    height: 200px;
+    width: calc(100%/3.5);
+    height: 150px;
     margin: 0 auto 2%; 
     display: flex;
     align-items: center;
@@ -182,31 +226,33 @@ export default {
     padding: 0 2%;
     overflow: hidden;
 }
-.create_options .overlay {
-    margin-left: 5%;
-    width: 50%;
+.options .overlay {
+    width: 55%;
     height: 80%;
     display: flex;
     flex-wrap: wrap;
+    z-index: 1;
 }
-.create_options .text {
+.options .text {
     font-weight: 500;
-    font-size: 120%;
+    font-size: 90%;
+    line-height: 20px;
 }
 .text span.emphasis {
     font-weight: 600;
 }
-.create_options .btn_wrapper {
+.options .btn_wrapper {
     height: 40px;
     width: 70%;
     margin-top: auto;
 }
-.create_options .btn_wrapper button {
+.options .btn_wrapper button {
     border: 1px solid var(--paper-grey-200);
     color: rgb(7, 45, 87);
     background: var(--paper-grey-100);
     font-weight: 600;
     border-radius: 20px;
+    font-size: 80%;
 }
 
 .create_new_test, .edit_unpublished_test, .create_new_question {
@@ -289,6 +335,8 @@ export default {
     height: 40px;
 }
 
+
+
 .back_btn_wrapper {
     display: flex;
     align-items: center;
@@ -299,6 +347,17 @@ export default {
 .route {
     margin-left: 3%;
     text-transform: capitalize;    
+}
+
+.tests_frame {
+    padding: 1%;
+    width: 98%;
+}
+.section_title {
+    font-size: 180%;
+    margin-bottom: 2%;
+    position: sticky;
+    top: 70px;
 }
 
 .create_content_body {

@@ -46,7 +46,6 @@ export default createStore({
         })
         .catch((error)=> {
           reject(error);
-
         });
 
       });
