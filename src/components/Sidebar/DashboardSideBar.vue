@@ -11,7 +11,7 @@
                 :key=index
             >   
                 <router-link 
-                    :to="'/dashboard/' + item.link"
+                    :to="'/account/' + item.link"
                     :class="{
                         dashboard_side_bar_nav_item: true,
                         active_route: (this.currentRouteIndex == index) ?true :false
@@ -47,7 +47,7 @@
                         @click="subRouteClicked(sublink, subIndex)"
                     >
                         <router-link 
-                            :to="'/dashboard/' + item.link + '/' + sublink.link"
+                            :to="'/account/' + item.link + '/' + sublink.link"
                         > 
                             <div class="text"> {{ sublink.title}} </div>
                         </router-link>

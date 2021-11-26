@@ -98,7 +98,7 @@ export default defineComponent({
                 
                 await this.$store.dispatch('signuserin', payload)
                 .then(()=> {
-                    this.$router.push({ path: '/dashboard' })
+                    this.$router.push({ path: '/' })
                 })
                 .catch((error)=> {
                     this.isLoading = false;

@@ -1,7 +1,16 @@
 <template>
-    <router-link to="/dashboard">
+    <router-link to="/account">
         <div class="user_profile_min">
-            <div class="profile_image">
+            <div 
+                :class="{
+                    profile_image: true,
+                    max_size: (size==null) ?true :false 
+                }"
+                :style="{
+                    height: size + 'px',
+                    width: size + 'px'
+                }"
+            >
                 <img :src=source >
             </div>
             <div 
@@ -11,7 +20,7 @@
                 } " 
                 v-if="showDetails"
             >
-                <div class="name"> Jason Ma </div>
+                <div class="name"> {{ userName }} </div>
                 <div class="ratings" v-if="showRatings">
                     <FontAwesomeIcon 
                         :icon="['fas', 'star']" 
@@ -29,11 +38,12 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
     name: 'user-profile-min',
-    props: ['showDetails', 'showRatings'],
+    props: ['showDetails', 'showRatings', 'size'],
     data() {
         return {
             isSignedIn: this.$store.getters.isSignedIn,
             userRole: this.$store.getters.role,
+            userName: this.$store.getters.userData.fullname,
             source: "https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
         }
     }
@@ -43,16 +53,18 @@ export default defineComponent({
 <style scoped>
     .user_profile_min {
         height: 100%;
-        width: 100%;
+        width: max-content;
         display: flex;
         align-items: center;
         justify-content: flex-end;
     }
     .user_profile_min .profile_image {
         border-radius: 50%;
-        height: 40px;
-        width: 40px;
         overflow: hidden;
+    }
+    .profile_image.max_size {
+        width: 40px;
+        height: 40px;
     }
     img {
         height: 100%;
@@ -61,7 +73,7 @@ export default defineComponent({
         object-position: top;
     }
     .dets {
-        margin-left: 3%;
+        margin-left: 5px;
     }
     .flex_label {
         display: flex;
@@ -69,6 +81,7 @@ export default defineComponent({
     }
     .name {
         margin-bottom: 2%;
+        text-transform: capitalize;
     }
     .ratings {
         font-size: 90%;

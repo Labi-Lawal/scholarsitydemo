@@ -1,9 +1,12 @@
 <template>
     <div class="progress_indicator">
+        <div class="progress_percentage_wrapper">
+            <div class="progress_percentage">{{ percentage }}%</div>
+            <div class="label"> Completed </div>
+        </div>
         <div class="progress_bar_frame">
             <div class="progress_bar_main" :style="{width: percentage + '%'}"></div>
         </div>
-        <div class="progress_percentage">{{ percentage }}%</div>
     </div>
 </template>
 
@@ -18,14 +21,29 @@ export default defineComponent({
 
 <style scoped>
     .progress_indicator {
+        height: 100%;
+    }
+    .progress_percentage_wrapper {
+        width: 30%;
+        height: 50%;
+        margin-bottom: 5px;
         display: flex;
         align-items: center;
-        height: 10px;
+        color: rgb(37, 177, 77);
+    }
+    .progress_percentage {
+        text-align: center;
+        font-weight: 600;
+        font-size: 130%;
+    }
+    .progress_percentage_wrapper div.label {
+        font-size: 80%;
+        margin-left: 5%;
     }
     .progress_bar_frame {
         border-radius: 10px;
         width: 70%;
-        height: 80%;
+        height: 20%;
         background: var(--paper-grey-200);
         overflow: hidden;
     }
@@ -33,11 +51,5 @@ export default defineComponent({
         background: rgb(37, 177, 77);
         height: 100%;
         transition: 0.5s;
-    }
-    .progress_percentage {
-        width: 30%;
-        text-align: center;
-        font-weight: 700;
-        color: var(--paper-grey-500);
     }
 </style>

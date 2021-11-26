@@ -10,13 +10,15 @@
                 <router-link to="/">Scholarsity</router-link>
             </div>
 
-            <div class="nav">   
+            <div class="nav">
+                <SiteNavigation class="nav_links" />
+
                 <SearchBar class="search_bar" />
 
-                <Notifications 
+                <Notifications
+                    v-if="isSignedIn" 
                     class="notification"
-                    count="9"
-                    v-if="isSignedIn"
+                    count="9"    
                 />
             </div>
 
@@ -26,30 +28,26 @@
                 </router-link>
             </div>
                 
-            <div class="profile_wrapper" v-if="isSignedIn">
-                <UserProfileMin :showDetails=false />
-            </div>
+            <UserProfileMin
+                v-if="isSignedIn"
+                class="profile"
+                :showDetails=false
+            />
         </div>
-        
-        <!-- <div class="bottom" v-if="isSignedIn">
-            <StudentNav v-if="routeParent === 'student'" />
-            <TeacherNav v-if="routeParent === 'teacher'" />
-        </div> -->
     </header>
 </template>
 
 <script>
     import { defineComponent } from "@vue/runtime-core";
     import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
-    // import TeacherNav from "@/components/navigation/TeacherNav.vue";
-    // import StudentNav from "@/components/navigation/StudentNav.vue";
+    import SiteNavigation from '@/components/navigation/SiteNavigation.vue';
     import SearchBar from "@/components/Form/SearchBar.vue";
     import Notifications from "@/components/Notifications.vue";
     import UserProfileMin from "@/components/UserProfileMin.vue";
 
     export default defineComponent({
         name: 'Header',
-        components: { ButtonPlainText, SearchBar, Notifications, UserProfileMin },
+        components: { ButtonPlainText, SearchBar, Notifications, UserProfileMin, SiteNavigation  },
         data () {
             var routeParent = this.$route.matched[0].name.toLowerCase();
 
@@ -58,7 +56,7 @@
                 routeParent,
                 isNotificationVisible: false,
                 windowTop: 0,
-                isFixed: false
+                isFixed: false,
             }
         },
         methods: {
@@ -115,11 +113,23 @@
     }
     
     .nav {
-        width: 80%;
-        height: 60%;
-        display: flex;
         margin-left: 2%;
         margin-right: 2%;
+        height: 60%;
+        width: calc(100% - calc(8%));
+        display: flex;
+    }
+    
+    .nav_links {
+        margin-right: auto;
+    }
+    
+    .nav_links:deep(nav > div) {
+        color: var(--paper-grey-500);
+    }
+    .nav_links:deep(nav > div):hover {
+        color: var(--blue-100);
+        font-weight: 500;
     }
     
     .search_bar {
@@ -136,37 +146,23 @@
         margin-bottom: auto;
     }
     
-    nav {
-        display: flex;
-        align-items: center;
-        margin-right: auto;
-    }
-    nav > div {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
     .signin_btn_wrapper {
-        margin-left: auto;
         height: 60%;
         width: 8%;
     }
     .signin_btn_wrapper button {
         border: none;
         background: var(--blue-100);
-        color: white;
+        color: white;   
         font-weight: 600;
         border-radius: 25px;
     }
-    .profile_wrapper {
-        margin: auto 0;
+    .profile {
+        width: fit-content;
     }
     
 
     .bottom {
-        /* border: 1px solid black; */
         height: 49px;
         width: 100%;
     }

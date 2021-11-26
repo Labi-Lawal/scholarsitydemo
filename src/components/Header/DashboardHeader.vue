@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="logo">
-            <SectionTitle :title="pageTitle" />
+            <SectionTitle  />
         </div>
         <div class="nav">
             

@@ -157,6 +157,23 @@ header {
 header .logo_wrapper {
   color: white;
 }
+
+header:deep(nav > div) {
+  color: var(--paper-grey-300) !important;
+}
+header:deep(nav > div:hover) {
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+header.fixed:deep(nav > div) {
+  color: var(--paper-grey-500) !important;
+}
+header.fixed:deep(nav > div:hover) {
+  color: var(--blue-100) !important;
+  font-weight: 500 !important;
+}
+
 header::v-deep .search_bar {
   background: white !important;
   display: none;
@@ -164,10 +181,6 @@ header::v-deep .search_bar {
 header::v-deep .notification .icon_wrapper .icon {
   color: white !important;
 }
-header::v-deep .bottom nav > div {
-  color: white;
-}
-
 
 header.fixed::v-deep .search_bar {
   background: var(--paper-grey-100) !important;

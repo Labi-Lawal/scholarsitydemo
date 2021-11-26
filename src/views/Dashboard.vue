@@ -113,11 +113,15 @@ export default defineComponent({
                     title: 'create',
                     link: 'create',
                     icon: 'chart-pie',
-                    // subLinks: [
-                    //     {
-                    //         title: 'general',
-                    //         link: 'general'
-                    //     },
+                    subLinks: [
+                        {
+                            title: 'tests',
+                            link: 'tests'
+                        },
+                        {
+                            title: 'questions',
+                            link: 'questions'
+                        }
                     //     {
                     //         title: 'instructions',
                     //         link: 'instructions'
@@ -138,7 +142,7 @@ export default defineComponent({
                     //         title: 'success',
                     //         link: 'success'
                     //     },
-                    // ]
+                    ]
                 },
                 {
                     title: 'analyse',
@@ -184,12 +188,12 @@ export default defineComponent({
     },
     async beforeMount() {
         this.userRole = this.$store.getters.userData.role;
-        if(this.userRole == 'student') {
-            this.nav = this.studentNav;
-        }
+        if(this.userRole == 'student') this.nav = this.studentNav;
         if(this.userRole == 'teacher') {
             this.nav = this.teacherNav;
+            this.$router.push('/account/create');
         }
+        
         this.currentPageTitle = this.nav[0].title
     }
 });

@@ -2,6 +2,7 @@
     <section class="create_body">
 
         <div class="create_options_tests" v-if="!isOptionSelected">
+
             <div class="options">
                 <div class="all_tests_metrics">
                     <div class="section_title">All Tests</div>
@@ -10,19 +11,22 @@
                             <div class="number">{{ allTests.length }}</div>
                             <div class="label">Total</div>
                         </div>
+                        
                         <div>
                             <div class="number">{{ 3 }}</div>
                             <div class="label">Completed</div>
                         </div>
+
                         <div>
                             <div class="number">{{ 2 }}</div>
                             <div class="label">Pending</div>
                         </div>
                     </div>
                 </div>
+
                 <div class="create_new_test" @click="showCreateNewTestForm">
                     <div class="illustration_wrapper">
-                        <img src="../../assets/teacher/create/illustration-create-test.png" >
+                        <img src="@/assets/teacher/create/illustration-create-test.png" >
                     </div>
                     <div class="floating_bubble"></div>
                     <div class="rad_emit">
@@ -32,6 +36,8 @@
                     </div>
                     <div class="overlay">
                         <div class="content">
+                            <FontAwesomeIcon :icon="['fas', 'plus']" class="plus_icon" />
+
                             <div class="option_title">Create New Test</div>
                             <div class="text">
                                 Organize your own tests to spark your 
@@ -40,27 +46,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="create_new_question" @click="showNewQuestion">
-                    <div class="illustration_wrapper">
-                        <img src="../../assets/teacher/create/illustration-create-test.png" >
-                    </div>
-                    <div class="floating_bubble"></div>
-                    <div class="rad_emit">
-                        <div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div class="overlay">
-                        <div class="content">
-                            <div class="option_title">Add Question</div>
-                            <div class="text">
-                                Organize your own tests to spark your 
-                                <span class="emphasis">students</span> study
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+
             <div class="tests_frame">
                 <div class="tests_grid_list_wrapper">
                     <GridList 
@@ -71,6 +58,7 @@
                     />
                 </div>
             </div>
+
         </div>
 
         <div class="create_activity_wrapper" v-if="isOptionSelected">
@@ -113,6 +101,7 @@ import VerticalList from "@/components/List/VerticalList.vue";
 import AddQuestions from "@/components/Form/AddQuestions.vue";
 import QuestionSuccess from "@/components/messages/QuestionSuccess.vue";
 import GridList from "@/components/List/GridList.vue";
+
 
 export default {
     components: { VerticalList, AddQuestions, QuestionSuccess, GridList },
@@ -299,6 +288,7 @@ export default {
     padding: 0 1%;
     box-shadow: none;
     border: none;
+    margin-right: auto;
 }
 .section_title {
     font-size: 160%;
@@ -342,8 +332,19 @@ export default {
     color: white;
     position: relative;
 }
-.create_new_test {
+.options > div.create_new_test {
     background: rgb(7, 45, 87);
+    height: 150px;
+    margin-top: auto;
+}
+.create_new_test .plus_icon {
+    border: 1px solid white;
+    border-radius: 50%;
+    padding: 5px;
+    width: 13px;
+    height: 13px;
+    background: white;
+    color: rgb(7, 45, 87);
 }
 .create_new_question {
     background: var(--paper-yellow-800);

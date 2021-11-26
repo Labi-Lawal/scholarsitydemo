@@ -171,7 +171,7 @@ export default defineComponent({
             
                 this.$store.dispatch('registerUser', body)
                 .then(()=> {
-                    this.$router.push({ path: '/dashboard' })
+                    this.$router.push({ path: '/' })
                 })
                 .catch((error)=> {
                     this.isLoading = false;

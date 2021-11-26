@@ -21,9 +21,13 @@
         <TestCard
           v-for="(test, index) in tests"
           :key="index"
+          :index=index
           :title="test.title"
           :course="test.course"
           :progress="test.progress"
+          :isMenuVisible="test.showMenu"
+          @showOptionAction=showOption
+          @hideOptionAction=hideOption
         />
 
         <!-- <ProductCard :list=15 @buttonAction="redeem" v-if="contentType === 'products'"/>
@@ -50,6 +54,12 @@ export default defineComponent({
         },
         emitButtonAction(index) {
             this.$emit('openBoardAction', index)
+        },
+        showOption(index) {
+            this.$emit('show-menu-option', index);
+        },
+        hideOption(index) {
+            this.$emit('hide-menu-option', index);
         }
     }
 });

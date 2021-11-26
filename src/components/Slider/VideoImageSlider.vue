@@ -113,7 +113,7 @@ export default defineComponent({
 
 <style scoped>
 .home-page-banner {
-  width: 100%;
+  width:  100%;
   height: 90vh;
   background-color: #EDEDED;
 }
@@ -142,9 +142,9 @@ export default defineComponent({
 .overlay .content {
   box-shadow: inset 0 0 2000px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
-  margin-top: 10%;
+  margin-top: 15vh;
   margin-left: 5%;
-  width: 45%;
+  width: 50%;
   padding: 3%;
   position: relative;
 }
@@ -153,7 +153,7 @@ export default defineComponent({
 }
 .main_text {
   font-weight: 700;
-  font-size: 450%;
+  font-size: 80px;
   color: white;
 }
 .sub_text {
