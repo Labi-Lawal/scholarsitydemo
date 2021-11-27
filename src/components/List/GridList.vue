@@ -24,6 +24,7 @@
           :index=index
           :title="test.title"
           :course="test.course"
+          :duration="test.duration"
           :progress="test.progress"
           :isMenuVisible="test.showMenu"
           @showOptionAction=showOption

@@ -78,13 +78,13 @@ export default defineComponent ({
     overflow: hidden;
     text-overflow: ellipsis;
     height: 35px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
     margin-top: 3%;
     font-weight: 600;
     color: var(--paper-grey-900);
+      display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .tutor {
     height: 15%;

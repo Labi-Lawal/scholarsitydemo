@@ -20,14 +20,29 @@
                     </div>
                 </div>
 
-                <div class="add_new_question">
-                    <div class="illustration_wrapper">
-                        <img src="@/assets/teacher/create/illustration-create-test.png" > 
-                    </div>
-                    <FontAwesomeIcon :icon="['fas', 'plus']" class="icon" />
-                    <div class="label">
-                        Create <br /> New Test
-                    </div>
+                <div class="section_box create_new_test">
+                    <router-link to="/teacher/create/new">
+                        <div class="illustration_wrapper">
+                            <img src="@/assets/teacher/create/illustration-create-test.png" > 
+                        </div>
+                        <FontAwesomeIcon :icon="['fas', 'plus']" class="icon" />
+                        <div class="label">
+                            Create <br /> New Test
+                        </div>
+                    </router-link>
+                </div>
+
+                <div class="section_box questions">
+                    <router-link to="/teacher/create/questions">
+                        <div class="illustration_wrapper">
+                            <img src="@/assets/teacher/create/illustration-question.png" > 
+                        </div>
+                        
+                        <div class="label">
+                            View Questions
+                        </div>
+                        <div class="sub_label">All questions in your archive</div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -58,6 +73,7 @@ export default defineComponent({
                     title: 'TEST 01',
                     course: 'COURSE 01 - Lorem ipsum ia kadhyvk ',
                     progress: 80,
+                    duration: '2hrs',
                     students: [
                         {
                             name: 'one',
@@ -71,9 +87,10 @@ export default defineComponent({
                     showMenu: false
                 },
                 {
-                    title: 'TEST 01',
+                    title: 'TEST 01 - WHATEVER YOU WANNA CALL IT',
                     course: 'COURSE 01',
                     progress: 20,
+                    duration: '2hrs',
                     students: [
                         {
                             name: 'one',
@@ -87,9 +104,10 @@ export default defineComponent({
                     showMenu: false
                 },
                 {
-                    title: 'TEST 01',
+                    title: 'TEST 01 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                     course: 'COURSE 01',
                     progress: 70,
+                    duration: '2hrs',
                     students: [
                         {
                             name: 'one',
@@ -103,9 +121,10 @@ export default defineComponent({
                     showMenu: false
                 },
                 {
-                    title: 'TEST 01',
+                    title: 'TEST 01 - Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                     course: 'COURSE 01',
                     progress: 90,
+                    duration: '2hrs',
                     students: [
                         {
                             name: 'one',
@@ -119,9 +138,10 @@ export default defineComponent({
                     showMenu: false
                 },
                 {
-                    title: 'TEST 01',
+                    title: 'TEST 01 - Lorem ipsum dolor sit amet, consectetur adipiscing elit os sdhj sdih kjasd vbdfs kaijshd sidf',
                     course: 'COURSE 01',
                     progress: 40,
+                    duration: '2hrs',
                     students: [
                         {
                             name: 'one',
@@ -181,24 +201,34 @@ export default defineComponent({
         margin-top: auto;
         font-size: 90%;
     }
-    div.add_new_question {
-        margin-left: auto;
-        background: rgba(7, 44, 87);
+    div.section_box {
         position: relative;
         cursor: pointer;
+        width: 150px;
+    }
+    div.create_new_test {
+        background: rgba(7, 44, 87);
+        margin-left: auto;
+    }
+    div.questions {
+        background: var(--paper-orange-a100);
+        width: 200px;
     }
 
-    .add_new_question .illustration_wrapper {
+    .section_box .illustration_wrapper {
         position: absolute;
         top: 0;
         right: 0;
         height: 80%;
-        width: 70%;
+        width: 100px;
         z-index: 0;
         opacity: 0.7;
     }
+    .section_box img {
+        object-fit: contain;
+    }
 
-    .add_new_question .icon {
+    .section_box .icon {
         background: var(--paper-grey-100);
         color: rgba(7, 44, 87);
         border-radius: 50%;
@@ -206,10 +236,23 @@ export default defineComponent({
         height: 10px;
         padding: 5px;
     }
-    .add_new_question .label {
+    .section_box .label {
         z-index: 1;
         color: white;
         font-weight: 600;
-        font-size: 100%; 
+        font-size: 100%;
+    }
+    .section_box.create_new_test .label {
+        margin-top: 10%;
+    }
+    .section_box.questions .label {
+        margin-top: 12%;
+        color: var(--red-100-faded);
+    }
+    .section_box.questions .sub_label {
+        font-size: 80%;
+        margin-top: 3%;
+        color: var(--paper-grey-600);
+        width: 60%;
     }
 </style>

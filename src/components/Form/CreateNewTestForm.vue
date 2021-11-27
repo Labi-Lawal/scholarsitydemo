@@ -70,7 +70,12 @@
                     </div>
                     <div class="field">
                         <label>Test Title Limit ( in Minutes )</label>
-                        <input autocomplete="false">
+                        <div class="mixed_input_double">
+                            <input autocomplete="false">
+                            <DropDown 
+                                
+                            />
+                        </div>
                     </div>
                 </section>
 

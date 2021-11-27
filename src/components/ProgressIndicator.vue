@@ -1,10 +1,15 @@
 <template>
     <div class="progress_indicator">
-        <div class="progress_percentage_wrapper">
+        <div 
+            class="progress_percentage_wrapper"
+        >
             <div class="progress_percentage">{{ percentage }}%</div>
             <div class="label"> Completed </div>
         </div>
-        <div class="progress_bar_frame">
+        <div 
+            class="progress_bar_frame"
+            v-if=showBar
+        >
             <div class="progress_bar_main" :style="{width: percentage + '%'}"></div>
         </div>
     </div>
@@ -15,7 +20,7 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
     name: 'progress-indicator',
-    props: ['percentage']
+    props: ['showBar', 'showPercentage', 'percentage']
 });
 </script>
 

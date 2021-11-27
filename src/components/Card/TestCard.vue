@@ -4,7 +4,10 @@
         @click="$emit('button-action', index)"
     >
         <div class="top">
-            <div class="course_title">{{ course }}</div>
+            <div class="course_title_wrapper">
+                <FontAwesomeIcon :icon="['fas', 'book-open']" class="icon" />
+                <div class="course_title">{{ course }}</div>
+            </div>
             <div 
                 class="menu_option"
                 @click="$emit('show-option-action', index)"
@@ -12,10 +15,22 @@
                 <FontAwesomeIcon :icon="['fas', 'ellipsis-v']" />
             </div>
         </div>
+
         <div class="test_title">{{ title }}</div>
+        
+        <div class="duration_wrapper">
+            <FontAwesomeIcon :icon="['fas', 'clock']" class="icon" />
+            <div class="duration_dets_wrapper">
+                <div class="label">Duration</div>
+                <div class="time">{{ duration }}</div>
+            </div>
+        </div>
+        
         <div class="bottom">
             <div class="progress_indicator_wrapper">
-                <ProgressIndicator 
+                <ProgressIndicator
+                    :showBar=true
+                    :showPercentage=true
                     :percentage=progress
                 />
             </div>
@@ -35,6 +50,7 @@
                 </div>
             </div>
         </div>
+        
         <div 
             class="option_menu"
             v-if="isMenuVisible"
@@ -59,7 +75,7 @@ import UserProfileMin from "@/components/UserProfileMin.vue";
 
 export default defineComponent ({
     name: 'test-card',
-    props: ['index', 'title', 'course', 'progress', 'isMenuVisible'],
+    props: ['index', 'title', 'course', 'duration', 'progress', 'isMenuVisible'],
     components: { ProgressIndicator, UserProfileMin },
     data(){
         return {  }
@@ -74,12 +90,24 @@ export default defineComponent ({
         border-radius: 5px;
         height: 250px;
         position: relative;
+        background: white;
     }
     .top {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 15%;
+        height: 10%;
+    }
+    .course_title_wrapper {
+        display: flex;
+    }
+    .course_title_wrapper .icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        border-radius: 50%;
+        color: var(--blue-100);
+        background: #3079ee43;
     }
     .course_title {
         margin: auto 0;
@@ -102,11 +130,42 @@ export default defineComponent ({
         border-radius: 5px;
         justify-content: center;
     }
+
     .test_title {
-        margin-top: 5%;
+        height: 28%;
+        margin-top: 1%;
         color: var(--paper-grey-700); 
-        font-weight: 600;
-        font-size: 160%;
+        font-weight: 500;
+        font-size: 120%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .duration_wrapper {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        margin-top: 1%;
+    }
+    .duration_wrapper .icon {
+        color: var(--paper-grey-400);
+        font-size: 90%;
+    }
+    .duration_wrapper .label {
+        font-size: 80%;
+        font-weight: 500;
+        color: var(--paper-grey-600);
+    }
+    .duration_dets_wrapper {
+        margin-left: 5px;
+        height: 80%;
+    }
+    .duration_dets_wrapper .time {
+        color: var(--paper-grey-800);
     }
 
     .bottom {

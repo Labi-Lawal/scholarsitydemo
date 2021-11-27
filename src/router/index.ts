@@ -65,6 +65,16 @@ const routes: Array<RouteRecordRaw> = [
               }
             ]
           },
+          {
+            path: 'questions', name: 'Questions',
+            component:  ()=> import('../views/Teacher/Create/Questions/Index.vue'),
+            children: [
+              {
+                path: 'all', alias: '', name: 'All Questions',
+                component: ()=> import('../views/Teacher/Create/Questions/Questions.vue'),
+              }
+            ]
+          }
         ]
       }
     ]

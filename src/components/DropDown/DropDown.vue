@@ -1,6 +1,6 @@
 <template>
     <div class="select">
-        <div class="display" :class="(hideBorder)?'hide-border':''" @click="$emit('show-options')">
+        <div class="display" :class="(hideBorder)?'hide-border':''" @click="$emit('show-options', dropDownIndex)">
             <div class="placeholder-option" v-if="placeholder!=undefined && !selected">{{placeholder}}</div>
             <div class="selected-option" v-if="placeholder!=undefined && selected">{{options[selectedIndex].display_name}}</div>
             <div class="selected-option" v-if="placeholder==undefined && selected">{{options[selectedIndex].display_name}}</div>
