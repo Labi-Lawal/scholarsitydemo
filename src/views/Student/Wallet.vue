@@ -44,7 +44,7 @@
 <script>
 import { defineComponent } from 'vue';
 import BalanceCard from '@/components/Wallet/BalanceCard.vue';
-import Table from '@/components/Table.vue';
+import Table from '@/components/Table/Table.vue';
 
 export default defineComponent({
     components: { BalanceCard, Table },

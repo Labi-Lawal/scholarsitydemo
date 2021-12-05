@@ -1,6 +1,12 @@
 <template>
-    <div class="select">
-        <div class="display" :class="(hideBorder)?'hide-border':''" @click="$emit('show-options', dropDownIndex)">
+    <div class="select" >
+        <div
+            tabindex=0
+            class="display" 
+            :class="(hideBorder)?'hide-border':''" 
+            @click="$emit('show-options', dropDownIndex)"
+            @keypress.enter="$emit('show-options', dropDownIndex)"
+        >
             <div class="placeholder-option" v-if="placeholder!=undefined && !selected">{{placeholder}}</div>
             <div class="selected-option" v-if="placeholder!=undefined && selected">{{options[selectedIndex].display_name}}</div>
             <div class="selected-option" v-if="placeholder==undefined && selected">{{options[selectedIndex].display_name}}</div>
@@ -20,7 +26,15 @@
             }" 
             v-if="isOptionsVisible"
         >
-            <div class="option" v-for="(option, index) in options" :key="option.value" @click="optionSelected(index)"> {{ option.display_name }}</div>
+            <div 
+                tabindex="-1"
+                class="option" 
+                v-for="(option, index) in options" 
+                :key="option.value" 
+                @click="optionSelected(index)"
+            > 
+                {{ option.display_name }}
+            </div>
         </div>
     </div>
 </template>
@@ -54,7 +68,7 @@ export default defineComponent({
 
 <style scoped>
     div.select {
-        height: 100%;
+        height: 80%;
         width: 100%;
         cursor: pointer;
         position: relative;
@@ -64,14 +78,20 @@ export default defineComponent({
     }
     div.display {
         height: 100%;
-        padding: 0% 6%;
+        padding: 1% 6%;
         display: flex;
+        text-align: start;
         border: 1px solid lightgrey;
         border-radius: 5px;
         text-transform: capitalize;
-        font-size: 110%;
+        font-size: 105%;
         color: rgb(83, 83, 83);
         font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    div.display:focus {
+        outline-color: var(--paper-light-blue-500);
     }
     div.display.hide-border {
         border: none;
@@ -118,9 +138,10 @@ export default defineComponent({
     div.option {
         display: flex;
         align-items: center;
+        text-align: start;
         height: 30px;
         color: grey;
-        padding: 0% 6%;
+        padding: 3% 6%;
         text-transform: capitalize;
     }
     div.option:hover {

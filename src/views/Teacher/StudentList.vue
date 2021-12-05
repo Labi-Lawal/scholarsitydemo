@@ -59,7 +59,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import Header from "@/components/Header/Header.vue";
-import Table from '@/components/Table.vue';
+import Table from '@/components/Table/Table.vue';
 import StudentAddNew from '@/components/Form/StudentAddNew.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
 import Footer from '@/components/Footer/SiteFooter.vue';
@@ -96,7 +96,16 @@ export default defineComponent({
         hideNewUserForm() {
             this.isNewUserFormVisible = false;
         },
-    }
+    },
+    async beforeMount() {
+        await this.$store.dispatch('fetchstudents')
+        .then((response)=> {
+            console.log(response);
+        })
+        .catch((error)=> {
+            console.log(error.response);
+        });
+    },
 });
 </script>
 

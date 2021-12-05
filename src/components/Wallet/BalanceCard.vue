@@ -5,12 +5,13 @@
             $ 44,530
         </div>
         <div 
-            class="purchase_credits "
+            class="purchase_credits"
             :class="{
                 div_width_by_none: (widthRatio == 1) ? true : false,
                 div_width_by_2: (widthRatio == 2) ? true : false,
                 div_width_by_3: (widthRatio == 3) ? true : false
             }"
+            @click="gotoPurchaseCredits()"
         >Purchase Credits</div>
     </div>
 </template>
@@ -20,7 +21,12 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
     name: 'balance-credits',
-    props: ['widthRatio']
+    props: ['widthRatio'],
+    methods: {
+        gotoPurchaseCredits() {
+            this.$router.push('/purchase-credits');
+        }
+    }
 });
 </script>
 

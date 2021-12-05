@@ -40,7 +40,7 @@ import { defineComponent } from "@vue/runtime-core";
 
 import FormTitle from "@/components/Title/FormTitle.vue";
 import ButtonPlainText from "@/components/buttons/ButtonPlainText.vue";
-import Table from "@/components/Table.vue";
+import Table from "@/components/Table/Table.vue";
 
 export default defineComponent({
     name: 'publish-form',

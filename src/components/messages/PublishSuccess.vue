@@ -7,6 +7,20 @@
             <div class="text">
                 Test has been published based on set schedule. 
             </div>
+            <div class="button_section">
+                <div class="btn_wrapper">
+                    <ButtonPlainText 
+                        buttonText="Create Again"
+                        @buttonAction="$emit('back-to-start')"
+                    />
+                </div>
+                <div class="btn_wrapper">
+                    <ButtonPlainText 
+                        buttonText="Finish"
+                        @buttonAction="$emit('view-tests')"
+                    />
+                </div>
+            </div>
         </div>
     </div>
   </section>
@@ -14,17 +28,15 @@
 
 <script>
 import { defineComponent } from "@vue/runtime-core";
+import ButtonPlainText from '../buttons/ButtonPlainText.vue';
 
 export default defineComponent({
     name: 'redeem-product-success',
-    components: { }
+    components: { ButtonPlainText }
 });
 </script>
 
 <style scoped>
-.redeem_product_success {
-    
-}
 .redeem_product_success_wrapper {
     display: flex;
     align-items: center;
@@ -51,16 +63,26 @@ export default defineComponent({
     color: var(--paper-grey-500);
     font-weight: 500;
 }
+.button_section {
+    width: 100%;
+    margin-top: 5%;
+    display: flex;
+    /* justify-content: flex-end; */
+}
 .btn_wrapper {
     width: 15%;
-    height: 30px;
-    margin-left: 10%;
+    height: 50px;
     margin-top: 1%;
 }
 .btn_wrapper button {
-    border: 1px solid var(--paper-grey-800);
-    background: var(--paper-grey-800);
+    border: #3079ee54;
+    background: #3079ee54;
+    color: var(--blue-100);
+    border-radius: 25px;
+}
+.btn_wrapper:last-child button {
+    background: #3079ee;
     color: white;
-    border-radius: 15px;
+    margin-left: 10%;
 }
 </style>

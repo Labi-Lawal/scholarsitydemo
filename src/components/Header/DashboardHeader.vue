@@ -1,62 +1,65 @@
 <template>
-    <header>
-        <div class="logo">
-            <SectionTitle  />
-        </div>
-        <div class="nav">
-            
-            <SearchBar class="search_bar" />
+    <header 
+        :class="{
+            signedin: isSignedIn,
+            fixed: true
+        }"
+    >
+        <div class="top">
+            <div class="logo_wrapper">
+                <router-link to="/">Scholarsity</router-link>
+            </div>
 
-            <Notifications 
-                class="notification"
-                count="9"
+            <div class="nav">
+                <SiteNavigation class="nav_links" />
+
+                <SearchBar class="search_bar" />
+
+                <Notifications
+                    v-if="isSignedIn" 
+                    class="notification"
+                    count="9"    
+                />
+            </div>
+
+            <div class="signin_btn_wrapper" v-if="!isSignedIn">
+                <router-link to="/signin">
+                    <ButtonPlainText buttonText="SIGN IN" :isLoading="false" class="signin_btn"/>
+                </router-link>
+            </div>
+                
+            <UserProfileMin
+                v-if="isSignedIn"
+                class="profile"
+                :showDetails=false
             />
         </div>
-            
-        <div class="profile_wrapper">
-            <div class="profile" @click="toggleMenu">
-                <div class="profile_image">
-                    <img 
-                        src="https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
-                    />
-                </div>
-                <div class="name"> {{ userName }} </div>
-            </div>
-            <div class="user_profile_menu" v-if="isMenuVisible">
-                <div class="item logout"> 
-                    <router-link to="/signout">Log Out</router-link> 
-                </div>
-            </div>
-        </div>
-        
     </header>
 </template>
 
 <script>
     import { defineComponent } from "@vue/runtime-core";
+    import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
+    import SiteNavigation from '@/components/navigation/SiteNavigation.vue';
     import SearchBar from "@/components/Form/SearchBar.vue";
-    import SectionTitle from "@/components/Title/SectionTitle.vue";
     import Notifications from "@/components/Notifications.vue";
+    import UserProfileMin from "@/components/UserProfileMin.vue";
 
     export default defineComponent({
-        name: 'dashboard-header',
-        components: { SearchBar, Notifications,SectionTitle },
-        props: ['pageTitle'],
+        name: 'Header',
+        components: { ButtonPlainText, SearchBar, Notifications, UserProfileMin, SiteNavigation  },
         data () {
+            var routeParent = this.$route.matched[0].name.toLowerCase();
+
             return  { 
+                isSignedIn: this.$store.getters.isSignedIn,
+                routeParent,
                 isNotificationVisible: false,
-                isMenuVisible: false,
-                is: '',
-                userName: '',
+                isFixed: false,
             }
         },
-        methods: {
-            toggleMenu () {
-                this.isMenuVisible = !this.isMenuVisible;      
-            }
-        },
-        beforeMount() {
-            this.userName = this.$store.getters.userData.fullname;
+        created() {
+            this.isSignedIn = this.$store.getters.isSignedIn;
         }
     });
 </script>
@@ -66,10 +69,28 @@
 
     header {
         height: 70px;
-        box-shadow: 0 0 20px -2px rgb(20 23 28 / 10%);
+        border-bottom: 1px solid var(--paper-grey-200);
+    }
+    
+    header.fixed {
+        position: fixed;
+        width: 100%;
+        z-index: 5;
+        top: 0;
+        background: white !important;
+        color: var(--paper-grey-800) !important;
+    }
+    
+    div.top {
         display: flex;
         align-items: center;
-        padding: 0 3%;
+        height: 70px;
+    }
+    div.top > *:first-child {
+        margin-left: 5%;
+    }
+    div.top > *:last-child {
+        margin-right: 5%;
     }
 
     .logo_wrapper {
@@ -78,18 +99,31 @@
     }
     
     .nav {
-        margin-left: auto;
-        height: 60%;
-        display: flex;
+        margin-left: 2%;
         margin-right: 2%;
+        height: 60%;
+        width: calc(100% - calc(8%));
+        display: flex;
+    }
+    
+    .nav_links {
+        margin-right: auto;
+    }
+    
+    .nav_links:deep(nav > div) {
+        color: var(--paper-grey-500);
+    }
+    .nav_links:deep(nav > div):hover {
+        color: var(--blue-100);
+        font-weight: 500;
     }
     
     .search_bar {
         margin-left: auto;
-        width: 300px;
+        width: 25%;
     }
     .search_bar.expand {
-        width: 600px;
+        width: 40%;
     }
     
     .notification {
@@ -98,80 +132,29 @@
         margin-bottom: auto;
     }
     
-    nav {
-        display: flex;
-        align-items: center;
-        margin-right: auto;
-    }
-    nav > div {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
     .signin_btn_wrapper {
-        margin-left: auto;
         height: 60%;
         width: 8%;
     }
     .signin_btn_wrapper button {
         border: none;
         background: var(--blue-100);
-        color: white;
+        color: white;   
         font-weight: 600;
         border-radius: 25px;
     }
-    .profile_wrapper {
-        margin: auto 0;
-        position: relative;
+    .profile {
+        width: fit-content;
     }
-    .profile_wrapper *::selection {
-        background: none;
-    }
-    .profile_wrapper .profile { 
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        cursor: pointer;
-    }
-    img {
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        object-position: top;
-    }
-    .name {
-        margin-left: 10px;
-        font-weight: 500;
-        text-transform: capitalize;
-    }
+    
 
-    .user_profile_menu {
-        box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.192);
-        border-radius: 5px;
-        position: absolute;
-        z-index: 5;
-        top: 120%;
-        right: 0;
-        width: 200px;
-        padding: 3% 0;
-        background: white;
+    .bottom {
+        height: 49px;
+        width: 100%;
     }
-    .item {
-        font-weight: 500;
-        height: 40px;
-        cursor: pointer;
-        color: var(--paper-grey-600);
-    }
-    .item > * {
-        padding: 0 5%;
-        display: flex;
-        align-items: center;
-    }
-    .item:hover {
-        background: var(--paper-grey-100);
+    .bottom nav {
+        width: 90%;
+        margin: 0 auto;
     }
 
 </style>

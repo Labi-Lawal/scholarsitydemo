@@ -12,8 +12,9 @@
                             {{ course.title }}
                         </div>
                         <div class="teacher_profile">
-                            <UserProfileMin 
+                            <UserProfileMin
                                 class="user_profile_min"
+                                :details=course.teacher
                                 :showDetails=true
                             />
                         </div>
@@ -39,13 +40,22 @@
                             </div>
                             <div class="total_ratings"> ({{ course.ratingsCount }}) </div>
                         </div>
-                        <div class="price">$84.99</div>
+                        <div class="price">${{ course.price }}</div>
                         <div class="buttons">
                             <div class="btn_wrapper">
-                                <ButtonPlainText buttonText="Add To Cart" class="add_to_cart"/>
+                                <ButtonPlainText 
+                                    :isLoading=isAddingToCart
+                                    buttonText="Add To Cart" 
+                                    class="add_to_cart"
+                                    @buttonAction="addToCart()"
+                                />
                             </div>
                             <div class="btn_wrapper">
-                                <ButtonPlainText buttonText="Buy Now" class="buy_now" />
+                                <ButtonPlainText 
+                                    buttonText="Buy Now" 
+                                    class="buy_now" 
+                                    @buttonAction="buyNow()"
+                                />
                             </div>
                         </div>
                     </div>
@@ -158,6 +168,10 @@
             </div>
         </section>
         <Footer />
+        <SuccessAddCartModal 
+            message="Item added to cart"
+            v-if="cartUpdated.status"
+        />
     </section>
 </template>
 
@@ -170,15 +184,29 @@ import SectionTitle from '@/components/Title/SectionTitle.vue';
 import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
 import ReviewCard from "@/components/Card/ReviewCard.vue";
 import SuggestedCourses from "@/components/SuggestedCourses.vue";
+import SuccessAddCartModal from "@/components/Modals/Success/SuccessAddCartModal.vue";
 
 export default defineComponent({
-    components: { Header, Footer, UserProfileMin, SectionTitle, ButtonPlainText, ReviewCard, SuggestedCourses },
+    components: { 
+        Header, 
+        Footer, 
+        UserProfileMin, 
+        SectionTitle, 
+        ButtonPlainText, 
+        ReviewCard, 
+        SuggestedCourses,
+        SuccessAddCartModal
+    },
+    props: [''],
     data() {
 
         var course = {
+            _id:'1',
             title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam orci elit, vel mollis purus volutpat facilisis. Nunc et facilisis mi. Vestibulum consequat bibendum orci ullamcorper bibendum. Nam consectetur, justo ac lobortis maximus, quam tortor tempor mi, nec tincidunt dolor felis at libero. Sed scelerisque nisi sit amet leo tristique porta. Mauris sed varius ipsum. Vivamus vulputate leo vel rutrum suscipit. Sed sed sapien a elit ultricies mattis. Vivamus at sem orci. Nam porttitor consectetur scelerisque. Donec egestas mi et consequat tempor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse venenatis risus ut lorem bibendum vulputate vitae eget risus. Nunc tempor leo et lorem maximus tempus. Aenean ullamcorper enim diam, vitae sagittis ex luctus vitae. Curabitur quis aliquet ipsum. Fusce vitae leo nec tortor laoreet semper. Nunc mollis sed nunc eget posuere. Aenean quis sem posuere, maximus urna non, vehicula nisi. Ut commodo lacus in faucibus lobortis. Aliquam erat volutpat. Sed suscipit, lectus quis tincidunt sodales, est tellus fermentum erat, eget volutpat quam nisi sit amet sapien.',
-            tutor: 'Jose Portilla',
+            teacher: [
+                'Jose Portilla'
+            ],
             ratingsCount: 52,
             avg_ratings: 4.8,
             price: 84.99,
@@ -200,65 +228,106 @@ export default defineComponent({
 
         courses = [
             {
-            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-            tutor: 'Jose Portilla',
-            ratingsCount: 52,
-            avg_ratings: 4.8,
-            price: 84.99
+                title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+                tutor: 'Jose Portilla',
+                ratingsCount: 52,
+                avg_ratings: 4.8,
+                price: 84.99
             },
             {
-            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-            tutor: 'Jose Portilla',
-            ratingsCount: 52,
-            avg_ratings: 4.8,
-            price: 84.99
+                title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+                tutor: 'Jose Portilla',
+                ratingsCount: 52,
+                avg_ratings: 4.8,
+                price: 84.99
             },
             {
-            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-            tutor: 'Jose Portilla',
-            ratingsCount: 52,
-            avg_ratings: 4.8,
-            price: 84.99
+                title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+                tutor: 'Jose Portilla',
+                ratingsCount: 52,
+                avg_ratings: 4.8,
+                price: 84.99
             },
             {
-            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-            tutor: 'Jose Portilla',
-            ratingsCount: 52,
-            avg_ratings: 4.8,
-            price: 84.99
+                title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+                tutor: 'Jose Portilla',
+                ratingsCount: 52,
+                avg_ratings: 4.8,
+                price: 84.99
             },
             {
-            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-            tutor: 'Jose Portilla',
-            ratingsCount: 52,
-            avg_ratings: 4.8,
-            price: 84.99
-            },{
-            title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-            tutor: 'Jose Portilla',
-            ratingsCount: 52,
-            avg_ratings: 4.8,
-            price: 84.99
+                title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+                tutor: 'Jose Portilla',
+                ratingsCount: 52,
+                avg_ratings: 4.8,
+                price: 84.99
+            },
+            {
+                title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
+                tutor: 'Jose Portilla',
+                ratingsCount: 52,
+                avg_ratings: 4.8,
+                price: 84.99
             }
         ];
 
         return {
             course,
+            courseid: this.$route.params.id,
             windowTop: 0,
             isFixed: false,
-            courses
+            courses,
+            isAddingToCart: false,
+            cartUpdated: {
+                status: false,
+                qty: 0
+            },
         }
     },
     methods: {
+        async fetchCourse() {
+            await this.$store.dispatch('fetchcourse', this.courseid)
+            .then((response)=> {
+                this.course = response;
+            })
+            .catch((error)=> {
+                console.log(error);
+            });
+        },
         handleOnSroll() {
             this.windowTop = window.top.scrollY;
-            console.log(this.windowTop);
 
             if(this.windowTop >= 500) this.isFixed = true;
             else this.isFixed = false;
 
             if(this.windowTop >= 2600) this.isFixed = false;
+        },
+        async addToCart() {
+            this.isAddingToCart = true;
+            
+            var newCartItem = {
+                id: this.course._id,
+                quantity: 1,
+                date: Date.now()
+            };
+            
+            await this.$store.dispatch('addcoursetocart', newCartItem)
+            .then((cartQty)=> { 
+                this.cartUpdated.status = true;
+                this.cartUpdated.qty = cartQty;
+
+                setTimeout(()=> this.cartUpdated.status = false, 2000);
+            })
+            .catch((error)=> {
+                console.log("ERROR ADDING TO CART");
+                console.log(error);
+            });
+
+            this.isAddingToCart = false;
         }
+    },
+    async beforeMount() {
+        await this.fetchCourse();
     },
     created() {
         window.addEventListener('scroll', this.handleOnSroll);

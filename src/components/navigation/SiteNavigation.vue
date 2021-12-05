@@ -155,7 +155,7 @@ export default defineComponent({
                         link: 'overall-statistics'
                     },
                     {
-                        title: 'overall statistics',
+                        title: 'Student Level Statistics',
                         link: 'student-level-statistics'
                     },
                 ]
@@ -176,7 +176,8 @@ export default defineComponent({
                 icon: 'store'
             }
         ], 
-        navList:any = [];
+        navList:any = [],
+        currentRouteIndex:any = null;
 
         return {
             userRole: null,
@@ -184,7 +185,7 @@ export default defineComponent({
             navList,
             studentNav,
             teacherNav,
-            currentRouteIndex: 0,
+            currentRouteIndex,
             currentSubRouteIndex: 0
         }
     },

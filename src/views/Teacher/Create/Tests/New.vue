@@ -1,8 +1,9 @@
 <template>
     <div class="all_tests_page">
-        <div class="bread_crumbs">Home > Create > New</div>
-        
-        <div class="page_head">
+    
+        <div class="page_head" v-if="!submitted">
+            <div class="bread_crumbs">Home > Create > New</div>
+
             <div class="page_title">Create New Test</div>
             <div class="progress_indicator_wrapper">
                 <PageProgressIndicator
@@ -13,18 +14,38 @@
             </div>
         </div>
 
-        <div class="body">
-            <GeneralInfo />
-            <div class="button_section">
-                <div class="button_wrapper">
-                    <ButtonPlainText 
-                        buttonText="Next"
-                    />
-                <div>
-            </div>
+        <div class="body" ref="bodyContainer" v-if="!submitted">
+            <GeneralInfo 
+                v-if="currentSectionIndex === 0"
+                @nextButtonAction="goToNext()"
+            />
+            <Instructions 
+                v-if="currentSectionIndex === 1"
+                @nextButtonAction="goToNext()"
+            />
+            <AddQuestions 
+                v-if="currentSectionIndex === 2"
+                @nextButtonAction="goToNext()"
+            />
+            <Review 
+                v-if="currentSectionIndex === 3"
+                @nextButtonAction="goToNext()"
+            />
+            <Publish 
+                v-if="currentSectionIndex === 4"
+                @nextButtonAction="goToNext()"
+            />
         </div>
+
+        <div
+            v-if="submitted && success" 
+            class="publish_success_wrapper"
+        >
+            <PublishSuccess 
+                @backToStart="createTest()"
+                @viewTests="backToTests()"
+            />
         </div>
-    </div>
     </div>
 </template>
 
@@ -32,10 +53,14 @@
 import { defineComponent } from '@vue/runtime-core';
 import PageProgressIndicator from '@/components/PageProgressIndicator.vue';
 import GeneralInfo from '@/components/CreateTest/GeneralInfo.vue';
-import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
+import Instructions from '@/components/CreateTest/Instructions.vue';
+import AddQuestions from '@/components/CreateTest/AddQuestions.vue';
+import Review from '@/components/CreateTest/Review.vue';
+import Publish from '@/components/CreateTest/Publish.vue';
+import PublishSuccess from '@/components/messages/PublishSuccess.vue';
 
 export default defineComponent({
-    components: { PageProgressIndicator, GeneralInfo, ButtonPlainText },
+    components: { PageProgressIndicator, GeneralInfo, Instructions, AddQuestions, Publish, Review, PublishSuccess },
     data() {
         return {
             currentSectionIndex: 0,
@@ -142,32 +167,57 @@ export default defineComponent({
                 {
                     title: 'Publish'
                 }
-            ]
+            ],
+            submitted: false,
+            success: false
         }
     },
     methods:  {
-
+        goToNext() {
+            if(this.currentSectionIndex < this.sections.length - 1)
+                this.currentSectionIndex++;
+            else  {
+                // TODO: SUBMIT ALL INFORMAION TO SERVER
+                this.submitted = true;
+                this.success = true;
+            }
+            
+        },
+        createTest() {
+            this.submitted = false;
+            this.success = false;
+            this.currentSectionIndex = 0;
+        },
+        backToTests() {
+            this.$router.push('/teacher/create');
+        }
+    },
+    updated() {
+        window.scrollTo(0, 0);
     }
 })
 </script>
 
 <style scoped>
     .bread_crumbs {
-        margin-top: 1%;
         font-size: 90%;
         color: var(--paper-grey-600);
     }
 
     .page_head {
+        background: white;
         height: 150px;
-        margin-top: 1%;
-        width: 90%;
         margin: 0 auto;
-        margin-top: 5%;
+        margin-top: 70px;
+        position: sticky;
+        z-index: 4;
+        top: 70px;
+        padding: 1% 0;
     }
     .page_title {
         font-size: 250%;
         height: 50px;
+        margin-top: 50px;
         margin-bottom: 20px;
     }
     .boxes {
@@ -258,7 +308,7 @@ export default defineComponent({
 
     .body {
         width: 90%;
-        margin: 5% auto;
+        margin: 0 auto;
     }
 
     .button_section {
@@ -278,5 +328,8 @@ export default defineComponent({
         color: white;
         font-weight: 600;
         border-radius: 25px;
+    }
+    .publish_success_wrapper {
+        padding: 15% 0;
     }
 </style>

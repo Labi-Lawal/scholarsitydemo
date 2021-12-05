@@ -79,4 +79,50 @@
       transform: translate(24px, 0);
     }
   }
+
+  .addtocart_success_message {
+    border: 1px solid green;
+    height: 100px;
+    width: 30%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .page_loader {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .page_loader div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 4px solid var(--blue-100);
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: var(--blue-100) transparent transparent transparent;
+  }
+  .page_loader div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .page_loader div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .page_loader div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 </style>

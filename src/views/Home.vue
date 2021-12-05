@@ -135,10 +135,25 @@ export default defineComponent({
           price: 84.99
         }
       ]
+
       return {
         details,
         courses
       }
+    },
+    methods: {
+      async fetchCourses() {
+        await this.$store.dispatch('fetchcourses')
+              .then((response)=> {
+                this.courses = response; 
+              })
+              .catch((error)=> {
+                  console.log(error.response);
+              });
+      }
+    },
+    async beforeMount() {
+      await this.fetchCourses();
     }
 });
 </script>
@@ -174,25 +189,27 @@ header.fixed:deep(nav > div:hover) {
   font-weight: 500 !important;
 }
 
-header::v-deep .search_bar {
+header:deep .search_bar {
   background: white !important;
   display: none;
 }
-header::v-deep .notification .icon_wrapper .icon {
+header:deep .notification .icon_wrapper .icon,
+header:deep .cart_indicator .icon {
   color: white !important;
 }
 
-header.fixed::v-deep .search_bar {
+header.fixed:deep .search_bar {
   background: var(--paper-grey-100) !important;
   display: unset;
 }
-header.fixed::v-deep .notification .icon_wrapper .icon {
+header.fixed:deep .notification .icon_wrapper .icon,
+header.fixed:deep .cart_indicator .icon  {
   color: var(--paper-grey-400) !important;
 }
-header.fixed::v-deep .bottom nav > div {
+header.fixed:deep .bottom nav > div {
   color: var(--paper-grey-700);
 }
-header::v-deep nav .router-link-exact-active{
+header:deep nav .router-link-exact-active{
   color: white;
   border-color: white;
 }

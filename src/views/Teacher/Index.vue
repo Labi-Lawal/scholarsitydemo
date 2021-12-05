@@ -1,6 +1,6 @@
 <template>
   <div class="create_page">
-    <Header />
+    <DashBoardHeader />
 
     <div class="create_page_body">
       <router-view />
@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import Header from '@/components/Header/Header.vue';
+import DashBoardHeader from '@/components/Header/DashboardHeader.vue';
 import SiteFooter from '@/components/Footer/SiteFooter.vue';
 
 export default {
-  components: { Header, SiteFooter }
+  components: { DashBoardHeader, SiteFooter }
 
 }
 </script>

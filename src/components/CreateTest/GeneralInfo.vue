@@ -94,12 +94,19 @@
 
             <section class="section_wrapper">
                 <div class="section_title"> Results to be published to student </div>
-                <div class="">
+                <div class="grid_7">
                     <div 
-                        class=""
-
+                        class="check_box_wrapper"
+                        v-for="(resultType, index) in resultTypes"
+                        :key="index"
                     >
-
+                        <CheckBox 
+                            :index=index
+                            :label=resultType.label
+                            :value=resultType.value
+                            :selected="resultType.selected"
+                            @selectCheckBox=selectBox
+                        />
                     </div>
                 </div>
             </section>
@@ -182,6 +189,14 @@
                 </div>
             </section>
 
+            <div class="button_section">
+                <div class="button_wrapper">
+                    <ButtonPlainText 
+                        buttonText="Next"
+                        @buttonAction="goToNextSection()"
+                    />
+                </div>
+            </div>
         </form>
     </div>
 </template>
@@ -189,10 +204,12 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import DropDown from '@/components/DropDown/DropDown.vue';
+import CheckBox from '@/components/CheckBox/CheckBox.vue';
+import ButtonPlainText from '@/components/buttons/ButtonPlainText.vue';
 
 export default defineComponent({
     name: 'general-info',
-    components: { DropDown },
+    components: { DropDown, CheckBox, ButtonPlainText },
     data() {
         return {
             boardOptions: [
@@ -263,10 +280,55 @@ export default defineComponent({
                     display_name: 'Hrs'
                 }
             ],
+            resultTypes: [
+                {
+                    label: 'Net Score',
+                    value: 'net-score',
+                    selected: false
+                },
+                {
+                    label: 'Total Score',
+                    value: 'total-score',
+                    selected: true
+                },
+                {
+                    label: 'Negative Score',
+                    value: 'negative-score',
+                    selected: false
+                },
+                {
+                    label: 'Accuracy Score',
+                    value: 'accuracy-score',
+                    selected: false
+                },
+                {
+                    label: 'Percentile',
+                    value: 'percentile',
+                    selected: false
+                },
+                {
+                    label: 'Correct Solutions',
+                    value: 'correct-ssolutions',
+                    selected: false
+                },
+                {
+                    label: 'Comparinson Analytics',
+                    value: 'comparison-analytics',
+                    selected: false
+                }
+            ],
             optionSelected: null,
             selectedIndex: [0, 0, 0, 2, 0, 0, 0, 0],
             selectedStatus: [false, false, false, true, false, false, false, false],
-            showOptions: [false, false, false, false]
+            showOptions: [false, false, false, false],
+            
+            selectedBoard: '',
+            selectedGrade: '',
+            selectedCourse: '',
+            topic: '',
+            testTitle: '',
+            selectedDurationInMs: '',
+            selectedresultTypes: []
         }
     },
     methods: {
@@ -283,6 +345,12 @@ export default defineComponent({
                 this.showOptions[i] = false; 
             }
         },
+        selectBox(index:number) {
+            this.resultTypes[index].selected = !this.resultTypes[index].selected;
+        },
+        goToNextSection() {
+            this.$emit('next-button-action');
+        }
     },
     async beforeMount() {
         // this.$store.dispatch('fetchboards')
@@ -296,6 +364,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+    .create_new_tests_general {
+        margin-top: 10%;
+    }
+
     .section_title {
         border-bottom: 1px solid var(--paper-grey-200);
         color: var(--paper-grey-600);
@@ -377,5 +449,36 @@ export default defineComponent({
         color: var(--paper-grey-800);
         border-radius: 3px;
         outline: none;
+    }
+    
+    .grid_7 {
+        width: 100%;
+        display: grid;
+        grid-template-columns: calc(100%/5) calc(100%/5) calc(100%/5) calc(100%/5) calc(100%/5);
+        column-gap: 3px;
+        row-gap: 10px;
+    }
+    .grid_7 > * {
+        height: 50px;
+        width: calc(100% - 12px);
+    }
+
+    .button_section {
+        margin: 5% auto;
+        height: 50px;
+        display: flex;
+        align-items: center;
+    }
+    .body .button_section .button_wrapper {
+        height: 50px;
+        width: 200px;
+        margin: 0 0 0 auto;
+    }
+    .body .button_section .button_wrapper button {
+        border: 1px solid var(--blue-100);
+        background: var(--blue-100);
+        color: white;
+        font-weight: 600;
+        border-radius: 25px;
     }
 </style>

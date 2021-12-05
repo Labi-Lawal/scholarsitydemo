@@ -1,11 +1,15 @@
-import { createStore } from 'vuex'
+import { createStore, storeKey } from 'vuex'
 import net from "../services/http";
 
 export default createStore({
   state: {
     isSignedIn: false,
     token: localStorage.getItem('access-token'),
-    user: null
+    user: null,
+    students: null,
+    cartItems: [],
+    cartItemDets: [],
+    checkoutInfo: {}
   },
   mutations: {
     store_user(state, payload) {
@@ -15,9 +19,12 @@ export default createStore({
       localStorage.setItem('access-token', payload);
       state.token = payload;
     },
+    store_students(state, payload) {
+      state.students = payload;
+    },
     update_auth_status(state, payload) {
       state.isSignedIn = payload;
-  },
+    },
     clear_user(state) { 
       state.isSignedIn = false;
       state.token = '';
@@ -26,6 +33,16 @@ export default createStore({
     auth_success(state) {
       state.isSignedIn = true;
     },
+    store_cart_items(state, payload) {
+      if(payload != null) {
+        // store cart array into localstorage
+        localStorage.setItem('cart_items', JSON.stringify(payload));
+        state.cartItems = payload;
+      }
+    },
+    savecheckout(state, payload) {
+      state.checkoutInfo = payload;
+    }
   },
   actions: {
     signuserin({commit}, payload) {
@@ -107,16 +124,197 @@ export default createStore({
         });
       });
     },
-    fetchCourse() {
-      return new Promise<void>((resolve)=> {
-        console.log("fetching User");
-        resolve();
+    fetchcourses() {
+      return new Promise((resolve, reject)=> {
+        net.http.get('/courses')
+        .then((response)=> {
+          resolve(response.data);
+        })
+        .catch((error)=> {
+          reject(error);
+        });
       })
     },
+    fetchcourse(commit, payload) {
+      return new Promise((resolve, reject)=> {
+        net.http.get(`/courses/${payload}`)
+        .then((response)=> {
+          resolve(response.data);
+        })
+        .catch((error)=> {
+          reject(error);
+        });
+      })
+    },
+    fetchstudents({commit}) {
+      return new Promise((resolve, reject) => {
+
+        net.httpSec.get('/teacher/students')
+        .then((response)=> {
+          const students = response.data.students;
+          
+          commit('store_students', students);
+          
+          resolve(students);
+
+        })
+        .catch((error)=> {
+          reject(error);
+        });
+      });
+    },
+    async addcoursetocart({commit}, new_cart_item) {
+
+      let cart_items:any = [], cart_items_string = '',
+      itemExistsInCart = false;
+
+      if(this.getters.isSignedIn) {
+        await net.httpSec.get(`/cart/add/${new_cart_item.id}`)
+        .then((response)=>{ 
+          let cart_items = [];
+          
+          if(response.data.cart != null) cart_items = response.data.cart;
+
+          // store updated cart in localstorage
+          commit('store_cart_items', cart_items);
+
+        })
+        .catch((error)=> {
+          throw new Error(JSON.stringify(error.response));
+        });
+
+        // STORE FETHCED ITEMS IN LOCALSTORAGE
+
+      } else {
+
+        // if not signed in get from localstorage
+        cart_items_string = localStorage.getItem('cart_items') || '';
+
+        // decode from string into array and store in cart array
+        if(cart_items_string != '') cart_items = JSON.parse(cart_items_string);
+        
+        if(cart_items == null) cart_items = [];
+        
+        if(cart_items.length > 0) {
+
+          for(let i=0; i<cart_items.length; i++) {
+              if(cart_items[i].id == new_cart_item.id) { 
+                  itemExistsInCart = true;
+                  cart_items[i].quantity++;
+                  break;
+              }
+          }
+          if(!itemExistsInCart) {
+              // store new item into cart array
+              cart_items.push(new_cart_item); 
+          }
+        } else { 
+          cart_items = [];
+          cart_items.push(new_cart_item); 
+        }
+
+        commit('store_cart_items', cart_items);
+
+        // if(this.$store.getters.isSignedIn) // Send updated cart to api 
+        return cart_items.length;
+
+      }
+    },
+    fetchcart({commit}) {
+      return new Promise((resolve, reject)=> {
+        if(this.state.isSignedIn){
+          
+          net.httpSec.get('/cart/')
+          .then((response)=> {
+            
+            let cart_items = [];
+            if(response.data.cart != null) cart_items = response.data.cart;
+
+            commit('store_cart_items', cart_items);
+
+            resolve(cart_items);
+
+          })
+          .catch((error)=> {
+            console.log(error);
+            reject(error);
+          });
+        
+        } else {
+          
+          let cart_items:any = localStorage.getItem('cart_items');
+          if(cart_items != null) cart_items = JSON.parse(cart_items);
+          else cart_items = [];
+        
+
+          commit('store_cart_items', cart_items);
+          resolve(cart_items);
+        }
+      });
+    },
+    fetchcartitem({commit}) {  
+      return new Promise((resolve, reject)=> {
+        // if(this.state.isSignedIn) {
+          this.dispatch('fetchcart')
+          .then((response)=> {
+            
+            const cart_items:any = response;
+            const cart_items_dets:any = [];
+
+            for(let i=0; i <= cart_items.length; i++) { 
+
+              if(i == cart_items.length) resolve(cart_items_dets);
+              else net.http.get(`/cart/fetchitem/${cart_items[i].id}`)
+                  .then((response)=> {
+                    
+                    const item = {
+                      title: response.data.item.title,
+                      type: (response.data.course) ?'course' :'product',
+                      price: response.data.item.price,
+                      qty: cart_items[i].quantity
+                    };
+
+                    cart_items_dets.push(item);
+              })
+              .catch((error)=> {
+                reject(error);
+              });
+            }
+          })
+          .catch((error)=> {
+            console.log(error);
+          });
+
+        // }
+      });
+    },
+    savecheckoutinfo({commit}, payload){
+      return new Promise<boolean>((resolve, reject)=> {
+        if(this.state.token) {
+          if(this.state.isSignedIn) {
+            commit('savecheckout', payload);
+            resolve(true);
+
+          } else {
+            this.dispatch('fetchuserinfo')
+            .then((response)=> {
+              commit('savecheckout', payload);
+              resolve(true);
+            })
+          }
+        }
+        else {
+          reject(false);
+        } 
+      });
+    }
   },
   getters: {
     isSignedIn: state => state.isSignedIn,
     userData: state => state.user,
-    token: state => state.token
+    token: state => state.token,
+    cartData: state => state.cartItems,
+    cartItemDets: state => state.cartItemDets,
+    checkoutInfo: state => state.checkoutInfo
   }
 })

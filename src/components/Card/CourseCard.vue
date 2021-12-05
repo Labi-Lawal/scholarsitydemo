@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/course" class="course_card_wall">
+    <router-link :to="`/course/` + courseid" class="course_card_wall">
     <div class="course_card">
         <div class="image_wrapper">
             <img src="../../assets/course-3.jpg">
@@ -36,7 +36,7 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent ({
     name: 'course-card',
-    props: ['title', 'tutor', 'avgRatings', 'ratingsCount', 'price']
+    props: ['courseid', 'title', 'tutor', 'avgRatings', 'ratingsCount', 'price']
 });
 </script>
 
@@ -81,7 +81,7 @@ export default defineComponent ({
     margin-top: 3%;
     font-weight: 600;
     color: var(--paper-grey-900);
-      display: -webkit-box;
+    display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;

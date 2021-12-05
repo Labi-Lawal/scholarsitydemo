@@ -38,15 +38,21 @@ import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
     name: 'user-profile-min',
-    props: ['showDetails', 'showRatings', 'size'],
+    props: ['showDetails', 'showRatings', 'size', 'details'],
     data() {
+        var userName = '';
+
+        if(this.details == '')
+            userName = (this.$store.getters.userData) ?this.$store.getters.userData.fullname :'';
+        else userName = this.details;
+        
         return {
-            isSignedIn: this.$store.getters.isSignedIn,
-            userRole: this.$store.getters.role,
-            userName: this.$store.getters.userData.fullname,
+            isSignedIn: this.$store.getters.isSignedIn || '',
+            userRole: this.$store.getters.role || '',
+            userName,
             source: "https://res.cloudinary.com/labilawal/image/upload/v1634448089/f4sxdfzfyvvwgnalozbm.jpg"
         }
-    }
+    },
 });
 </script>
 

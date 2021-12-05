@@ -5,8 +5,9 @@
     </div>
     <div class="horizontal_carousel_list" ref="scroll">
       <CourseCard  
-          v-for="(course, index) in courses"
-          :key="index"
+          v-for="course in courses"
+          :key="course._id"
+          :courseid="course._id"
           :title="course.title"
           :tutor="course.tutor"
           :ratings="course.averageRatings"

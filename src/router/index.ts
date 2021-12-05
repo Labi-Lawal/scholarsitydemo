@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     component: ()=> import('../views/Auth/Signout.vue')
   },
   {
-    path: '/course',
+    path: '/course/:id',
     name: 'Course',
     component: ()=> import('../views/Course.vue')
   },
@@ -36,7 +36,29 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/account', name: 'Account',
-    component: ()=> import('../views/Account.vue')
+    component: ()=> import('../views/Account.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/cart', name: 'Cart',
+    component: ()=> import('../views/Cart.vue')
+  },
+  {
+    path: '/checkout', name: 'Checkout',
+    component: ()=> import('../views/Checkout.vue'),
+    meta: {
+      requiresAuth: true,
+      requiresCheckoutInfo: true
+    }
+  },
+  {
+    path: '/purchase-credits', name: 'Purchase Credits',
+    component: ()=> import('../views/PurchaseCredits.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/teacher', name: 'Teacher',
@@ -48,19 +70,19 @@ const routes: Array<RouteRecordRaw> = [
         component:  ()=> import('../views/Teacher/Create/Index.vue'),
         children: [
           {
-            path: 'tests', alias: '', name: 'Tests',
+            path: 'tests', alias: '', name: 'Create Tests',
             component:  ()=> import('../views/Teacher/Create/Tests/Index.vue'),
             children: [
               {
-                path: 'all', alias: '', name:'All Tests',
+                path: 'all', alias: '', name:'Tests All',
                 component:  ()=> import('../views/Teacher/Create/Tests/Tests.vue'),
               },
               {
-                path: 'new', name: 'New Test',
+                path: 'new', name: 'Tests New Test',
                 component:  ()=> import('../views/Teacher/Create/Tests/New.vue'),
               },
               {
-                path: 'edit', name: 'Edit Test',
+                path: 'edit', name: 'Tests Edit Test',
                 component:  ()=> import('../views/Teacher/Create/Tests/Edit.vue'),
               }
             ]
@@ -76,7 +98,37 @@ const routes: Array<RouteRecordRaw> = [
             ]
           }
         ]
-      }
+      },
+      {
+        path: 'analyse', name: 'Analyse',
+        component:  ()=> import('../views/Teacher/Create/Index.vue'),
+        children: [
+          {
+            path: 'select-test', alias: '', name: 'Analyse Tests',
+            component:  ()=> import('../views/Teacher/Create/Tests/Index.vue'),
+          },
+          {
+            path: 'overall-statistics', name: 'Analyse Overall Statistics',
+            component:  ()=> import('../views/Teacher/Create/Questions/Index.vue'),
+          },
+          {
+            path: 'student-level-statistics', name: 'Analyse Student Level Statistics',
+            component:  ()=> import('../views/Teacher/Create/Questions/Index.vue'),
+          }
+        ]
+      },
+      {
+        path: 'reports', name: 'Reports',
+        component: ()=> import('../views/Teacher/Reports.vue'),
+      },
+      {
+        path: 'wallet', name: 'Teacher Wallet',
+        component: ()=> import('../views/Teacher/Wallet.vue'),
+      },
+      {
+        path: 'student-list', name: 'Student List',
+        component: ()=> import('../views/Teacher/StudentList.vue'),
+      },
     ]
   }
   // {
@@ -230,18 +282,6 @@ const routes: Array<RouteRecordRaw> = [
   //         }
   //       ]
   //     },
-  //     {
-  //       path: 'reports', name: 'Reports',
-  //       component: ()=> import('../views/Teacher/Reports.vue'),
-  //     },
-  //     {
-  //       path: 'wallet', name: 'Teacher Wallet',
-  //       component: ()=> import('../views/Teacher/Wallet.vue'),
-  //     },
-  //     {
-  //       path: 'student-list', name: 'Student List',
-  //       component: ()=> import('../views/Teacher/StudentList.vue'),
-  //     },
   //   ]
   // },
 ]
@@ -267,6 +307,16 @@ router.beforeEach( async (to, from, next)=> {
   else if(to.matched.some(record => record.meta.authRoute)) {
     if(!store.getters.token) next();
     else next('/account');
+  }
+
+  else if(to.matched.some(record => record.meta.requiresCheckoutInfo)) {
+    if(store.getters.checkoutInfo) next();
+  }
+
+  else if(to.path != '/signout' && store.getters.token && !store.getters.isSignedIn) {
+    await store.dispatch('fetchuserinfo')
+          .then(()=> { next() })
+          .catch(()=> { next('/signout') });
   }
 
   else next();

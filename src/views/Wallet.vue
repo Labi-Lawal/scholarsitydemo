@@ -38,7 +38,10 @@
                         >Date Range</div>
                     </div>
                     <div class="wallet_table_content">
-                        <Table :tableHeadings="headings" :tableBody="body" />
+                        <Table 
+                            :tableHeadings="headings" 
+                            :tableBody="body" 
+                        />
                     </div>
                 </div>
             </div>
@@ -51,7 +54,7 @@
 import { defineComponent } from 'vue';
 import Header from '@/components/Header/Header.vue';
 import BalanceCard from '@/components/Wallet/BalanceCard.vue';
-import Table from '@/components/Table.vue';
+import Table from '@/components/Table/Table.vue';
 import Footer from '@/components/Footer/SiteFooter.vue';
 
 export default defineComponent({

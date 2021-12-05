@@ -18,7 +18,11 @@
                 <Notifications
                     v-if="isSignedIn" 
                     class="notification"
-                    count="9"    
+                    count="9"
+                />
+
+                <CartIndicator 
+                    class="cart_indicator"
                 />
             </div>
 
@@ -44,10 +48,18 @@
     import SearchBar from "@/components/Form/SearchBar.vue";
     import Notifications from "@/components/Notifications.vue";
     import UserProfileMin from "@/components/UserProfileMin.vue";
+    import CartIndicator from "@/components/CartIndicator.vue";
 
     export default defineComponent({
         name: 'Header',
-        components: { ButtonPlainText, SearchBar, Notifications, UserProfileMin, SiteNavigation  },
+        components: { 
+            ButtonPlainText, 
+            SearchBar, 
+            Notifications, 
+            UserProfileMin, 
+            SiteNavigation, 
+            CartIndicator 
+        },
         data () {
             var routeParent = this.$route.matched[0].name.toLowerCase();
 
@@ -62,7 +74,7 @@
         methods: {
             handleOnSroll() {
                 this.windowTop = window.top.scrollY;
-                if(this.windowTop >= 500) this.isFixed = true;
+                if(this.windowTop >= 400) this.isFixed = true;
                 else this.isFixed = false;
             }
         },
@@ -118,6 +130,7 @@
         height: 60%;
         width: calc(100% - calc(8%));
         display: flex;
+        align-items: center;
     }
     
     .nav_links {
@@ -139,11 +152,15 @@
     .search_bar.expand {
         width: 40%;
     }
-    
+
     .notification {
         margin-top: auto;
         margin-left: 5%;
         margin-bottom: auto;
+    }
+
+    .cart_indicator {
+        margin-left: 2%;
     }
     
     .signin_btn_wrapper {
