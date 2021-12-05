@@ -92,49 +92,7 @@ export default defineComponent({
         }
       ],
 
-      courses = [
-        {
-          title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-          tutor: 'Jose Portilla',
-          ratingsCount: 52,
-          avg_ratings: 4.8,
-          price: 84.99
-        },
-        {
-          title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-          tutor: 'Jose Portilla',
-          ratingsCount: 52,
-          avg_ratings: 4.8,
-          price: 84.99
-        },
-        {
-          title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-          tutor: 'Jose Portilla',
-          ratingsCount: 52,
-          avg_ratings: 4.8,
-          price: 84.99
-        },
-        {
-          title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-          tutor: 'Jose Portilla',
-          ratingsCount: 52,
-          avg_ratings: 4.8,
-          price: 84.99
-        },
-        {
-          title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-          tutor: 'Jose Portilla',
-          ratingsCount: 52,
-          avg_ratings: 4.8,
-          price: 84.99
-        },{
-          title: '2021 Complete Python Bootcamp From Zero to Hero in Python 2021 Complete Python Bootcamp From Zero to Hero in Python',
-          tutor: 'Jose Portilla',
-          ratingsCount: 52,
-          avg_ratings: 4.8,
-          price: 84.99
-        }
-      ]
+      courses:any = []
 
       return {
         details,

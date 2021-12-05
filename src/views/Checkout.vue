@@ -114,7 +114,7 @@ export default defineComponent({
         },
         goToWallet() {
             const role = this.$store.getters.userData.role;
-            this.$router.push(`/${role}/wallet`);
+            this.$router.push(`/purchased-credits`);
         }
     }
 });
