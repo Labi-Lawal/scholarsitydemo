@@ -154,8 +154,21 @@ export default defineComponent({
                     ],
                     showMenu: false
                 }
-            ]
+            ],
+            isLoading: false
         }
+    },
+    async beforeMount() {
+        this.isLoading = true;
+
+        await this.$store.dispatch('fetchtests')
+        .then((response)=> {
+            this.allTests = response;
+            this.isLoading = false;
+        })
+        .catch((error)=> {
+            console.log(error.response);
+        });
     }
 })
 </script>

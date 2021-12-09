@@ -1,16 +1,19 @@
 <template>
     <div class="create_new_tests_general">
         <form @submit.prevent="signInButtonPressed">
+
             <section class="section_wrapper">
+               
                 <div class="triple_field new_field_group">
+
                     <div class="field">
                         <div class="label">Board</div>
                         <div class="drop_down_wrapper">
                             <DropDown 
                                 placeholder="Select Board"
-                                :options="boardOptions"
-                                :selected=selectedStatus[0]
-                                :selectedIndex=selectedIndex[0]
+                                :options="boardModel.options"
+                                :selected=boardModel.selected
+                                :selectedIndex=boardModel.selectedIndex
                                 :isOptionsVisible="showOptions[0]"
                                 :hideIcon=false
                                 :hideBorder=false
@@ -21,14 +24,15 @@
                             />
                         </div>
                     </div>
+                    
                     <div class="field">
                         <div class="label">Grade</div>
                         <div class="drop_down_wrapper">
                             <DropDown 
                                 placeholder="Select Grade"
-                                :options="gradeOptions"
-                                :selected=selectedStatus[1]
-                                :selectedIndex=selectedIndex[1]
+                                :options="gradeModel.options"
+                                :selected=gradeModel.selected
+                                :selectedIndex=gradeModel.selectedIndex
                                 :isOptionsVisible="showOptions[1]"
                                 :hideIcon=false
                                 :hideBorder=false
@@ -39,14 +43,15 @@
                             />
                         </div>
                     </div>
+                    
                     <div class="field">
                         <div class="label">Course</div>
                         <div class="drop_down_wrapper">
                             <DropDown 
                                 placeholder="Select Course"
-                                :options="courseOptions"
-                                :selected=selectedStatus[2]
-                                :selectedIndex=selectedIndex[2]
+                                :options="courseModel.options"
+                                :selected=courseModel.selected
+                                :selectedIndex=courseModel.selectedIndex
                                 :isOptionsVisible="showOptions[2]"
                                 :hideIcon=false
                                 :hideBorder=false
@@ -57,17 +62,31 @@
                             />
                         </div>
                     </div>
+
                 </div>
 
                 <div class="triple_field small_at_end new_field_group">
+                  
                     <div class="field input">
                         <div class="label">Topic</div>
-                        <input autocomplete="false">
+                        <input 
+                            :type="topicModel.type"
+                            :placeholder="topicModel.placeholder"
+                            v-model="topicModel.value"
+                            autocomplete="false"
+                        >
                     </div>
+                  
                     <div class="field input">
                         <div class="label">Test Title</div>
-                        <input autocomplete="false">
+                        <input 
+                            :type="testTitleModel.type"
+                            :placeholder="testTitleModel.placeholder"
+                            v-model="testTitleModel.value"
+                            autocomplete="false"
+                        >
                     </div>
+                  
                     <div class="field">
                         <div class="label">Test Duration</div>
                         <div class="mixed_input_dropdown_double">
@@ -89,6 +108,7 @@
                             </div>
                         </div>
                     </div>
+                
                 </div> 
             </section>
 
@@ -197,6 +217,7 @@
                     />
                 </div>
             </div>
+
         </form>
     </div>
 </template>
@@ -212,74 +233,146 @@ export default defineComponent({
     components: { DropDown, CheckBox, ButtonPlainText },
     data() {
         return {
-            boardOptions: [
-                {
-                    value: 'board-1',
-                    display_name: 'board 1'
-                },
-                {
-                    value: 'board-2',
-                    display_name: 'board 2'
-                },
-                {
-                    value: 'board-3',
-                    display_name: 'board 3'
-                },
-                {
-                    value: 'board-4',
-                    display_name: 'board 4'
-                }
-            ],
-            gradeOptions: [
-                {
-                    value: 'grade-1',
-                    display_name: 'grade 1'
-                },
-                {
-                    value: 'grade-2',
-                    display_name: 'grade 2'
-                },
-                {
-                    value: 'grade-3',
-                    display_name: 'grade 3'
-                },
-                {
-                    value: 'grade-4',
-                    display_name: 'grade 4'
-                }
-            ],
-            courseOptions: [
-                {
-                    value: 'course-1',
-                    display_name: 'course 1'
-                },
-                {
-                    value: 'course-2',
-                    display_name: 'course 2'
-                },
-                {
-                    value: 'course-3',
-                    display_name: 'course 3'
-                },
-                {
-                    value: 'course-4',
-                    display_name: 'course 4'
-                }
-            ],
-            durationOptions: [
-                {
-                    value: 'sec',
-                    display_name: 'secs'
-                },
-                {
-                    value: 'min',
-                    display_name: 'Mins'
-                },
-                {
-                    value: 'Hrs',
-                    display_name: 'Hrs'
-                }
-            ],
+            boardModel: {
+                error: '',
+                value: '',
+                selected: false,
+                selectedIndex: 0,
+                options: [
+                    {
+                        display_name: 'Central Board of Secondary Education [CBSE]',
+                        value: 'central-board-of-education-[CBSE]'
+                    },
+                    {
+                        display_name: 'Indian Certificate of Secondary Education [ICSE]',
+                        value: 'Central -board-ofEducation-[CBSE]'
+                    },
+                    {
+                        display_name: 'Council For The Indian School Certificate Examinations [CISCE]',
+                        value: 'Central -board-ofEducation-[CBSE]'
+                    },
+                    {
+                        display_name: 'State Board',
+                        value: 'Central -board-ofEducation-[CBSE]'
+                    },
+                    {
+                        display_name: 'International Baccalaureate [IB]',
+                        value: 'Central -board-ofEducation-[CBSE]'
+                    },
+                    {
+                        display_name: 'National Institute of Open Schooling [NIOS]',
+                        value: 'National Institute of Open Schooling [NIOS]'
+                    }
+                ]
+            },
+            gradeModel: {
+                error: '',
+                value: '',
+                selected: false,
+                selectedIndex: 0,
+                options: [
+                    {
+                        display_name: 'Grade 1',
+                        value: 'grade-1'
+                    },
+                    {
+                        display_name: 'Grade 2',
+                        value: 'grade-2'
+                    },
+                    {
+                        display_name: 'Grade 3',
+                        value: 'grade-3'
+                    },
+                    {
+                        display_name: 'Grade 4',
+                        value: 'grade-4'
+                    },
+                    {
+                        display_name: 'Grade 5',
+                        value: 'grade-5'
+                    },
+                    {
+                        display_name: 'Grade 6',
+                        value: 'grade-6'
+                    },
+                    {
+                        display_name: 'Grade 7',
+                        value: 'grade-7'
+                    },
+                    {
+                        display_name: 'Grade 8',
+                        value: 'grade-8'
+                    },
+                    {
+                        display_name: 'Grade 9',
+                        value: 'grade-9'
+                    },
+                    {
+                        display_name: 'Grade 10',
+                        value: 'grade-10'
+                    },
+                    {
+                        display_name: 'Grade 11',
+                        value: 'grade-11'
+                    },
+                    {
+                        display_name: 'Grade 12',
+                        value: 'grade-12'
+                    },
+                ]
+            },
+            courseModel: {
+                error: '',
+                value: '',
+                selected: false,
+                selectedIndex: 0,
+                options: [
+                    {
+                        value: 'course-1',
+                        display_name: 'course 1'
+                    },
+                    {
+                        value: 'course-2',
+                        display_name: 'course 2'
+                    },
+                    {
+                        value: 'course-3',
+                        display_name: 'course 3'
+                    },
+                    {
+                        value: 'course-4',
+                        display_name: 'course 4'
+                    }
+                ],
+            },
+            topicModel: {
+                type: 'text',
+                placeholder: 'Choose your test topic',
+                error: '',
+                value: ''
+            },
+            testTitleModel: {
+                type: 'text',
+                placeholder: 'Choose your test title',
+                error: '',
+                value: ''
+            },
+            durationModel:{
+                options: [
+                    {
+                        value: 'sec',
+                        display_name: 'secs'
+                    },
+                    {
+                        value: 'min',
+                        display_name: 'Mins'
+                    },
+                    {
+                        value: 'Hrs',
+                        display_name: 'Hrs'
+                    }
+                ]
+            },
             resultTypes: [
                 {
                     label: 'Net Score',
@@ -325,8 +418,6 @@ export default defineComponent({
             selectedBoard: '',
             selectedGrade: '',
             selectedCourse: '',
-            topic: '',
-            testTitle: '',
             selectedDurationInMs: '',
             selectedresultTypes: []
         }

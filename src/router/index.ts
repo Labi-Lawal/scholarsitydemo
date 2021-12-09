@@ -36,10 +36,24 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/account', name: 'Account',
-    component: ()=> import('../views/Account.vue'),
+    component: ()=> import('../views/Account/Account.vue'),
     meta: {
       requiresAuth: true
-    }
+    },
+    children: [
+      {
+        path: 'info', alias: '', name: 'Personal Information',
+        component: ()=> import('../views/Account/Information.vue'),
+      },
+      {
+        path: 'notifications', name: 'Notifications',
+        component: ()=> import('../views/Account/Notifications.vue'),
+      },
+      {
+        path: 'settings', name: 'Settings',
+        component: ()=> import('../views/Account/Settings.vue'),
+      }
+    ]
   },
   {
     path: '/cart', name: 'Cart',
@@ -130,11 +144,48 @@ const routes: Array<RouteRecordRaw> = [
         component: ()=> import('../views/Teacher/StudentList.vue'),
       },
     ]
+  },
+  {
+    path: '/student', name: 'Student',
+    component: ()=> import('../views/Student/Index.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'categories', alias: '', name: 'Categories',
+        component: ()=> import('../views/Student/Categories/Index.vue'),
+        children: [
+          {
+            path: 'courses', alias: '', name: 'Student Courses',
+            component: ()=> import('../views/Student/Categories/Courses.vue'),
+          },
+          {
+            path: 'tests', name: 'Student Tests',
+            component: ()=> import('../views/Student/Categories/Tests.vue'),
+          },
+          {
+            path: 'contests', name: 'Student Contests',
+            component: ()=> import('../views/Student/Categories/Tests.vue'),
+          }
+        ]
+      },
+      {
+        path: 'analytics', name: 'Student Analytics',
+        component: ()=> import('../views/Student/Analytics.vue')
+      },
+      {
+        path: 'compete-up', name: 'Compete Up',
+        component: ()=> import('../views/Student/Analytics.vue')
+      },
+      {
+        path: 'contests', name: 'Contests',
+        component: ()=> import('../views/Student/Analytics.vue')
+      },
+      {
+        path: 'wallet', name: 'Wallet',
+        component: ()=> import('../views/Student/Analytics.vue')
+      }
+    ]
   }
-  // {
-  //   path: '/student', name: 'Student',
-  //   component: ()=> import('../views/Student/Index.vue')
-  // }
   // {
   //   path: '/account',
   //   name: 'Dashboard',

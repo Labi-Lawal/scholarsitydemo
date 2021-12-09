@@ -1,4 +1,4 @@
-import { createStore, storeKey } from 'vuex'
+import { createStore } from 'vuex'
 import net from "../services/http";
 
 export default createStore({
@@ -252,7 +252,7 @@ export default createStore({
         }
       });
     },
-    fetchcartitem({commit}) {  
+    fetchcartitem() {  
       return new Promise((resolve, reject)=> {
         // if(this.state.isSignedIn) {
           this.dispatch('fetchcart')
@@ -297,7 +297,7 @@ export default createStore({
 
           } else {
             this.dispatch('fetchuserinfo')
-            .then((response)=> {
+            .then(()=> {
               commit('savecheckout', payload);
               resolve(true);
             })
@@ -306,6 +306,45 @@ export default createStore({
         else {
           reject(false);
         } 
+      });
+    },
+    updateuserdata({commit}, payload) {
+      return new Promise((resolve, reject)=> {
+        if(this.state.token) {
+          net.httpSec.put('/user/profile/edit', payload)
+          .then((response)=> {
+            
+            commit('store_token', response.data.token);
+            commit('store_user', response.data.user);
+
+            resolve(response.data.user);
+
+          })
+          .catch((error:any)=> {
+            reject(error);
+          });
+        }
+      });
+    },
+    createtest(commit, payload) {
+      return new Promise((resolve, reject)=> {
+      
+      });
+    },
+    fetchtests({commit}) {
+      return new Promise((resolve, reject)=> {
+        net.httpSec.get('/user/fetchtests')
+        .then((response)=> {
+          
+          const tests = response.data.tests;
+          
+          commit('store_tests', tests);
+
+          resolve(tests)
+        })
+        .catch((error)=> {
+          reject(error);
+        });
       });
     }
   },

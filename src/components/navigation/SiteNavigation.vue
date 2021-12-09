@@ -15,7 +15,7 @@
                 class=""
             >
                 <router-link 
-                    :to="navItem.link"
+                    :to="'/' + userRole + navItem.link"
                     :class="{
                         active_route: (this.currentRouteIndex == index) ?true :false
                     }"
@@ -37,8 +37,23 @@ export default defineComponent({
     data() {
         const studentNav = [
             {
+                title: 'categories',
+                link: '/categories',
+                icon: 'chart-pie',
+                subLinks: [
+                    {
+                        title: 'courses',
+                        link: 'courses'
+                    },
+                    {
+                        title: 'grades',
+                        link: 'grades'
+                    },
+                ]
+            },
+            {
                 title: 'analytics',
-                link: 'analytics',
+                link: '/analytics',
                 icon: 'chart-pie',
                 subLinks: [
                     {
@@ -108,7 +123,7 @@ export default defineComponent({
         teacherNav = [
             {
                 title: 'create',
-                link: '/teacher/create',
+                link: '/create',
                 icon: 'chart-pie',
                 subLinks: [
                     {

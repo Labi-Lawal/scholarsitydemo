@@ -44,7 +44,12 @@
                             <FontAwesomeIcon 
                                 :icon="['fas', 'check']" 
                                 class="email_loader success_email_check" 
-                                v-if="emailValidated"
+                                v-if="emailValidated && !emailConflict"
+                            />
+                            <FontAwesomeIcon 
+                                :icon="['fas', 'times']" 
+                                class="email_loader error_email_check" 
+                                v-if="emailValidated && emailConflict"
                             />
                             <div class="error-message" v-if="emailModel.error != ''">{{ emailModel.error }}</div>
                         </div>
@@ -340,7 +345,8 @@ export default defineComponent({
             isDisabled,
             isLoading: false,
             isCheckingEmail: false,
-            emailValidated: false 
+            emailValidated: false,
+            emailConflict: false
         }
     },
     methods: {
@@ -523,12 +529,14 @@ export default defineComponent({
             .then(()=> {
                 console.log('SUCCESS');
                 this.emailModel.error = "";
+                this.emailConflict = false;
                 this.isCheckingEmail = false;
                 return true;
             })
             .catch((error)=> {
                 console.log(error);
                 this.emailModel.error = "Email already exist";
+                this.emailConflict = true;
                 this.isCheckingEmail = false;
                 return false;
             });
@@ -665,16 +673,28 @@ export default defineComponent({
     .email_loader {
         height: 20px;
         width: 20px;
+        padding: 3px;
         position: absolute;
-        top: 30%;
+        top: 21%;
         right: 7%;
         margin: auto 0;
     }
     .success_email_check {
-        color: green;
+        background: green;
         width: 15px;
         height: 15px;
         margin-top: 1%;
+        padding: 3px;
+        color: white;
+        border-radius: 50%;
+    }
+    .error_email_check {
+        background: red;
+        padding: 3px;
+        color: white;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
     }
     .lds-ring {
         display: inline-block;

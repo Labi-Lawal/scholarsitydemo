@@ -113,8 +113,7 @@ export default defineComponent({
             alert('r/woosh');
         },
         goToWallet() {
-            const role = this.$store.getters.userData.role;
-            this.$router.push(`/purchased-credits`);
+            this.$router.push(`/purchase-credits`);
         }
     }
 });

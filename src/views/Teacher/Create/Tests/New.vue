@@ -217,7 +217,7 @@ export default defineComponent({
     .page_title {
         font-size: 250%;
         height: 50px;
-        margin-top: 50px;
+        margin-top: 0px;
         margin-bottom: 20px;
     }
     .boxes {

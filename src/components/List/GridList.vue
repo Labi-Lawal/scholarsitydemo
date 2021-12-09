@@ -2,14 +2,16 @@
     <section 
         :class="{
             grid_list: true,
-            four_columns: (columnAmnt == 4) ?true :false,
-            three_columns: (columnAmnt == 3) ?true :false,
-            two_columns: (columnAmnt == 2) ?true :false
+            col_5: (columnAmnt == 4) ?true :false,
+            col_4: (columnAmnt == 4) ?true :false,
+            col_3: (columnAmnt == 3) ?true :false,
+            col_2: (columnAmnt == 2) ?true :false
         }"
     >
         <CourseCard
           v-for="(course, index) in courses"
           :key="index"
+          :courseid="course._id"
           :title="course.title"
           :tutor="course.tutor"
           :ratings="course.averageRatings"
@@ -75,15 +77,15 @@ export default defineComponent({
     column-gap: 20px;
     width: 100%;
 }
-.four_columns {
+.col_4 {
     --grid-frame-width: calc(100% - calc(20px * 3));
     grid-template-columns: calc(var(--grid-frame-width)/4) calc(var(--grid-frame-width)/4) calc(var(--grid-frame-width)/4) calc(100%/4);
 }
-.three_columns {
+.col_3 {
     --grid-frame-width: calc(100% - calc(20px * 2));
     grid-template-columns: calc(var(--grid-frame-width)/3) calc(var(--grid-frame-width)/3) calc(var(--grid-frame-width)/3);
 }
-.two_columns {
+.col_2 {
     --grid-frame-width: calc(100% - calc(20px * 1));
     grid-template-columns: calc(var(--grid-frame-width)/2) calc(var(--grid-frame-width)/2) calc(var(--grid-frame-width)/2);
 }
