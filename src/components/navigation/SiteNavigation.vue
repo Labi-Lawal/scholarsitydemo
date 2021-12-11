@@ -2,10 +2,10 @@
     <div class="navigation">
         <nav v-if="!isSignedIn">
             <div class="">
-                <router-link to="/student"> Student </router-link>
+                <router-link to="/"> Student </router-link>
             </div>
             <div class="">
-                <router-link to="/teacher"> Teacher </router-link>
+                <router-link to="/for-teachers"> Teacher </router-link>
             </div>
         </nav>
         <nav v-if="isSignedIn" class="navigation_links">
@@ -158,7 +158,7 @@ export default defineComponent({
             },
             {
                 title: 'analyse',
-                link: '/teacher/analyse',
+                link: '/analyse',
                 icon: 'list-ol',
                 subLinks: [
                     {
@@ -177,17 +177,17 @@ export default defineComponent({
             },
             {
                 title: 'reports',
-                link: '/teacher/reports',
+                link: '/reports',
                 icon: 'chess'
             },
             {
                 title: 'wallet',
-                link: '/teacher/wallet',
+                link: '/wallet',
                 icon: 'wallet'
             },
             {
                 title: 'student list',
-                link: '/teacher/student-list',
+                link: '/student-list',
                 icon: 'store'
             }
         ], 

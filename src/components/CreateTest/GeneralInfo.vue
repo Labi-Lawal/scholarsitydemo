@@ -20,7 +20,7 @@
                                 :dropDownIndex=0
                                 :raiseByOne=3
                                 @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
+                                @optionSelect="selectOption"
                             />
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                                 :dropDownIndex=1
                                 :raiseByOne=2
                                 @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
+                                @optionSelect="selectOption"
                             />
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 :dropDownIndex=2
                                 :raiseByOne=1
                                 @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
+                                @optionSelect="selectOption"
                             />
                         </div>
                     </div>
@@ -90,26 +90,31 @@
                     <div class="field">
                         <div class="label">Test Duration</div>
                         <div class="mixed_input_dropdown_double">
-                            <input autocomplete="false">
+                            <input 
+                                type="number"
+                                v-model="durationModel.digits"
+                                @keyup.e="reject()"
+                                autocomplete="false"
+                            >
                             <div class="drop_down_wrapper">
                                 <DropDown 
-                                    placeholder="Select Time Parameter"
-                                    :options="durationOptions"
-                                    :selected=selectedStatus[3]
-                                    :selectedIndex=selectedIndex[3]
+                                    :options="durationModel.options"
+                                    :selected=durationModel.selected
+                                    :selectedIndex=durationModel.selectedIndex
                                     :isOptionsVisible="showOptions[3]"
                                     :hideIcon=false
                                     :hideBorder=true
                                     :dropDownIndex=3
                                     :raiseByOne=0
                                     @showOptions="showDropOptions"
-                                    @optionSelect="optionSelected"
+                                    @optionSelect="selectOption"
                                 />
                             </div>
                         </div>
                     </div>
                 
                 </div> 
+
             </section>
 
             <section class="section_wrapper">
@@ -117,7 +122,7 @@
                 <div class="grid_7">
                     <div 
                         class="check_box_wrapper"
-                        v-for="(resultType, index) in resultTypes"
+                        v-for="(resultType, index) in resultTypesModel.options"
                         :key="index"
                     >
                         <CheckBox 
@@ -132,81 +137,49 @@
             </section>
 
             <section class="section_wrapper">
+       
                 <div class="section_title"> Bonus Credit Criteria </div>
-                <div class="triple_field new_field_group bonus_credit">
-                    <div class="field">
+                
+                <div class="new_field_group bonus_credit col_4">
+
+                    <div class="field input">
                         <div class="label">For > 99th percentile</div>
-                        <div class="drop_down_wrapper">
-                            <DropDown 
-                                placeholder="Select Board"
-                                :options="boardOptions"
-                                :selected=selectedStatus[4]
-                                :selectedIndex=selectedIndex[4]
-                                :isOptionsVisible="showOptions[4]"
-                                :hideIcon=false
-                                :hideBorder=false
-                                :dropDownIndex=4
-                                :raiseByOne=3
-                                @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
-                            />
-                        </div>
+                        <input 
+                            :type="percentileAModel.type"
+                            v-model="percentileAModel.value"
+                            autocomplete="false"
+                        >
                     </div>
+            
                     <div class="field">
                         <div class="label">For 95 - 99th percentile</div>
-                        <div class="drop_down_wrapper">
-                            <DropDown 
-                                placeholder="Select Grade"
-                                :options="gradeOptions"
-                                :selected=selectedStatus[5]
-                                :selectedIndex=selectedIndex[5]
-                                :isOptionsVisible="showOptions[5]"
-                                :hideIcon=false
-                                :hideBorder=false
-                                :dropDownIndex=5
-                                :raiseByOne=2
-                                @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
-                            />
-                        </div>
+                          <input 
+                            :type="percentileBModel.type"
+                            v-model="percentileBModel.value"
+                            autocomplete="false"
+                        >
                     </div>
+            
                     <div class="field">
                         <div class="label">For 90 - 94.99th percentile</div>
-                        <div class="drop_down_wrapper">
-                            <DropDown 
-                                placeholder="Select Course"
-                                :options="courseOptions"
-                                :selected=selectedStatus[6]
-                                :selectedIndex=selectedIndex[6]
-                                :isOptionsVisible="showOptions[6]"
-                                :hideIcon=false
-                                :hideBorder=false
-                                :dropDownIndex=6
-                                :raiseByOne=1
-                                @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
-                            />
-                        </div>
+                          <input 
+                            :type="percentileCModel.type"
+                            v-model="percentileCModel.value"
+                            autocomplete="false"
+                        >
                     </div>
+            
                     <div class="field">
                         <div class="label">For 80 - 84.99th percentile</div>
-                        <div class="drop_down_wrapper">
-                            <DropDown 
-                                placeholder="Select Course"
-                                :options="courseOptions"
-                                :selected=selectedStatus[7]
-                                :selectedIndex=selectedIndex[7]
-                                :isOptionsVisible="showOptions[7]"
-                                :hideIcon=false
-                                :hideBorder=false
-                                :dropDownIndex=7
-                                :raiseByOne=1
-                                @showOptions="showDropOptions"
-                                @optionSelect="optionSelected"
-                            />
-                        </div>
+                        <input 
+                            :type="percentileDModel.type"
+                            v-model="percentileDModel.value"
+                            autocomplete="false"
+                        >
                     </div>
+             
                 </div>
+            
             </section>
 
             <div class="button_section">
@@ -232,6 +205,58 @@ export default defineComponent({
     name: 'general-info',
     components: { DropDown, CheckBox, ButtonPlainText },
     data() {
+        var resultTypesModel:any = {
+                value: [],
+                options: [
+                    {
+                        label: 'Net Score',
+                        value: 'net-score',
+                        selected: false
+                    },
+                    {
+                        label: 'Total Score',
+                        value: 'total-score',
+                        selected: true
+                    },
+                    {
+                        label: 'Negative Score',
+                        value: 'negative-score',
+                        selected: false
+                    },
+                    {
+                        label: 'Accuracy Score',
+                        value: 'accuracy-score',
+                        selected: false
+                    },
+                    {
+                        label: 'Percentile',
+                        value: 'percentile',
+                        selected: false
+                    },
+                    {
+                        label: 'Correct Solutions',
+                        value: 'correct-ssolutions',
+                        selected: false
+                    },
+                    {
+                        label: 'Comparinson Analytics',
+                        value: 'comparison-analytics',
+                        selected: false
+                    }
+                ]
+        },
+        courseModel = {
+            error: '',
+            value: '',
+            selected: false,
+            selectedIndex: 0,
+            options: [
+                {
+                    value: ''
+                }
+            ],
+        };
+      
         return {
             boardModel: {
                 error: '',
@@ -321,30 +346,7 @@ export default defineComponent({
                     },
                 ]
             },
-            courseModel: {
-                error: '',
-                value: '',
-                selected: false,
-                selectedIndex: 0,
-                options: [
-                    {
-                        value: 'course-1',
-                        display_name: 'course 1'
-                    },
-                    {
-                        value: 'course-2',
-                        display_name: 'course 2'
-                    },
-                    {
-                        value: 'course-3',
-                        display_name: 'course 3'
-                    },
-                    {
-                        value: 'course-4',
-                        display_name: 'course 4'
-                    }
-                ],
-            },
+            courseModel,
             topicModel: {
                 type: 'text',
                 placeholder: 'Choose your test topic',
@@ -358,6 +360,12 @@ export default defineComponent({
                 value: ''
             },
             durationModel:{
+                error: '',
+                value: 0,
+                type: '',
+                digits: 0,
+                selected: true,
+                selectedIndex: 0,
                 options: [
                     {
                         value: 'sec',
@@ -373,44 +381,24 @@ export default defineComponent({
                     }
                 ]
             },
-            resultTypes: [
-                {
-                    label: 'Net Score',
-                    value: 'net-score',
-                    selected: false
-                },
-                {
-                    label: 'Total Score',
-                    value: 'total-score',
-                    selected: true
-                },
-                {
-                    label: 'Negative Score',
-                    value: 'negative-score',
-                    selected: false
-                },
-                {
-                    label: 'Accuracy Score',
-                    value: 'accuracy-score',
-                    selected: false
-                },
-                {
-                    label: 'Percentile',
-                    value: 'percentile',
-                    selected: false
-                },
-                {
-                    label: 'Correct Solutions',
-                    value: 'correct-ssolutions',
-                    selected: false
-                },
-                {
-                    label: 'Comparinson Analytics',
-                    value: 'comparison-analytics',
-                    selected: false
-                }
-            ],
-            optionSelected: null,
+            resultTypesModel,
+            percentileAModel: {
+                type: 'number',
+                value: 0
+            },
+            percentileBModel: {
+                type: 'number',
+                value: 0
+            },
+            percentileCModel: {
+                type: 'number',
+                value: 0
+            },
+            percentileDModel: {
+                type: 'number',
+                value: 0
+            },
+
             selectedIndex: [0, 0, 0, 2, 0, 0, 0, 0],
             selectedStatus: [false, false, false, true, false, false, false, false],
             showOptions: [false, false, false, false],
@@ -423,6 +411,43 @@ export default defineComponent({
         }
     },
     methods: {
+        reject() {
+            this.durationModel.digits = 0;
+        },
+        selectOption(selected:any){
+            if(selected.dropDownIndex == 0) {
+                this.boardModel.selected = true;
+                this.boardModel.selectedIndex = selected.optionIndex;
+                this.boardModel.value = this.boardModel.options[selected.optionIndex].value;
+            }
+            if(selected.dropDownIndex == 1) {
+                this.gradeModel.selected = true;
+                this.gradeModel.selectedIndex = selected.optionIndex;
+                this.gradeModel.value = this.gradeModel.options[selected.optionIndex].value;
+            }
+            if(selected.dropDownIndex == 2) {
+                this.courseModel.selected = true;
+                this.courseModel.selectedIndex = selected.optionIndex;
+                this.courseModel.value = this.courseModel.options[selected.optionIndex].value;
+            }
+            if(selected.dropDownIndex == 3) {
+                this.durationModel.selected = true;
+                this.durationModel.selectedIndex = selected.optionIndex;
+                this.durationModel.type = this.durationModel.options[selected.optionIndex].value;
+
+                if(this.durationModel.type == 'secs') {
+                    this.durationModel.value = this.durationModel.digits * 1;
+                }
+                if(this.durationModel.type == 'mins') {
+                    this.durationModel.value = this.durationModel.digits * 60 //mins to secs;
+                }
+                if(this.durationModel.type == 'hrs') {
+                    this.durationModel.value = this.durationModel.digits * (60 * 60) //hours to secs;
+                }
+            }
+
+            this.hideAllDropDownOptions();
+        },
         showDropOptions (index:number) {
             if(this.showOptions[index])
                 this.showOptions[index] = false;
@@ -437,19 +462,67 @@ export default defineComponent({
             }
         },
         selectBox(index:number) {
-            this.resultTypes[index].selected = !this.resultTypes[index].selected;
+            const selectedOption = this.resultTypesModel.options[index];
+
+            if(!this.resultTypesModel.value.includes(selectedOption.value)) {
+                this.resultTypesModel.value.push(selectedOption.value);
+                selectedOption.selected = true;
+            } 
+            else {
+                this.resultTypesModel.value.splice(selectedOption.value.indexOf(), 1);
+                selectedOption.selected = false;
+            } 
         },
         goToNextSection() {
-            this.$emit('next-button-action');
+
+            const generalInfo = {
+                board: this.boardModel.value,
+                grade: this.gradeModel.value,
+                course: this.boardModel.value,
+                topic: this.topicModel.value,
+                testTitle: this.topicModel.value,
+                duration: this.durationModel.value,
+                resultsTypes: this.resultTypesModel.value,
+                percentiles:{
+                    a: this.percentileAModel.value,
+                    b: this.percentileBModel.value,
+                    c: this.percentileCModel.value,
+                    d: this.percentileDModel.value
+                }
+            };
+
+            // store general info
+            this.$store.dispatch('storegeninfo', generalInfo)
+            .then(()=> this.$emit('next-button-action'))
+            .catch((error)=> console.log(error));
+        },
+
+        async fetchCourses() {
+            await this.$store.dispatch('fetchcourses')
+            .then((response)=> {
+                
+                this.courseModel.options = [];
+
+                response.forEach((element:any) => {
+                    var course = {
+                        display_name: element.title,
+                        value: element._id
+                    }
+
+                    this.courseModel.options.push(course);
+                });
+
+                console.log(this.courseModel.options);
+            })
+            .catch((error)=> {
+                this.courseModel.error = 'There was an error fetching courses.'
+                console.log(error);
+            });
         }
+
     },
     async beforeMount() {
-        // this.$store.dispatch('fetchboards')
-        // .then((response)=> { this.boardOptions = response; })
-        // .catch((error)=>{
-        //     console.log(error.response);
-        //     console.log("THere was an error fetching boards");
-        // });
+        this.fetchCourses();
     }
 });
 </script>
@@ -540,6 +613,11 @@ export default defineComponent({
         color: var(--paper-grey-800);
         border-radius: 3px;
         outline: none;
+        font-size: 110%;
+    }
+    input::placeholder {
+        font-size: 110%;
+        color: var(--paper-grey-500);
     }
     
     .grid_7 {
@@ -552,6 +630,13 @@ export default defineComponent({
     .grid_7 > * {
         height: 50px;
         width: calc(100% - 12px);
+    }
+
+    .col_4 {
+        display: flex;
+    }
+    .col_4 > div {
+        width: calc(100% /4) calc(100% /4) calc(100% /4) calc(100% /4) !important;   
     }
 
     .button_section {

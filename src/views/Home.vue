@@ -1,5 +1,5 @@
 <template>
-    <section class="categories">
+  <section class="categories">
       <Header class="header" />
 
       <section class="categories_body">
@@ -59,6 +59,7 @@
         </section>
 
       </section>
+      
       <Footer />
   </section>
 </template>

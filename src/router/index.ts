@@ -3,9 +3,12 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'Home',
+    path: '/', name: 'Home',
     component: ()=> import('../views/Home.vue')
+  },
+  {
+    path: '/for-teachers', name: 'For Students',
+    component: ()=> import('../views/Teacher/Home.vue')
   },
   {
     path: '/register',

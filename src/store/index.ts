@@ -9,7 +9,22 @@ export default createStore({
     students: null,
     cartItems: [],
     cartItemDets: [],
-    checkoutInfo: {}
+    checkoutInfo: {},
+    tempTest: {
+      board: '',
+      grade: '',
+      course: '',
+      topic: '',
+      testTitle: '',
+      duration: '',
+      resultTypes: '',
+      percentile99th: '',
+      percentile95th: '',
+      percentile90th: '',
+      percentile80th: '',
+      instructions: [],
+      questions: []
+    }
   },
   mutations: {
     store_user(state, payload) {
@@ -42,6 +57,25 @@ export default createStore({
     },
     savecheckout(state, payload) {
       state.checkoutInfo = payload;
+    },
+    store_new_test_general_info (state, payload) {
+      state.tempTest.board = payload.board;
+      state.tempTest.grade = payload.grade;
+      state.tempTest.course = payload.course;
+      state.tempTest.topic = payload.topic;
+      state.tempTest.testTitle = payload.testTitle;
+      state.tempTest.duration = payload.duration;
+      state.tempTest.resultTypes = payload.resultsTypes;
+      state.tempTest.percentile99th = payload.percentiles.a;
+      state.tempTest.percentile95th = payload.percentiles.b;
+      state.tempTest.percentile90th = payload.percentiles.c;
+      state.tempTest.percentile80th = payload.percentiles.d;
+    },
+    store_new_test_instructions (state, payload) {
+      state.tempTest.instructions = payload;
+    },
+    store_new_test_questions(state, payload) {
+      state.tempTest.questions = payload;
     }
   },
   actions: {
@@ -326,11 +360,11 @@ export default createStore({
         }
       });
     },
-    createtest(commit, payload) {
-      return new Promise((resolve, reject)=> {
+    // createtest(commit, payload) {
+    //   return new Promise((resolve, reject)=> {
       
-      });
-    },
+    //   });
+    // },
     fetchtests({commit}) {
       return new Promise((resolve, reject)=> {
         net.httpSec.get('/user/fetchtests')
@@ -346,6 +380,17 @@ export default createStore({
           reject(error);
         });
       });
+    },
+
+    // store new test info temp
+    storegeninfo({commit}, payload) {
+      commit('store_new_test_general_info', payload);
+    },
+    storeinstructions({commit}, payload) {
+      commit('store_new_test_instructions', payload);
+    },
+    storequestions({commit}, payload) {
+      commit('store_new_test_questions', payload);
     }
   },
   getters: {
@@ -354,6 +399,7 @@ export default createStore({
     token: state => state.token,
     cartData: state => state.cartItems,
     cartItemDets: state => state.cartItemDets,
-    checkoutInfo: state => state.checkoutInfo
+    checkoutInfo: state => state.checkoutInfo,
+    testData: state => state.tempTest
   }
 })

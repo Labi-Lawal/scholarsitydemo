@@ -102,6 +102,12 @@ export default defineComponent({
     }
     div.display div.selected-option, div.display div.placeholder-option {
         width: 90%;
+        margin: auto 0;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
     div.display div.placeholder-option {
         color: rgba(146, 146, 146, 0.705);
@@ -114,11 +120,11 @@ export default defineComponent({
         border: 1px solid lightgrey;
         background: white;
         position: absolute;
-        width: 99.5%;
+        width: 99.2%;
         left: 0;
-        top: 105%;
+        top: 115%;
         padding: 2% 0%;
-        border-radius: 2px;
+        border-radius: 0 0 5px 5px;
     }
     .raise_by_1_level {
         z-index: 1;
@@ -139,7 +145,6 @@ export default defineComponent({
         display: flex;
         align-items: center;
         text-align: start;
-        height: 30px;
         color: grey;
         padding: 3% 6%;
         text-transform: capitalize;

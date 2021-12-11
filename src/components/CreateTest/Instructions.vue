@@ -73,19 +73,16 @@ export default defineComponent({
             this.allFields.splice(index, 1);
         },
         goToNextSection() {
-            this.$emit('next-button-action');
+            this.$store.dispatch('storeinstructions', this.allFields)
+            .then(()=> this.$emit('next-button-action'))
+            .catch((error)=> console.log(error));
         }
     }
 });
 </script>
 
 <style scoped>
-.instructions_from {
-    
-}
-form {
-    
-}
+
 .section_title {
     border-bottom: 1px solid var(--paper-grey-200);
     color: var(--paper-grey-600);
@@ -118,7 +115,7 @@ input {
     padding: 2% 3%;
     border: 1px solid var(--paper-grey-300);
     background: var(--paper-grey-100);
-    color: var(--paper-grey-500);
+    color: var(--paper-grey-800);
     border-radius: 10px;
     outline: none;
     font-size: 100%;

@@ -9,7 +9,6 @@
                 <PageProgressIndicator
                     :sections="sections"
                     :currentSectionIndex=currentSectionIndex
-                    @prevSectionButtonAction="goToPrevSection"
                 />
             </div>
         </div>
@@ -19,7 +18,7 @@
                 v-if="currentSectionIndex === 0"
                 @nextButtonAction="goToNext()"
             />
-            <Instructions 
+            <Instructions
                 v-if="currentSectionIndex === 1"
                 @nextButtonAction="goToNext()"
             />
