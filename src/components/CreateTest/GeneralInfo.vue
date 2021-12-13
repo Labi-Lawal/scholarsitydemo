@@ -1,6 +1,9 @@
 <template>
     <div class="create_new_tests_general">
         <form @submit.prevent="signInButtonPressed">
+            <div class="section_title">
+                General Information
+            </div>
 
             <section class="section_wrapper">
                
@@ -205,50 +208,52 @@ export default defineComponent({
     name: 'general-info',
     components: { DropDown, CheckBox, ButtonPlainText },
     data() {
+        var selectedResult = this.$store.getters.testData.resultTypes || [];
+
         var resultTypesModel:any = {
-                value: [],
+                value: this.$store.getters.testData.resultTypes || [],
                 options: [
                     {
                         label: 'Net Score',
                         value: 'net-score',
-                        selected: false
+                        selected: (selectedResult.includes('net-score')) ?true :false
                     },
                     {
                         label: 'Total Score',
                         value: 'total-score',
-                        selected: true
+                        selected: (selectedResult.includes('total-score')) ?true :false
                     },
                     {
                         label: 'Negative Score',
                         value: 'negative-score',
-                        selected: false
+                        selected: (selectedResult.includes('negative-score')) ?true :false
                     },
                     {
                         label: 'Accuracy Score',
                         value: 'accuracy-score',
-                        selected: false
+                        selected: (selectedResult.includes('accuracy-score')) ?true :false
                     },
                     {
                         label: 'Percentile',
                         value: 'percentile',
-                        selected: false
+                        selected: (selectedResult.includes('percentile')) ?true :false
                     },
                     {
                         label: 'Correct Solutions',
-                        value: 'correct-ssolutions',
-                        selected: false
+                        value: 'correct-solutions',
+                        selected: (selectedResult.includes('correct-solutions')) ?true :false
                     },
                     {
                         label: 'Comparinson Analytics',
                         value: 'comparison-analytics',
-                        selected: false
+                        selected: (selectedResult.includes('comparison-analytics')) ?true :false
                     }
                 ]
         },
         courseModel = {
             error: '',
-            value: '',
-            selected: false,
+            value: this.$store.getters.testData.course || '',
+            selected: (this.$store.getters.testData.course) ?true :false,
             selectedIndex: 0,
             options: [
                 {
@@ -260,8 +265,8 @@ export default defineComponent({
         return {
             boardModel: {
                 error: '',
-                value: '',
-                selected: false,
+                value: this.$store.getters.testData.board || '',
+                selected: (this.$store.getters.testData.board) ?true :false,
                 selectedIndex: 0,
                 options: [
                     {
@@ -270,30 +275,30 @@ export default defineComponent({
                     },
                     {
                         display_name: 'Indian Certificate of Secondary Education [ICSE]',
-                        value: 'Central -board-ofEducation-[CBSE]'
+                        value: 'Central-board-of-Education-[CBSE]'
                     },
                     {
                         display_name: 'Council For The Indian School Certificate Examinations [CISCE]',
-                        value: 'Central -board-ofEducation-[CBSE]'
+                        value: 'council-for-the-indian-school-certificate-examinations-[CISCE]'
                     },
                     {
                         display_name: 'State Board',
-                        value: 'Central -board-ofEducation-[CBSE]'
+                        value: 'state-board'
                     },
                     {
                         display_name: 'International Baccalaureate [IB]',
-                        value: 'Central -board-ofEducation-[CBSE]'
+                        value: 'international-baccalaureate-[IB]'
                     },
                     {
                         display_name: 'National Institute of Open Schooling [NIOS]',
-                        value: 'National Institute of Open Schooling [NIOS]'
+                        value: 'national-institute-of-open-schooling-[NIOS]'
                     }
                 ]
             },
             gradeModel: {
                 error: '',
-                value: '',
-                selected: false,
+                value: this.$store.getters.testData.grade || '',
+                selected: (this.$store.getters.testData.grade) ?true :false,
                 selectedIndex: 0,
                 options: [
                     {
@@ -351,19 +356,19 @@ export default defineComponent({
                 type: 'text',
                 placeholder: 'Choose your test topic',
                 error: '',
-                value: ''
+                value: this.$store.getters.testData.topic || '',
             },
             testTitleModel: {
                 type: 'text',
                 placeholder: 'Choose your test title',
                 error: '',
-                value: ''
+                value: this.$store.getters.testData.testTitle || '',
             },
             durationModel:{
                 error: '',
-                value: 0,
+                value: this.$store.getters.testData.duration.split('-')[1] || '',
                 type: '',
-                digits: 0,
+                digits: this.$store.getters.testData.duration.split('-')[0] || 0,
                 selected: true,
                 selectedIndex: 0,
                 options: [
@@ -372,11 +377,11 @@ export default defineComponent({
                         display_name: 'secs'
                     },
                     {
-                        value: 'min',
+                        value: 'mins',
                         display_name: 'Mins'
                     },
                     {
-                        value: 'Hrs',
+                        value: 'hrs',
                         display_name: 'Hrs'
                     }
                 ]
@@ -384,19 +389,19 @@ export default defineComponent({
             resultTypesModel,
             percentileAModel: {
                 type: 'number',
-                value: 0
+                value: this.$store.getters.testData.percentile99th || 0
             },
             percentileBModel: {
                 type: 'number',
-                value: 0
+                value: this.$store.getters.testData.percentile95th || 0
             },
             percentileCModel: {
                 type: 'number',
-                value: 0
+                value: this.$store.getters.testData.percentile90th || 0
             },
             percentileDModel: {
                 type: 'number',
-                value: 0
+                value: this.$store.getters.testData.percentile80th || 0
             },
 
             selectedIndex: [0, 0, 0, 2, 0, 0, 0, 0],
@@ -411,7 +416,7 @@ export default defineComponent({
         }
     },
     methods: {
-        reject() {
+        clear() {
             this.durationModel.digits = 0;
         },
         selectOption(selected:any){
@@ -419,6 +424,8 @@ export default defineComponent({
                 this.boardModel.selected = true;
                 this.boardModel.selectedIndex = selected.optionIndex;
                 this.boardModel.value = this.boardModel.options[selected.optionIndex].value;
+
+                console.log(this.boardModel.value);
             }
             if(selected.dropDownIndex == 1) {
                 this.gradeModel.selected = true;
@@ -428,22 +435,24 @@ export default defineComponent({
             if(selected.dropDownIndex == 2) {
                 this.courseModel.selected = true;
                 this.courseModel.selectedIndex = selected.optionIndex;
-                this.courseModel.value = this.courseModel.options[selected.optionIndex].value;
+                this.courseModel.value = this.courseModel.options[selected.optionIndex];
             }
             if(selected.dropDownIndex == 3) {
                 this.durationModel.selected = true;
                 this.durationModel.selectedIndex = selected.optionIndex;
-                this.durationModel.type = this.durationModel.options[selected.optionIndex].value;
 
-                if(this.durationModel.type == 'secs') {
-                    this.durationModel.value = this.durationModel.digits * 1;
-                }
-                if(this.durationModel.type == 'mins') {
-                    this.durationModel.value = this.durationModel.digits * 60 //mins to secs;
-                }
-                if(this.durationModel.type == 'hrs') {
-                    this.durationModel.value = this.durationModel.digits * (60 * 60) //hours to secs;
-                }
+                this.durationModel.type = this.durationModel.options[selected.optionIndex].value;
+                this.durationModel.value = this.durationModel.digits.toString() + '-' + this.durationModel.type;
+
+                // if(this.durationModel.type == 'secs') {
+                //     this.durationModel.value = this.durationModel.digits * 1;
+                // }
+                // if(this.durationModel.type == 'mins') {
+                //     this.durationModel.value = this.durationModel.digits * 60 //mins to secs;
+                // }
+                // if(this.durationModel.type == 'hrs') {
+                //     this.durationModel.value = this.durationModel.digits * (60 * 60) //hours to secs;
+                // }
             }
 
             this.hideAllDropDownOptions();
@@ -478,11 +487,11 @@ export default defineComponent({
             const generalInfo = {
                 board: this.boardModel.value,
                 grade: this.gradeModel.value,
-                course: this.boardModel.value,
+                course: this.courseModel.value,
                 topic: this.topicModel.value,
-                testTitle: this.topicModel.value,
+                testTitle: this.testTitleModel.value,
                 duration: this.durationModel.value,
-                resultsTypes: this.resultTypesModel.value,
+                resultTypes: this.resultTypesModel.value,
                 percentiles:{
                     a: this.percentileAModel.value,
                     b: this.percentileBModel.value,
@@ -490,6 +499,8 @@ export default defineComponent({
                     d: this.percentileDModel.value
                 }
             };
+
+            console.log(generalInfo);
 
             // store general info
             this.$store.dispatch('storegeninfo', generalInfo)

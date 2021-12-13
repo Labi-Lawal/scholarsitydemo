@@ -20,18 +20,22 @@
             />
             <Instructions
                 v-if="currentSectionIndex === 1"
+                @prevButtonAction="goToPrev()"
                 @nextButtonAction="goToNext()"
             />
             <AddQuestions 
                 v-if="currentSectionIndex === 2"
+                @prevButtonAction="goToPrev()"
                 @nextButtonAction="goToNext()"
             />
             <Review 
                 v-if="currentSectionIndex === 3"
+                @prevButtonAction="goToPrev()"
                 @nextButtonAction="goToNext()"
             />
             <Publish 
                 v-if="currentSectionIndex === 4"
+                @prevButtonAction="goToPrev()"
                 @nextButtonAction="goToNext()"
             />
         </div>
@@ -172,6 +176,11 @@ export default defineComponent({
         }
     },
     methods:  {
+        goToPrev() {
+            if(this.currentSectionIndex > 0)
+                this.currentSectionIndex--;
+            
+        },
         goToNext() {
             if(this.currentSectionIndex < this.sections.length - 1)
                 this.currentSectionIndex++;

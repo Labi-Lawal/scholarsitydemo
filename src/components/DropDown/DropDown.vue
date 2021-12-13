@@ -27,11 +27,12 @@
             v-if="isOptionsVisible"
         >
             <div 
-                tabindex="-1"
+                tabindex=1
                 class="option" 
                 v-for="(option, index) in options" 
                 :key="option.value" 
                 @click="optionSelected(index)"
+                @keypress.enter="optionSelected(index)"
             > 
                 {{ option.display_name }}
             </div>

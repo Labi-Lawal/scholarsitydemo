@@ -1,7 +1,9 @@
 <template>
     <div class="checkbox_frame">
         <div 
+            tabindex=0
             @click="$emit('select-check-box', index)"
+            @keypress.enter="$emit('select-check-box', index)"
             :class="{
                 checkbox_box: true,
                 is_checked: (selected) ?true :false

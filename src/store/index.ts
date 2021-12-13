@@ -17,7 +17,7 @@ export default createStore({
       topic: '',
       testTitle: '',
       duration: '',
-      resultTypes: '',
+      resultTypes: [],
       percentile99th: '',
       percentile95th: '',
       percentile90th: '',
@@ -65,13 +65,15 @@ export default createStore({
       state.tempTest.topic = payload.topic;
       state.tempTest.testTitle = payload.testTitle;
       state.tempTest.duration = payload.duration;
-      state.tempTest.resultTypes = payload.resultsTypes;
+      state.tempTest.resultTypes = payload.resultTypes;
       state.tempTest.percentile99th = payload.percentiles.a;
       state.tempTest.percentile95th = payload.percentiles.b;
       state.tempTest.percentile90th = payload.percentiles.c;
       state.tempTest.percentile80th = payload.percentiles.d;
     },
     store_new_test_instructions (state, payload) {
+      console.log("SAVING THIS SHIT");
+      console.log(payload);
       state.tempTest.instructions = payload;
     },
     store_new_test_questions(state, payload) {

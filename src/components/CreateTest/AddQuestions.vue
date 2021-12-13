@@ -140,6 +140,12 @@
             </div>
 
             <div class="button_section">
+                <div class="button_wrapper prev">
+                    <ButtonPlainText 
+                        buttonText="Go Back"
+                        @buttonAction="goToPrevSection()"
+                    />
+                </div>
                 <div class="button_wrapper">
                     <ButtonPlainText 
                         buttonText="Next"
@@ -149,9 +155,6 @@
             </div>
 
         </form>
-        <!-- <div class="resources">
-            
-        </div> -->
     </section>
 </template>
 
@@ -165,8 +168,9 @@ export default defineComponent({
     name: 'instructions-form',
     components: { ButtonIcon, ButtonPlainText, DropDown },
     data() {
+        var cachedQuestions = this.$store.getters.testData.questions;
         return {
-            allFields: [
+            allFields: (cachedQuestions.length > 0) ?cachedQuestions :[
                 {
                     question: '',
                     explanation: '',
@@ -348,6 +352,9 @@ export default defineComponent({
             this.hideAllDropDownOptions();
         },
 
+        goToPrevSection() {
+            this.$emit('prev-button-action');
+        },
         goToNextSection() {
             this.$store.dispatch('storequestions', this.allFields)
             .then(()=> this.$emit('next-button-action'))
@@ -519,11 +526,16 @@ input::placeholder {
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+.button_wrapper.prev button {
+    border: none !important;
+    background: lightgrey !important;
+    color: var(--paper-grey-600) !important;
 }
 .body .button_section .button_wrapper {
     height: 50px;
     width: 200px;
-    margin: 0 0 0 auto;
 }
 .body .button_section .button_wrapper button {
     border: 1px solid var(--blue-100);

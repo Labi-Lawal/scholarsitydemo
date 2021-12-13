@@ -2,7 +2,7 @@
     <section class="instructions_from">
         <form @submit.prevent="signInButtonPressed">
             <div class="section_title">
-                Instructions To Student For The Test
+                Test Intructions
             </div>
             
             <div class="input_field_wrapper">
@@ -30,6 +30,13 @@
             </div>
 
             <div class="button_section">
+                <div class="button_wrapper prev">
+                    <ButtonPlainText 
+                        buttonText="Go Back"
+                        @buttonAction="goToPrevSection()"
+                    />
+                </div>
+
                 <div class="button_wrapper">
                     <ButtonPlainText 
                         buttonText="Next"
@@ -55,15 +62,12 @@ export default defineComponent({
             randomNo: parseInt((Math.random() * 10) * 10000),
             allFields: [
                 {
-                    value: 'Answer All Questions',
+                    value: 'Answer all questions'
                 }
             ]
         }
     },
     methods: {
-        save(value) {
-            console.log(value);
-        },
         addNewField () {
             this.allFields.push({
                 value:''
@@ -72,11 +76,30 @@ export default defineComponent({
         removeField (index) {
             this.allFields.splice(index, 1);
         },
+
+        goToPrevSection() {
+            this.$emit('prev-button-action');
+        },
         goToNextSection() {
-            this.$store.dispatch('storeinstructions', this.allFields)
+
+            var allInstructions = [];
+            this.allFields.forEach(element => {
+                if(element.value != '') allInstructions.push(element.value);
+            }); 
+
+            this.$store.dispatch('storeinstructions', allInstructions)
             .then(()=> this.$emit('next-button-action'))
             .catch((error)=> console.log(error));
         }
+    },
+    beforeMount() {
+        var cachedInstructions = this.$store.getters.testData.instructions;
+        if(cachedInstructions.length > 0) {
+            this.allFields = [];
+            cachedInstructions.forEach(element => {
+                this.allFields.push({ value: element });
+            });
+        } 
     }
 });
 </script>
@@ -151,11 +174,12 @@ input::placeholder {
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
+
 .body .button_section .button_wrapper {
     height: 50px;
     width: 200px;
-    margin: 0 0 0 auto;
 }
 .body .button_section .button_wrapper button {
     border: 1px solid var(--blue-100);
@@ -163,5 +187,10 @@ input::placeholder {
     color: white;
     font-weight: 600;
     border-radius: 25px;
+}
+.button_wrapper.prev button {
+    border: none !important;
+    background: lightgrey !important;
+    color: var(--paper-grey-600) !important;
 }
 </style>
